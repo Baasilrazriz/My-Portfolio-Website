@@ -4,6 +4,8 @@ import viteLogo from '/vite.svg'
 import NavbarSection from './Sections/NavbarSection'
 import HomeSection from './Sections/HomeSection'
 import SocialAccountSection from './Sections/SocialAccountSection'
+import AboutSection from './Sections/AboutSection'
+import EducationSection from './Sections/EducationSection'
 
 function App() {
 
@@ -13,6 +15,8 @@ function App() {
    <NavbarSection/>
    <HomeSection/>
    <SocialAccountSection/>
+   <AboutSection/>
+   <EducationSection/>
     </>
   )
 }
