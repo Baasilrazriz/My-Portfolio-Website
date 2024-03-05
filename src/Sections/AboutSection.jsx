@@ -7,7 +7,7 @@ function AboutSection(props) {
     return (
         <div className=" bg-slate-800 overflow-hidden " id="about">
 
-     <Heading bg="l" heading="About Me"/>
+     <Heading theme="l" heading="About Me"/>
         <div className="xl:py-12 xl:pr-44 xl:pl-20      ">
   
           <div  className="  md:flex  md:flex-row flex flex-col justify-center items-center     gap-20">
@@ -71,11 +71,11 @@ function AboutSection(props) {
   <div className=" sm:space-x-7 space-x-3 md:flex-row flex  ">
     <div><a
         href="https://drive.google.com/file/d/1xexlfoLX-lnobkIUzQc2vdkcwu7bk75D/view?usp=sharing"><button
-          className=" overflow-hidden  h-14 w-48 items-center sm:h-14 sm:w-56 rounded-3xl font-bold text-xl bg-green-900 text-gray-100  border-green-200 border-solid border-2 hover:bg-green-400 hover:border-1 hover:border-solid hover:border-black  hover:text-slate-950 hover:scale-105 hover:shadow-lg hover:shadow-green-700">Download
+          className="transition-all delay-175 overflow-hidden  h-14 w-48 items-center sm:h-14 sm:w-56 rounded-3xl font-bold text-xl bg-green-900 text-gray-100  border-green-200 border-solid border-2 hover:bg-green-400 hover:border-1 hover:border-solid hover:border-black  hover:text-slate-950 hover:scale-105 hover:shadow-lg hover:shadow-green-700">Download
           CV</button></a></div>
 
     <div><a href="#con"><button
-          className=" overflow-hidden h-14 w-48 sm:h-14 sm:w-56 items-center   text-xl rounded-3xl font-bold bg-blue-900 text-gray-100 border-blue-200 border-solid border-2 hover:bg-blue-400 hover:border-1 hover:border-solid hover:border-black  hover:text-slate-950 hover:scale-105 hover:shadow-lg hover:shadow-blue-700">Hire
+          className="transition-all delay-175 overflow-hidden h-14 w-48 sm:h-14 sm:w-56 items-center   text-xl rounded-3xl font-bold bg-blue-900 text-gray-100 border-blue-200 border-solid border-2 hover:bg-blue-400 hover:border-1 hover:border-solid hover:border-black  hover:text-slate-950 hover:scale-105 hover:shadow-lg hover:shadow-blue-700">Hire
           Me</button></a>
           </div>
 

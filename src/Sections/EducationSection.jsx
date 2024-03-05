@@ -8,7 +8,7 @@ function EducationSection(props) {
     return (
         <section id="education" className="bg-slate-950 px-5">
 
-       <Heading bg="d" heading="My Education"/>
+       <Heading theme="d" heading="My Education"/>
     
         <div>
           <div className=" p-4 mt-6 pb-40">
