@@ -12,6 +12,7 @@
   "dependencies": {
     "@material-tailwind/react": "^2.1.9",
     "@reduxjs/toolkit": "^2.2.1",
+    "@vercel/analytics": "^1.2.2",
     "emailjs-com": "^3.2.0",
     "flowbite-react": "^0.7.2",
     "hover-carousel": "^1.1.0",
