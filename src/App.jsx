@@ -7,6 +7,8 @@ import EducationSection from './Sections/EducationSection'
 import SkillsSection from './Sections/SkillsSection'
 import CertificateSection from './Sections/CertificateSection'
 import ProjectSection from './Sections/ProjectSection'
+import ContactSection from './Sections/ContactSection'
+import FooterSection from './Sections/FooterSection'
 
 function App() {
 
@@ -21,6 +23,8 @@ function App() {
    <SkillsSection/>
    <CertificateSection/>
    <ProjectSection/>
+   <ContactSection/>
+   <FooterSection/>
     </>
   )
 }
