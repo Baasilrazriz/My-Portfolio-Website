@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import SocialAccountIcon from '../Components/SocialAccounts/SocialAccountIcon';
 
 function FooterSection(props) {
   const socialAccounts = useSelector((state) => state.social.socialAccounts);
