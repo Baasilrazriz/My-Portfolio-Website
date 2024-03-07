@@ -6,7 +6,7 @@ function SocialAccountSection(props) {
     return (
         <div className=''>
         <div className=" right-0 pt-[40rem] opacity-75 fixed end-2 top-6 lg:end-8 lg:top-8">
- <a className="inline-block rounded-full bg-teal-600 p-3 text-white shadow transition hover:bg-teal-500 sm:p-3 lg:p-3"
+ <a className="inline-block rounded-full bg-teal-600 p-4 text-white shadow transition hover:bg-teal-500 sm:p-3 lg:p-3"
    href="#">
    <span className="sr-only">Back to top</span>
 

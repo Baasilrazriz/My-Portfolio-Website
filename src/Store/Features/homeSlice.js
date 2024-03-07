@@ -2,12 +2,30 @@ import { createSlice } from '@reduxjs/toolkit';
     const initialState = {
      image:"https://c0.wallpaperflare.com/preview/524/860/912/screen-code-coding-programming.jpg",
      description:"Passionate software engineering student at Bahria University, proficient in HTML, CSS, Bootstrap, Tailwind CSS, JavaScript, ReactJS, NodeJS, Asp.net, C#, Java, MongoDB, and SQL. I aim to use my expertise to contribute effectively in a professional setting.",
+     cv:'./src/assets/my cv.pdf',
+     
     };
     
     const homeSlice = createSlice({
       name: 'home',
       initialState,
       reducers: {
+         downloadcv : (state,action) => {
+     
+          fetch(state.cv).then((response) => {
+              response.blob().then((blob) => {
+               
+                  const fileURL =
+                      window.URL.createObjectURL(blob);
+                       
+                  let alink = document.createElement("a");
+                  alink.href = fileURL;
+                  alink.download = "basil's CV.pdf";
+                  alink.click();
+              });
+          });
+      },
+    
            setImage:(state,action)=>{
             state.image= action.payload;
         },
@@ -17,6 +35,6 @@ import { createSlice } from '@reduxjs/toolkit';
       },
     });
     
-    export const {setImage,setDescription} = homeSlice.actions;
+    export const {setImage,downloadcv,setDescription} = homeSlice.actions;
     export default homeSlice.reducer;
     

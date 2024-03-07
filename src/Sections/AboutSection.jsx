@@ -1,8 +1,10 @@
 import React from 'react';
 import Heading from '../Components/Heading';
-import {useSelector } from 'react-redux';
+import {useDispatch, useSelector } from 'react-redux';
+import { downloadcv } from '../Store/Features/homeSlice';
 function AboutSection(props) {
-    const profilePic = useSelector((state) => state.about.Profilepic);
+const dispatch=useDispatch()
+  const profilePic = useSelector((state) => state.about.Profilepic);
     const about = useSelector((state) => state.about.about);
     return (
         <div className=" bg-slate-800 overflow-hidden " id="about">
@@ -69,10 +71,12 @@ function AboutSection(props) {
 <div className="flex items-center mt-20 mb-5 justify-around">
   
   <div className=" sm:space-x-7 space-x-3 md:flex-row flex  ">
-    <div><a
-        href="https://drive.google.com/file/d/1xexlfoLX-lnobkIUzQc2vdkcwu7bk75D/view?usp=sharing"><button
+    <div>
+        <button onClick={()=>{
+          dispatch(downloadcv())
+        }}
           className="transition-all delay-175 overflow-hidden  h-14 w-48 items-center sm:h-14 sm:w-56 rounded-3xl font-bold text-xl bg-green-900 text-gray-100  border-green-200 border-solid border-2 hover:bg-green-400 hover:border-1 hover:border-solid hover:border-black  hover:text-slate-950 hover:scale-105 hover:shadow-lg hover:shadow-green-700">Download
-          CV</button></a></div>
+          CV</button></div>
 
     <div><a href="#con"><button
           className="transition-all delay-175 overflow-hidden h-14 w-48 sm:h-14 sm:w-56 items-center   text-xl rounded-3xl font-bold bg-blue-900 text-gray-100 border-blue-200 border-solid border-2 hover:bg-blue-400 hover:border-1 hover:border-solid hover:border-black  hover:text-slate-950 hover:scale-105 hover:shadow-lg hover:shadow-blue-700">Hire

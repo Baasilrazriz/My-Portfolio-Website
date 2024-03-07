@@ -1,8 +1,44 @@
-import React from 'react';
-import {useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import {useDispatch, useSelector } from 'react-redux';
+import { downloadcv} from '../Store/Features/homeSlice';
 function HomeSection(props) {
+  const dispatch =useDispatch()    
     const image = useSelector((state) => state.home.image);
     const description = useSelector((state) => state.home.description);
+    const words = ['Muhammad Basil Irfan',' a Software Engineer ', ' a Freelancer ', ' a Web developer '];
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [displayedText, setDisplayedText] = useState('');
+
+  useEffect(() => {
+    const type = () => {
+      const currentWord = words[currentWordIndex];
+
+      if (isDeleting) {
+        setDisplayedText(currentWord.substring(0, charIndex - 1));
+        setCharIndex((prevCharIndex) => prevCharIndex - 1);
+
+        if (charIndex === 0) {
+          setIsDeleting(false);
+          setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
+        }
+      } else {
+        setDisplayedText(currentWord.substring(0, charIndex + 1));
+        setCharIndex((prevCharIndex) => prevCharIndex + 1);
+
+        if (charIndex === currentWord.length) {
+          setIsDeleting(true);
+        }
+      }
+    };
+
+    const timeout = setTimeout(type, 150);
+
+    return () => clearTimeout(timeout);
+  }, [currentWordIndex, charIndex, isDeleting, words]);
+
+
     return (
         <div className=" xl:mt-20 pt-[7rem]  pb-14 px-5 xl:px-0 xl:py-[10.7rem] sm:h-full w-full h-screen   bg-slate-950    text-gray-200 overflow-hidden" id="home">
         <div className="max-w-6xl mx-auto   p-4 sm:px-6 h-full">      
@@ -24,8 +60,9 @@ function HomeSection(props) {
   
                 <h3 className="text-2xl lg:text-3xl leading-tight mb-2 font-[Poppins,sans-serif] font-[750]">
                   I’m </h3>
-                <spam id="text"
+                <spam id="typingText"
                   className="text-gray-100 text-2xl lg:text-3xl leading-tight mb-2 font-[Poppins,sans-serif] font-[750]">
+            {displayedText}
                 </spam>
   
               </div>
@@ -33,9 +70,11 @@ function HomeSection(props) {
               </p>
               <div className="flex items-center mt-10 ">
   
-                <div className="xl:px-10 xl:pt-2 space-x-4 xl:space-x-8 text-gray-300  md:flex-row flex    text-nowrap">
+                <div className="ml-[-1.2rem] xl:px-10 xl:pt-2 space-x-4 xl:space-x-8 text-gray-300  md:flex-row flex    text-nowrap">
                   <div><a
-                      href=""><button
+                      href=""><button onClick={()=>{
+                        dispatch(downloadcv())
+                      }}
                         className=" overflow-hidden  h-14 w-48  sm:h-14 sm:w-52  font-bold items-center  md:text-lg  rounded-md  bg-green-900  border-green-200 border-solid border hover:bg-green-500 hover:border-2 hover:border-solid hover:scale-105 hover:shadow-md hover:shadow-green-700  hover:text-slate-950">Download
                         CV</button></a></div>
                   <div><a href="#con"><button
