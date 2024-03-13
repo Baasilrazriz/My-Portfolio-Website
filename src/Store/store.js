@@ -5,6 +5,7 @@ import socialAccountReducer from "./Features/socialAccountSlice";
 import aboutReducer from "./Features/aboutSlice";
 import educationReducer from "./Features/educationSlice";
 import skillsReducer from "./Features/skillsSlice";
+import projectReducer from "./Features/projectSlice";
 export const store = configureStore({
   reducer: {
     navbar:navbarReducer,
@@ -13,5 +14,6 @@ export const store = configureStore({
     about:aboutReducer,
     education:educationReducer,
     skills:skillsReducer,
+    projects:projectReducer,
   },
 });

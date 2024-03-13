@@ -1,45 +1,10 @@
 import React, { useState } from 'react';
 import Heading from '../Components/Heading';
 import ProjectCard from '../Components/Projects/ProjectCard';
+import { useSelector } from 'react-redux';
 
 function ProjectSection(props) {
-  const projects=[
-    {
-      title:"Ecommerce Web App",
-      image:"",
-      description:"Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.",
-      skills:["React JS","Asp.net","Tailwind css","SQL","RTK"],
-      type:"Web",
-    },
-    {
-      title:"Airline Management System",
-      image:"",
-      description:"Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.",
-      skills:["C#","SQL"],
-      type:"Desktop",
-    },
-    {
-      title:"Airline Management System",
-      image:"",
-      description:"Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.",
-      skills:["C#","SQL"],
-      type:"Desktop",
-    },
-    {
-      title:"mob hlo",
-      image:"",
-      description:"Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.",
-      skills:["React Native"],
-      type:"Mobile",
-    },
-    {
-      title:"Ecommerce Web App",
-      image:"",
-      description:"Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.",
-      skills:["React JS","Asp.net","Tailwind css","SQL","RTK"],
-      type:"Web",
-    },
-  ]
+  const projects = useSelector((state) => state.projects.projects);
   const [toggleProject,setToggleProject]=useState(false)
   const handleMoreProjects=()=>{
     setToggleProject(!toggleProject)
