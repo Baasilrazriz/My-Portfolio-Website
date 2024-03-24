@@ -36,8 +36,8 @@ const dispatch=useDispatch()
   <div >
 
     <div className="flex gap-2 ">
-      <h1 className="font-medium text-gray-900 dark:text-white  font-serif  xl:text-2xl lg:text-lg sm:text-xl text-[1.4rem] ">Name :</h1>
-      <p className="pt-1  text-justify xl:text-xl lg:text-lg  text-[1.4rem] font-serif sm:text-xl text-gray-700 dark:text-gray-400">Muhammad Basil irfan Rizvi
+      <h1 className="font-medium text-nowrap text-gray-900 dark:text-white  font-serif  xl:text-2xl lg:text-lg sm:text-xl text-[1.4rem] ">Name :</h1>
+      <p className="pt-1  text-justify  xl:text-xl lg:text-lg  text-[1.4rem] font-serif sm:text-xl text-gray-700 dark:text-gray-400">Muhammad Basil irfan Rizvi
       </p>
     </div>
 
@@ -58,7 +58,7 @@ const dispatch=useDispatch()
 
     <div className="flex gap-2">
       <h1 className=" font-medium text-gray-900 dark:text-white  font-serif lg:text-lg  xl:text-2xl sm:text-xl text-[1.4rem]">Location:</h1>
-      <p className="pt-1  text-justify xl:text-xl  text-[1.4rem] lg:text-lg font-serif sm:text-xl  text-gray-700 dark:text-gray-400">Karachi, Sindh, Pakistan
+      <p className="pt-1  text-left xl:text-xl  text-[1.4rem] lg:text-lg font-serif sm:text-xl  text-gray-700 dark:text-gray-400">Karachi, Sindh, Pakistan
       </p>
     </div>
 
