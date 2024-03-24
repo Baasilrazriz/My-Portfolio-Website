@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import {useDispatch, useSelector } from 'react-redux';
 import { downloadcv} from '../Store/Features/homeSlice';
 function HomeSection(props) {
@@ -11,45 +11,7 @@ function HomeSection(props) {
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [displayedText, setDisplayedText] = useState('');
-  // useEffect(() => {
-  //   const link = document.querySelectorAll('nav > .hover-this');
-  //   const cursor = document.querySelector('.cursor');
-
-  //   const animateit = (e) => {
-  //     const span = e.currentTarget.querySelector('span');
-  //     const { offsetX: x, offsetY: y } = e.nativeEvent;
-  //     const { offsetWidth: width, offsetHeight: height } = e.currentTarget;
-
-  //     const move = 25;
-  //     const xMove = (x / width) * (move * 2) - move;
-  //     const yMove = (y / height) * (move * 2) - move;
-
-  //     span.style.transform = `translate(${xMove}px, ${yMove}px)`;
-
-  //     if (e.type === 'mouseleave') span.style.transform = '';
-  //   };
-
-  //   const editCursor = (e) => {
-  //     const { clientX: x, clientY: y } = e;
-  //     cursor.style.left = x + 'px';
-  //     cursor.style.top = y + 'px';
-  //   };
-
-  //   link.forEach((b) => {
-  //     b.addEventListener('mousemove', animateit);
-  //     b.addEventListener('mouseleave', animateit);
-  //   });
-  //   window.addEventListener('mousemove', editCursor);
-
-  //   return () => {
-  //     link.forEach((b) => {
-  //       b.removeEventListener('mousemove', animateit);
-  //       b.removeEventListener('mouseleave', animateit);
-  //     });
-  //     window.removeEventListener('mousemove', editCursor);
-  //   };
-  // }, []);
-  
+ 
   useEffect(() => {
 
     
@@ -83,7 +45,7 @@ function HomeSection(props) {
 
 
     return (
-        <div className=" xl:mt-20 pt-[7rem]  pb-14 px-5 xl:px-0 xl:py-[10.7rem] sm:h-full w-full h-screen text-gray-700 dark:text-gray-200  bg-slate-300  dark:bg-slate-950     overflow-hidden" id="home">
+        <div className=" xl:mt-20 pt-[7rem]  pb-14 px-5 xl:px-0 xl:py-[11.35rem] sm:h-full w-full h-screen text-gray-700 dark:text-gray-200  bg-slate-300  dark:bg-slate-950     overflow-hidden" id="home">
         <div className="max-w-6xl mx-auto   p-4 sm:px-6 h-full">      
           <div className="max-w-sm mx-auto md:max-w-none md:grid  md:grid-cols-2 gap-6 md:gap-14 lg:gap-12 xl:gap-20 items-center">
           <a className="relative block group" href="#0">
@@ -105,7 +67,7 @@ function HomeSection(props) {
   <h3 className="text-2xl hover-this lg:text-3xl mt-1 leading-tight  font-[Poppins,sans-serif] font-[750] ">
     I’m </h3>
   <spam id="typingText"
-    className="bg-clip-text hover-this text-transparent bg-gradient-to-br from-yellow-300 to-red-500 text-2xl lg:text-4xl leading-tight  font-[Poppins,sans-serif] font-[750]">
+    className="bg-clip-text hover-this text-transparent bg-gradient-to-br ye from-yellow-300 to-red-500 text-2xl lg:text-4xl leading-tight  font-[Poppins,sans-serif] font-[750]">
 {displayedText}
   </spam>
 
@@ -139,4 +101,4 @@ function HomeSection(props) {
     );
 }
 
-export default HomeSection;
+export default memo (HomeSection);
