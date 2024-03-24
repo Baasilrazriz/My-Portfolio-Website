@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { toggleNavbarDropdown } from '../../Store/Features/navbarSlice';
+import Switcher from '../Theme/Switcher';
 
 function Navbar(props) {
     const dispatch = useDispatch();
@@ -17,15 +18,15 @@ dispatch(toggleNavbarDropdown());
           </div>
         </div>
         <div>
-          <ul className="lg:flex font-semibold hidden  text-gray-400">
-            <li className="m-[14px] cursor-pointer  hover:font-bold text-base hover:text-white"><a href="#home">Home</a></li>
-            <li className="m-[14px] cursor-pointer  hover:font-bold text-base hover:text-white"><a href="#about">About</a></li>
-            <li className="m-[14px] cursor-pointer  hover:font-bold text-base hover:text-white"><a href="#education">Education</a></li>
-            <li className="m-[14px] cursor-pointer  hover:font-bold text-base hover:text-white"><a href="#skills">Skills</a>
+          <ul className="lg:flex font-semibold hidden  text-gray-400  lg:text-lg">
+            <li className="m-[14px] cursor-pointer hover:scale-125   hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-br hover:from-yellow-300 hover:to-red-500 "><a href="#home">Home</a></li>
+            <li className="m-[14px] cursor-pointer hover:scale-125   hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-br hover:from-yellow-300 hover:to-red-500 "><a href="#about">About</a></li>
+            <li className="m-[14px] cursor-pointer hover:scale-125   hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-br hover:from-yellow-300 hover:to-red-500 "><a href="#education">Education</a></li>
+            <li className="m-[14px] cursor-pointer hover:scale-125   hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-br hover:from-yellow-300 hover:to-red-500 "><a href="#skills">Skills</a>
             </li>
-            <li className="m-[14px] cursor-pointer  hover:font-bold text-base hover:text-white"><a href="#proj">Projects</a>
+            <li className="m-[14px] cursor-pointer    hover:scale-125  hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-br hover:from-yellow-300 hover:to-red-500 "><a href="#proj">Projects</a>
             </li>
-            <li className="m-[14px] cursor-pointer  hover:font-bold text-base hover:text-white"><a href="#con">Contact</a></li>
+            <li className="m-[14px] cursor-pointer  hover:scale-125    hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-br hover:from-yellow-300 hover:to-red-500 "><a href="#con">Contact</a></li>
           </ul>
         </div>
           
@@ -34,7 +35,10 @@ dispatch(toggleNavbarDropdown());
       
     
         <div className="m-4 pr-4 ">
-          <div className="w-6 cursor-pointer hidden lg:block"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAABuwAAAbsBOuzj4gAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAcHSURBVHic1ZtZbFRVGMf/37l3ZrrTFhAFJU1dcAkuUFAgJiJ0OjQxqFESTYzLi6iJicbgg8HEqg/uxkQf1IhR4oIbGhWoJrg9aKmiREmAca8gWDszXdJZ7pzPh67D3Onc5but/J5mcs/5f/f8c853z7n3HGJmTAeJX1oXwlIrSfEqMK8E0e76MzrvmZbgU2AGKd4Xb71EQd0G5jUEWgBigAGALM7rm4OM7RR5A+LtkSSsDQDuVEwtoy0ugAiP1S/6dJ94bA+IGXB0X1t1pII3gbARwElTFI0nzFzHLKnAPhExIPlzbHWkkl8E0FyuLIFva2ranZaIKwH5SYK9B9bXhtTwowzcCoAcVOmqP7PzYs8BA8BzD0gdaLvcVLyFgYVO6zDwtNd4QeHJgFS8dQMr2gog5KLaXw39fW97iRckym2F5KHoTcz0Gtw1Hsx4Dku7c27jBY0rAxLxttsBvATAcB3J5K2u60wDjg1IHozeTczPwlmyO55fG5o/+cNDvcBxZEDqYHQNCI/5iPO5j7qBUtaAwXj7XCa86qRsSZg+81w3YKZu1GerzVza+gDAKb6iaHVi9oBkTeQtUnSJzxi5+rN3/OZTIzBKGjDwfXQVZ2g9Qr6Xy71+BYKkpAG5tNrKBnvJ+MdB//jXCA5bA3r3tF2BLDWRq6lOCYhPvB6gNI088pT/t0UMPrF6QN8Pl5+HDC2yv+oeYgr7VwmOoiaqXOjZ0lfdQ34foQFzXBMfUJyhlWP/SMAA5hPIgL6ur1o5L5L6JiCcLKonTIEBBOPGyf9Zi8SI9O+PNYooBUBhJ9d0aeF/mSBW+P87DCYZQIotXlBwNS8wDwKgNLeICAXAuAGJ7mgbNBW2WKgHQOkrhZTEGTeAtTqn6GpeKApTtKdnZaWQmigTQ4D4tOMvspQBQFVNujoqpibIhAGM+UVXLZIbBkzrhZREGTeA2P5zFqdlEiGAK/Bti+wcQ4CJHMA027ZERsyAOcm6ho1SYlJM9ABl/42MM2T3gdcjtLkv3l4npSbBpCSII7YleNQEGeYanN8kJSbBxBAg/r1kKbk8AAbf1XsgWpxwZ4hJPYAOlirEaZKbEwBVJqFDTM0n4waYlP+xZCkGeEBgbTwG4ZZUPHqtnKB3xlulzNq9UxXkYQJyYkOBmPFyMt56kZSgV8YNqDn/3WMwpp728IBcLgBQBab3h35dO09S1C2F7wNM/mWqwpwhICtqwmmWZbyHeHtEUtQNhQPbwJvlKuiU5LwAYPCKJFuvzdRiqcCAgcjQE2U/flsETgomxBGurknXfDETj8eClixc/GWCQugpV4nTJPtUAABGi6mwp//g2mWywlNT3AqTtzupyIMkuVAaYz6T+iJxqPV6aeFSFG2T690bna+GjB5oBztBCFCzNQQ+oNrxljJwX11z56EgxMew3SfY1xX7FGla40hBAdSgQeFATLAI9EI2lO2Y27T77yAC2Bpw5NvVcyqGK/5m7XwzFM3SoKrAdp4PAXiSIuGnZi38MCEpXHKnaKIr9gqn6QZXYtUMqpN6hWSLBeBzZt7OKrS98YyPyybscpTeKhtvjySOcorzcDVJoQiD6rXId8XywdANpvdBvI/yOJwDDs9ZVH8U2Fa4dNu/IfyvmWpGPy1XxIuNkPFO3fkffw2U2Suc3BPr0MO02fWNKYBqRoeE+IOiLHkAxwAc5jxFeACnI6MqJ0/yuVpvnr1010OAg83SiW/W/cQZnOvpVgyAajWocnpOpYzDAA8q8JDNrLUCnY3Ld7SN/S3bURt0bQtMeEs8eYCTCvofJflWqTR6ZH6ijxngQZvGh/m3yY0HnIzUFduGrQgtg8He9/laBO5T0EcNcEoJv2ccnZkmRvUHlP2rfJMH+ysyRctvx+cFEt1t63hYfQQWGtU0kjBRwSATgMHOEqcGOEdADkCWRn6Xe/Ao5K2q3JKTlhQf03F1YCLRFdvEaXrEcQW3EEZMMHhkc4bCSIM1AD3aULdPWQKoMn99Q0vn67aX3Z4YSe6N3aCHaAtcTJJmDAPaqND3zlq66/FSRTwdmUl2xS7QOXyFPNX4usEAoRD35SLWartuPxlP05X65Tt/gKkWUJjj3m4vYCrQ2ZBZMa9c4wGfh6YAINkd26bTdI2j1WPAkAELlfqOhiW7nndcR+LobG/X2rMMmG9wmmbuLW+ID6tKWlV/obuN2SIGjJH4LnYpsniFs9QkJloGCvO/2qCO2ct2POOpfhCHpxPd666DxQ+yheaibTcSEIAQemDw/Y3Ldm7xJRXo6fH9G8LJTGojW3Qjsljsaw8iAQjzETLwbqQaD1eds9P+Y65b2ek6Pg8Aye/WXcV5fTVAp7LGPDAaoamWNCKsYUCBQZwHUZYUD0PhTzLQrRk7GwczH+Ey+SO3/wH0EJa3saF6lwAAAABJRU5ErkJggg==" alt=""/></div>
+          <div className=" cursor-pointer hidden lg:block">
+            <Switcher/>
+            {/* <img src="data:image/png;base64,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" alt=""/> */}
+            </div>
         </div>
     
     

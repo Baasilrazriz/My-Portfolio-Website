@@ -14,7 +14,7 @@ function ProjectSection(props) {
         <section id="proj">
 
       <Heading theme="l" heading="My Projects"/>
-        <div className="pt-14 pb-28 px-10 md:px-28 bg-slate-800  ">
+        <div className="pt-14 pb-28 px-10 md:px-28 bg-slate-300  dark:bg-slate-950  ">
     
     
           <div id="projects" className=" text-white section-p1 bg-slate-950 border-2 rounded-2xl">

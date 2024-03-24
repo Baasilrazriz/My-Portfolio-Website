@@ -6,7 +6,7 @@ import EndPoints from '../Components/Education/EndPoints';
 function EducationSection(props) {
     const education = useSelector((state) => state.education.educationExp);
     return (
-        <section id="education" className="bg-slate-950 px-5">
+        <section id="education" className="bg-slate-300  dark:bg-slate-950 px-5">
 
        <Heading theme="d" heading="My Education"/>
     

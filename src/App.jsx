@@ -1,30 +1,24 @@
-
-import NavbarSection from './Sections/NavbarSection'
-import HomeSection from './Sections/HomeSection'
-import SocialAccountSection from './Sections/SocialAccountSection'
-import AboutSection from './Sections/AboutSection'
-import EducationSection from './Sections/EducationSection'
-import SkillsSection from './Sections/SkillsSection'
-import CertificateSection from './Sections/CertificateSection'
-import ProjectSection from './Sections/ProjectSection'
-import ContactSection from './Sections/ContactSection'
-import FooterSection from './Sections/FooterSection'
-
+import PortfolioPage from "./Pages/PortfolioPage"
+import { BrowserRouter, Routes,Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import LoginPage from "./Pages/LoginPage"
+import ProtectedRoutes from "./ProtectedRoutes/ProtectedRoutes"
 function App() {
 
 
   return (
     <>
-   <NavbarSection/>
-   <HomeSection/>
-   <SocialAccountSection/>
-   <AboutSection/>
-   <EducationSection/>
-   <SkillsSection/>
-   <CertificateSection/>
-   <ProjectSection/>
-   <ContactSection/>
-   <FooterSection/>
+<ToastContainer style={{ zIndex: 9999 }} />
+     <BrowserRouter>
+   <Routes>
+  
+    <Route path="/" element={<PortfolioPage/>}/>
+    <Route path="/login" element={<LoginPage/>}/>
+    <Route element={<ProtectedRoutes/>} >
+    <Route path="/admin" element={<PortfolioPage/>}/>
+    </Route>    
+   </Routes>
+   </BrowserRouter>
     </>
   )
 }

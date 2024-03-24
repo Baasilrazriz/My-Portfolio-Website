@@ -42,7 +42,7 @@ function CertificateSection(props) {
   },
    ];
     return (
-        <section id="Achievements" class="bg-slate-950 ">
+        <section id="Achievements" class="bg-slate-300  dark:bg-slate-950 ">
     <Heading theme="d" heading="My Achievements"/>
     <div class="w-full py-10 px-20 flex flex-wrap gap-5 justify-center h-full overflow-hidden">
 {

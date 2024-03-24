@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {useDispatch, useSelector } from 'react-redux';
 import { downloadcv} from '../Store/Features/homeSlice';
 function HomeSection(props) {
+  
   const dispatch =useDispatch()    
     const image = useSelector((state) => state.home.image);
     const description = useSelector((state) => state.home.description);
@@ -10,8 +11,50 @@ function HomeSection(props) {
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [displayedText, setDisplayedText] = useState('');
+  // useEffect(() => {
+  //   const link = document.querySelectorAll('nav > .hover-this');
+  //   const cursor = document.querySelector('.cursor');
 
+  //   const animateit = (e) => {
+  //     const span = e.currentTarget.querySelector('span');
+  //     const { offsetX: x, offsetY: y } = e.nativeEvent;
+  //     const { offsetWidth: width, offsetHeight: height } = e.currentTarget;
+
+  //     const move = 25;
+  //     const xMove = (x / width) * (move * 2) - move;
+  //     const yMove = (y / height) * (move * 2) - move;
+
+  //     span.style.transform = `translate(${xMove}px, ${yMove}px)`;
+
+  //     if (e.type === 'mouseleave') span.style.transform = '';
+  //   };
+
+  //   const editCursor = (e) => {
+  //     const { clientX: x, clientY: y } = e;
+  //     cursor.style.left = x + 'px';
+  //     cursor.style.top = y + 'px';
+  //   };
+
+  //   link.forEach((b) => {
+  //     b.addEventListener('mousemove', animateit);
+  //     b.addEventListener('mouseleave', animateit);
+  //   });
+  //   window.addEventListener('mousemove', editCursor);
+
+  //   return () => {
+  //     link.forEach((b) => {
+  //       b.removeEventListener('mousemove', animateit);
+  //       b.removeEventListener('mouseleave', animateit);
+  //     });
+  //     window.removeEventListener('mousemove', editCursor);
+  //   };
+  // }, []);
+  
   useEffect(() => {
+
+    
+
+
     const type = () => {
       const currentWord = words[currentWordIndex];
 
@@ -40,33 +83,35 @@ function HomeSection(props) {
 
 
     return (
-        <div className=" xl:mt-20 pt-[7rem]  pb-14 px-5 xl:px-0 xl:py-[10.7rem] sm:h-full w-full h-screen   bg-slate-950    text-gray-200 overflow-hidden" id="home">
+        <div className=" xl:mt-20 pt-[7rem]  pb-14 px-5 xl:px-0 xl:py-[10.7rem] sm:h-full w-full h-screen text-gray-700 dark:text-gray-200  bg-slate-300  dark:bg-slate-950     overflow-hidden" id="home">
         <div className="max-w-6xl mx-auto   p-4 sm:px-6 h-full">      
           <div className="max-w-sm mx-auto md:max-w-none md:grid  md:grid-cols-2 gap-6 md:gap-14 lg:gap-12 xl:gap-20 items-center">
           <a className="relative block group" href="#0">
               <div
-                className="absolute inset-0 bg-gray-800 hidden md:block transform md:translate-y-2 md:translate-x-4 xl:translate-y-4 xl:translate-x-8 group-hover:translate-x-0 group-hover:translate-y-0 transition duration-700 ease-out pointer-events-none"
+                className="rounded-3xl absolute inset-0 bg-gradient-to-br from-yellow-300 opacity-45  to-red-500 hidden md:block transform md:translate-y-2 md:translate-x-4 xl:translate-y-4 xl:translate-x-8 group-hover:translate-x-0 group-hover:translate-y-0 transition duration-700 ease-out pointer-events-none"
                 ></div>
               <figure
-                className="relative h-0 pb-[56.25%] md:pb-[75%] lg:pb-[56.25%] overflow-hidden transform md:-translate-y-2 xl:-translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0 transition duration-700 ease-out">
+                className="rounded-3xl relative h-0 pb-[56.25%] md:pb-[75%] lg:pb-[56.25%] overflow-hidden transform md:-translate-y-2 xl:-translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0 transition duration-700 ease-out">
                 <img
                   className="absolute inset-0 w-full h-full object-cover transform hover:scale-105 transition duration-700 ease-out"
                   src={image}
                   width="540" height="303" alt="Blog post"/>
               </figure>
             </a>
-            <div className='pt-10 xl:pt-0'>
-              <div className="flex space-x-2">
+            <div className='pt-10 xl:pt-0 '>
+              <div className='flex flex-col justify-center ' id='main'>
+              <div className="flex space-x-2    h-14">
   
-                <h3 className="text-2xl lg:text-3xl leading-tight mb-2 font-[Poppins,sans-serif] font-[750]">
-                  I’m </h3>
-                <spam id="typingText"
-                  className="text-gray-100 text-2xl lg:text-3xl leading-tight mb-2 font-[Poppins,sans-serif] font-[750]">
-            {displayedText}
-                </spam>
-  
+  <h3 className="text-2xl hover-this lg:text-3xl mt-1 leading-tight  font-[Poppins,sans-serif] font-[750] ">
+    I’m </h3>
+  <spam id="typingText"
+    className="bg-clip-text hover-this text-transparent bg-gradient-to-br from-yellow-300 to-red-500 text-2xl lg:text-4xl leading-tight  font-[Poppins,sans-serif] font-[750]">
+{displayedText}
+  </spam>
+
+</div>
               </div>
-              <p className="text-base xl:text-lg text-gray-400 text-justify ">{description}
+              <p className="text-base xl:text-lg  text-justify ">{description}
               </p>
               <div className="flex items-center mt-10 ">
   
@@ -82,7 +127,8 @@ function HomeSection(props) {
                         Hire Me</button></a></div>
   
                 </div>
-  
+                {/* <div className="cursor  absolute w-2 h-2 bg-white rounded-full mix-blend-difference transition-transform duration-300 ease-in-out"></div> */}
+
               </div>
             </div>
           </div>

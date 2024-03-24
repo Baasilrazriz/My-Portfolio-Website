@@ -7,7 +7,7 @@ const dispatch=useDispatch()
   const profilePic = useSelector((state) => state.about.Profilepic);
     const about = useSelector((state) => state.about.about);
     return (
-        <div className=" bg-slate-800 overflow-hidden " id="about">
+        <div className=" bg-slate-400 dark:bg-slate-800 overflow-hidden " id="about">
 
      <Heading theme="l" heading="About Me"/>
         <div className="xl:py-12 xl:pr-44 xl:pl-20      ">
@@ -19,27 +19,27 @@ const dispatch=useDispatch()
             </div>
            </div>
   <div className=' md:w-2/3   '>
-  <h1 className="font-bold text-white  font-serif md:mx-0 mx-20 text-3xl">Hello everyone!</h1>
-              <p className="mt-2 mb-8  xl:pr-0 md:pr-14 md:mx-0 mx-20 text-justify md:text-lg font-serif text-gray-400"> {about}</p>
+  <h1 className="font-bold text-gray-800 dark:text-white  font-serif md:mx-0 mx-20 text-3xl">Hello everyone!</h1>
+              <p className="mt-2 mb-8  xl:pr-0 md:pr-14 md:mx-0 mx-20 text-justify md:text-lg font-serif text-gray-800 dark:text-white"> {about}</p>
               <div className='flex flex-col'>
               <div className="sm:flex block sm:mx-5 mx-20   xl:px-10   lg:mr-4 text-nowrap gap-10 ">
   
   <div >
 
     <div className="flex gap-2 ">
-      <h1 className="font-medium text-white  font-serif  xl:text-2xl lg:text-lg sm:text-xl text-[1.4rem] ">Name :</h1>
-      <p className="pt-1  text-justify xl:text-xl lg:text-lg  text-[1.4rem] font-serif sm:text-xl text-gray-400">Muhammad Basil irfan Rizvi
+      <h1 className="font-medium text-gray-900 dark:text-white  font-serif  xl:text-2xl lg:text-lg sm:text-xl text-[1.4rem] ">Name :</h1>
+      <p className="pt-1  text-justify xl:text-xl lg:text-lg  text-[1.4rem] font-serif sm:text-xl text-gray-700 dark:text-gray-400">Muhammad Basil irfan Rizvi
       </p>
     </div>
 
     <div className="flex gap-2">
-      <h1 className=" font-medium text-white  font-serif  xl:text-2xl lg:text-lg sm:text-xl text-[1.4rem]">DOB :</h1>
-      <p className="pt-1  text-justify xl:text-xl lg:text-lg text-[1.4rem] font-serif sm:text-xl text-gray-400">June 30,2003</p>
+      <h1 className=" font-medium text-gray-900 dark:text-white  font-serif  xl:text-2xl lg:text-lg sm:text-xl text-[1.4rem]">DOB :</h1>
+      <p className="pt-1  text-justify xl:text-xl lg:text-lg text-[1.4rem] font-serif sm:text-xl text-gray-700 dark:text-gray-400">June 30,2003</p>
     </div>
 
     <div className="flex gap-2">
-      <h1 className="  font-medium text-white  font-serif lg:text-lg  xl:text-2xl sm:text-xl text-[1.4rem]">Sex :</h1>
-      <p className="pt-1  text-justify xl:text-xl  text-[1.4rem] font-serif lg:text-lg sm:text-xl text-gray-400">M</p>
+      <h1 className="  font-medium text-gray-900 dark:text-white  font-serif lg:text-lg  xl:text-2xl sm:text-xl text-[1.4rem]">Sex :</h1>
+      <p className="pt-1  text-justify xl:text-xl  text-[1.4rem] font-serif lg:text-lg sm:text-xl text-gray-700 dark:text-gray-400">M</p>
     </div>
 
 
@@ -48,19 +48,19 @@ const dispatch=useDispatch()
   <div className=" ">
 
     <div className="flex gap-2">
-      <h1 className=" font-medium text-white  font-serif lg:text-lg  xl:text-2xl sm:text-xl text-[1.4rem]">Location:</h1>
-      <p className="pt-1  text-justify xl:text-xl  text-[1.4rem] lg:text-lg font-serif sm:text-xl  text-gray-400">Karachi, Sindh, Pakistan
+      <h1 className=" font-medium text-gray-900 dark:text-white  font-serif lg:text-lg  xl:text-2xl sm:text-xl text-[1.4rem]">Location:</h1>
+      <p className="pt-1  text-justify xl:text-xl  text-[1.4rem] lg:text-lg font-serif sm:text-xl  text-gray-700 dark:text-gray-400">Karachi, Sindh, Pakistan
       </p>
     </div>
 
     <div className="flex gap-2">
-      <h1 className=" font-medium text-white  font-serif lg:text-lg  xl:text-2xl sm:text-xl  text-[1.4rem]">Email:</h1>
-      <p className="pt-1  text-justify xl:text-xl text-[1.4rem] lg:text-lg font-serif sm:text-xl text-gray-400">baasilrazriz@gmail.com</p>
+      <h1 className=" font-medium text-gray-900 dark:text-white  font-serif lg:text-lg  xl:text-2xl sm:text-xl  text-[1.4rem]">Email:</h1>
+      <p className="pt-1  text-justify xl:text-xl text-[1.4rem] lg:text-lg font-serif sm:text-xl text-gray-700 dark:text-gray-400">baasilrazriz@gmail.com</p>
     </div>
 
     <div className="flex gap-2">
-      <h1 className=" font-medium text-white  font-serif  lg:text-lg xl:text-2xl text-[1.4rem]">Phone:</h1>
-      <p className="pt-1  text-justify xl:text-xl text-[1.4rem] lg:text-lg font-serif sm:text-xl text-gray-400">+923237184249</p>
+      <h1 className=" font-medium text-gray-900 dark:text-white  font-serif  lg:text-lg xl:text-2xl text-[1.4rem]">Phone:</h1>
+      <p className="pt-1  text-justify xl:text-xl text-[1.4rem] lg:text-lg font-serif sm:text-xl text-gray-700 dark:text-gray-400">+923237184249</p>
     </div>
 
 
