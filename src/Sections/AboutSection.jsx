@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Heading from '../Components/Heading';
 import {useDispatch, useSelector } from 'react-redux';
 import { downloadcv } from '../Store/Features/homeSlice';
+import locomotiveScroll from "locomotive-scroll";
 function AboutSection(props) {
+  const scrollRef = React.createRef();
+
+  useEffect(() => {
+    const scroll = new locomotiveScroll({
+      el: scrollRef.current,
+      smooth: true
+    });
+  });
 const dispatch=useDispatch()
   const profilePic = useSelector((state) => state.about.Profilepic);
     const about = useSelector((state) => state.about.about);
@@ -10,12 +19,12 @@ const dispatch=useDispatch()
         <div className=" bg-slate-400 dark:bg-slate-800 overflow-hidden " id="about">
 
      <Heading theme="l" heading="About Me"/>
-        <div className="xl:py-12 xl:pr-44 xl:pl-20      ">
+        <div className="xl:py-12 xl:pr-44 xl:pl-20      "ref={scrollRef}>
   
           <div  className="  md:flex  md:flex-row flex flex-col justify-center items-center     gap-20">
            <div className='md:w-1/3'>
            <div className="  md:ml-2 xl:ml-5   lg:mx-20 xl:h-96 xl:w-96 lg:h-72 lg:w-72 xl:mt-[-6rem]  h-64 w-64 rounded-full overflow-hidden  border-2 border-black">              
-              <img className='h-full w-full object-cover' src={profilePic} alt=""/>
+              <img  className='h-full  w-full object-cover' src={profilePic} alt=""/>
             </div>
            </div>
   <div className=' md:w-2/3   '>
