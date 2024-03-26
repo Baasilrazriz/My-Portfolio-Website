@@ -7,11 +7,10 @@ function ContactSection(props) {
     
     emailjs.sendForm('service_e4ajvle', 'template_yvzd4fl', e.target, 'uRsOwhI0RI7Tk9XQn')
       .then((result) => {
-        console.log(result.text,result.status);
+        console.log(result.text);
         alert("email sent")
       }, (error) => {
         console.log(error.text);
-        // Optionally, you can show an error message or perform other actions here
       });
   };
 
