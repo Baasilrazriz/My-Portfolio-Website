@@ -1,29 +1,27 @@
 import React, { useState } from "react";
 import Heading from "../Components/Heading";
 import ProjectCard from "../Components/Projects/ProjectCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { OpenProjectModal } from "../Store/Features/projectSlice";
+import ProjectsModal from "../EditModals/ProjectsModal";
 
 function ProjectSection(props) {
-const admin=false;
+  const dispatch=useDispatch();
+
   const projects = useSelector((state) => state.projects.projects);
   const [toggleProject, setToggleProject] = useState(false);
   const handleMoreProjects = () => {
     setToggleProject(!toggleProject);
   };
-
+const onEdit=()=>{
+  // props.history.push('/edit')
+  dispatch(OpenProjectModal())
+}
   return (
     <section id="proj">
-      <Heading theme="l" heading="My Projects" />
-      <div className=" pb-28 px-10 md:px-28 bg-slate-300  dark:bg-slate-800  ">
-{admin?(      <div>
-          <div className="flex   justify-end items-end ">
-            <button className="hover:scale-105  h-14 w-48 hover:shadow-md hover:shadow-blue-700 overflow-hidden  font-bold sm:h-14 sm:w-52 md:text-lg  items-center rounded-md  bg-gray-400   border-blue-200 border-solid border hover:bg-blue-500 hover:border-2 hover:border-solid font-serif    hover:text-slate-950">
-              Edit Project
-            </button>
-          </div>
-        </div>
-):<></>
-}
+      <Heading theme="l" heading="My Projects" onclick={onEdit}/>
+      <div className=" pb-28 px-10 md:px-28 bg-slate-400  dark:bg-slate-800  ">
+<ProjectsModal/>
        <div className="pt-14">
        <div
           id="projects"
