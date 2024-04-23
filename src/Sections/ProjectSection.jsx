@@ -1,27 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Heading from "../Components/Heading";
 import ProjectCard from "../Components/Projects/ProjectCard";
 import { useDispatch, useSelector } from "react-redux";
-import { OpenProjectModal } from "../Store/Features/projectSlice";
-import ProjectsModal from "../EditModals/ProjectsModal";
+import { OpenProjectModal} from "../Store/Features/projectSlice";
+
 
 function ProjectSection(props) {
   const dispatch=useDispatch();
 
   const projects = useSelector((state) => state.projects.projects);
+
   const [toggleProject, setToggleProject] = useState(false);
   const handleMoreProjects = () => {
     setToggleProject(!toggleProject);
   };
-const onEdit=()=>{
-  // props.history.push('/edit')
-  dispatch(OpenProjectModal())
-}
+
   return (
     <section id="proj">
-      <Heading theme="l" heading="My Projects" onclick={onEdit}/>
+      <Heading theme="l" heading="My Projects" />
       <div className=" pb-28 px-10 md:px-28 bg-slate-400  dark:bg-slate-800  ">
-<ProjectsModal/>
+{/* <ProjectsModal/> */}
        <div className="pt-14">
        <div
           id="projects"
@@ -90,10 +88,11 @@ const onEdit=()=>{
                     <ProjectCard
                       key={index}
                       title={project.title}
-                      image={project.image}
-                      description={project.description}
-                      skills={project.skills}
-                      type={project.type}
+                      language={project.lang}
+                      image={project.imgUrl[0]}
+                      overview={project.overview}
+                      skills={project.tech}
+                      type={project.category}
                     />
                   );
                 })}

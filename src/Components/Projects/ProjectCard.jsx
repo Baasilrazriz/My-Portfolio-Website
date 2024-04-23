@@ -15,16 +15,16 @@ const [toggleSkill,setToggleSkills]=useState(false);
   
     return (
         <div id={props.key} className="xl:w-1/4 md:w-1/2 p-4">
-                    <div className="bg-gray-100 p-6 rounded-lg  overflow-hidden ">
-                      <img className="h-40 rounded w-full object-cover object-center mb-6" src={props.image?props.image:"https://dummyimage.com/723x403"}  
+                    <div className="bg-gray-100 p-4 rounded-lg  overflow-hidden h-[28rem]">
+                      <img className="h-40 rounded w-full object-cover object-center " src={props.image?props.image:"https://dummyimage.com/723x403"}  
                         alt="content"/>
-                      <h3 className="tracking-widest text-yellow-500 text-xs font-medium title-font">{props.language}</h3>
-                      <h2 className="text-lg text-gray-900 font-medium title-font mb-4">{props.title}</h2>
-                      <p className="leading-relaxed text-base">{props.description}</p>
+                      <h3 className="tracking-widest text-yellow-500 text-xs ml-1  font-medium title-font mt-5">{props.language?props.language:"C#"}</h3>
+                      <h2 className="text-lg  font-bold ml-1 text-gray-800 text-center   mb-1">{props.title}</h2>
+                      <p className="leading-relaxed text-base text-ellipsis ml-1 line-clamp-4 text-left">{props.overview}</p>
                       <div className={`mt-5 py-1 flex flex-wrap gap-y-5 gap-x-2 overflow-hidden ${toggleSkill?"h-full":"h-10"}`}>
                         {
                           skills.map((skill,index)=>(
-                            <div key={index} className='flex justify-center items-center h-8 bg-green-700 text-gray-100 w-auto p-2 text-nowrap  rounded-full  text-xs font-semibold '>{skill}</div>
+                            <div key={index} className='flex justify-center items-center h-8 bg-gray-400 text-slate-950 w-auto p-2 text-nowrap  rounded-full  text-xs font-bold '>{skill}</div>
                           ))
                         }                        
                       </div>

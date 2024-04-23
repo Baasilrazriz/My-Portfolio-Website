@@ -1,7 +1,6 @@
 import React from "react";
 
 function Heading(props) {
-  const admin=true;
   return (
     <div
       className={`${
@@ -17,22 +16,7 @@ function Heading(props) {
           </p>
           <div className="w-44 h-1 border-b-4 border-yellow-400 rounded-2xl mt-2 md:mt-3 "></div>
         </div>
-        {admin ? (
-          <div className=" hidden xl:block">
-          {props.onclick?(<>
-            <button
-              onClick={props.onclick}
-              className="hover:scale-105  h-14 w-14 hover:shadow-md hover:shadow-gray-700 overflow-hidden  font-bold sm:h-14 sm:w-32 md:text-lg  items-center rounded-md bg-gray-300  dark:bg-gray-900 hover:bg-gray-900   border-blue-200 border-solid border dark:hover:bg-gray-500 hover:border-2 hover:border-solid hover:text-white    dark:hover:text-slate-950"
-            >
-              Edit details
-            </button>
-          </>):(<></>)
-
-          }
-          </div>
-        ) : (
-          <></>
-        )}
+        
       </div>
     </div>
   );
