@@ -96,7 +96,12 @@ function AboutSection(props) {
                 <div className="flex items-center mt-20 mb-5 justify-around">
                   <div className=" sm:space-x-7 space-x-3 md:flex-row flex  ">
                     <div>
-                     <a href="src\assets\MuhammadBasilIrfan-Resume.pdf">
+                     <a
+                      href="../../src/assets/MuhammadBasilIrfan-Resume.pdf"
+                      alt="alt text"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                     >
                      <button
                         // onClick={() => {
                         //   dispatch(downloadcv());

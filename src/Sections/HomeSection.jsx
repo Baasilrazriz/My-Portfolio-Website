@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import {useDispatch, useSelector } from 'react-redux';
 import { downloadcv} from '../Store/Features/homeSlice';
+import { Link } from 'react-router-dom';
 function HomeSection(props) {
   
   const dispatch =useDispatch()    
@@ -78,7 +79,12 @@ function HomeSection(props) {
               <div className="flex items-center mt-10 ">
   
                 <div className="ml-[-1.2rem] xl:px-10 xl:pt-2 space-x-4 xl:space-x-8 text-gray-300  md:flex-row flex    text-nowrap">
-                  <div><a href="src\assets\MuhammadBasilIrfan-Resume.pdf"><button 
+                  <div><a
+                       href="../../src/assets/MuhammadBasilIrfan-Resume.pdf"
+                       alt="alt text"
+                       target="_blank"
+                       rel="noopener noreferrer" 
+                      ><button 
                         className=" overflow-hidden  h-14 w-48  sm:h-14 sm:w-52  font-bold items-center  md:text-lg  rounded-md  bg-green-900  border-green-200 border-solid border hover:bg-green-500 hover:border-2 hover:border-solid hover:scale-105 hover:shadow-md hover:shadow-green-700  hover:text-slate-950">Download
                         CV</button></a></div>
                   <div><a href="#con"><button
