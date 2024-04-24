@@ -96,14 +96,16 @@ function AboutSection(props) {
                 <div className="flex items-center mt-20 mb-5 justify-around">
                   <div className=" sm:space-x-7 space-x-3 md:flex-row flex  ">
                     <div>
-                      <button
-                        onClick={() => {
-                          dispatch(downloadcv());
-                        }}
+                     <a href="src\assets\MuhammadBasilIrfan-Resume.pdf">
+                     <button
+                        // onClick={() => {
+                        //   dispatch(downloadcv());
+                        // }}
                         className="transition-all delay-175 overflow-hidden  h-14 w-48 items-center sm:h-14 sm:w-56 rounded-3xl font-bold text-xl bg-green-900 text-gray-100  border-green-200 border-solid border-2 hover:bg-green-400 hover:border-1 hover:border-solid hover:border-black  hover:text-slate-950 hover:scale-105 hover:shadow-lg hover:shadow-green-700"
                       >
                         Download CV
                       </button>
+                     </a>
                     </div>
 
                     <div>
