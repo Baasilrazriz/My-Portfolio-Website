@@ -97,7 +97,7 @@ function AboutSection(props) {
                   <div className=" sm:space-x-7 space-x-3 md:flex-row flex  ">
                     <div>
                      <a
-                      href="../../src/assets/MuhammadBasilIrfan-Resume.pdf"
+                      href="https://drive.google.com/file/d/11LkjodG_xPY63FGX1_7Hf2eSKhhQzbse/view?usp=drive_link"
                       alt="alt text"
                       target="_blank"
                       rel="noopener noreferrer"

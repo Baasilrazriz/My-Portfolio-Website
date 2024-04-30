@@ -80,7 +80,7 @@ function HomeSection(props) {
   
                 <div className="ml-[-1.2rem] xl:px-10 xl:pt-2 space-x-4 xl:space-x-8 text-gray-300  md:flex-row flex    text-nowrap">
                   <div><a
-                       href="../../src/assets/MuhammadBasilIrfan-Resume.pdf"
+                       href="https://drive.google.com/file/d/11LkjodG_xPY63FGX1_7Hf2eSKhhQzbse/view?usp=drive_link"
                        alt="alt text"
                        target="_blank"
                        rel="noopener noreferrer" 
