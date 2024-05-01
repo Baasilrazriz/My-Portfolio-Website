@@ -2,6 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import {useDispatch, useSelector } from 'react-redux';
 import { downloadcv} from '../Store/Features/homeSlice';
 import { Link } from 'react-router-dom';
+import { Fade, Slide, Zoom } from 'react-awesome-reveal';
 function HomeSection(props) {
   
   const dispatch =useDispatch()    
@@ -49,6 +50,7 @@ function HomeSection(props) {
         <div className=" xl:mt-20 pt-[7rem]  pb-14 px-5 xl:px-0 xl:py-[11.35rem] sm:h-full w-full h-screen text-gray-700 dark:text-gray-200  bg-slate-300  dark:bg-slate-950     overflow-hidden" id="home">
         <div className="max-w-6xl mx-auto   p-4 sm:px-6 h-full">      
           <div className="max-w-sm mx-auto md:max-w-none md:grid  md:grid-cols-2 gap-6 md:gap-14 lg:gap-12 xl:gap-20 items-center">
+          <Zoom >
           <a className="relative block group" href="#0">
               <div
                 className="rounded-3xl absolute inset-0 bg-gradient-to-br from-yellow-300 opacity-45  to-red-500 hidden md:block transform md:translate-y-2 md:translate-x-4 xl:translate-y-4 xl:translate-x-8 group-hover:translate-x-0 group-hover:translate-y-0 transition duration-700 ease-out pointer-events-none"
@@ -61,6 +63,7 @@ function HomeSection(props) {
                   width="540" height="303" alt="Blog post"/>
               </figure>
             </a>
+          </Zoom>
             <div className='pt-10 xl:pt-0 '>
               <div className='flex flex-col justify-center ' id='main'>
               <div className="flex space-x-2    h-14">

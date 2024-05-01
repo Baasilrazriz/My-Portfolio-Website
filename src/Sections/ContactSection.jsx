@@ -1,5 +1,6 @@
 import React from 'react';
 import emailjs from 'emailjs-com';
+import { Bounce, Fade, Roll, Rotate, Slide, Zoom } from 'react-awesome-reveal';
 
 function ContactSection(props) {
   const sendEmail = (e) => {
@@ -38,23 +39,28 @@ function ContactSection(props) {
                 <div className="lg:col-span-2 lg:py-12">
                   <div className="mt-8">
                     <div className="">
-                      <a href='https://www.google.com/maps?q=Karachi' className="flex  py-3 border-2 border-black  rounded-lg bg-gray-800 mb-5 hover:scale-105 hover:border-green-500 hover:drop-shadow-xl transition-shadow ">
+                 <Slide>  
+                     <a href='https://www.google.com/maps?q=Karachi' className="flex  py-3 border-2 border-black  rounded-lg bg-gray-800 mb-5 hover:scale-105 hover:border-green-500 hover:drop-shadow-xl transition-shadow ">
                         <h1 className="md:pr-3 ml-2 font-medium text-gray-400  font-serif  md:text-2xl text-lg">Location:</h1>
                         <h1 className="pt-0.5  text-center md:text-2xl text-base font-serif text-green-500">Karachi, Sindh,
                           Pakistan
                         </h1>
                       </a>
-
+</Slide>
+                      <Slide>
                       <a href='mailto:baasil869@gmail.com?subject=For%20Job%20Offer&body=Hi%20there,' className="flex py-3 border-2 border-black  rounded-lg bg-gray-800 mb-5 hover:scale-105 hover:border-blue-700 hover:drop-shadow-xl transition-shadow">
                         <h1 className="md:pr-3 ml-2 font-medium text-gray-400  font-serif  md:text-2xl text-lg">Email:</h1>
                         <h1 className="pt-0.5  text-center md:text-2xl text-base font-serif text-blue-700">
                           baasilrazriz@gmail.com</h1>
                       </a>
+                      </Slide>
 
+                      <Slide>
                       <a href='https://wa.me/+923237184249' className="flex  py-3 border-2 border-black  rounded-lg bg-gray-800 mb-5 hover:scale-105 hover:border-red-600 hover:drop-shadow-xl transition-shadow">
                         <h1 className="md:pr-3 ml-2 font-medium  text-gray-400 font-serif  md:text-2xl text-lg">Phone:</h1>
                         <h1 className="pt-0.5  text-center md:text-2xl text-base font-serif text-red-600">+923237184249</h1>
                       </a>
+                      </Slide>
                     </div>
                   </div>
                 </div>

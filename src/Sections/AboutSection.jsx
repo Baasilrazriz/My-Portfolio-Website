@@ -3,6 +3,7 @@ import Heading from "../Components/Heading";
 import { useDispatch, useSelector } from "react-redux";
 import { downloadcv } from "../Store/Features/homeSlice";
 import locomotiveScroll from "locomotive-scroll";
+import { Bounce, Fade, JackInTheBox, Slide } from "react-awesome-reveal";
 function AboutSection(props) {
   const dispatch = useDispatch();
   const profilePic = useSelector((state) => state.about.Profilepic);
@@ -15,6 +16,7 @@ function AboutSection(props) {
       <Heading theme="l" heading="About Me" />
       <div className="xl:py-12 xl:pr-44 xl:pl-20      ">
         <div className="  md:flex  md:flex-row flex flex-col justify-center items-center     gap-20">
+          <Fade>
           <div className="md:w-1/3">
             <div className="  md:ml-2 xl:ml-5   lg:mx-20 xl:h-96 xl:w-96 lg:h-72 lg:w-72 xl:mt-[-6rem]  h-64 w-64 rounded-full overflow-hidden  border-2 border-black">
               <img
@@ -24,9 +26,10 @@ function AboutSection(props) {
               />
             </div>
           </div>
+          </Fade>
           <div className=" md:w-2/3   ">
             <h1 className="font-bold text-gray-800 dark:text-white  font-serif md:mx-0 mx-20 text-3xl">
-              Hello everyone!
+              Asaalam o Alikum!
             </h1>
             <p className="mt-2 mb-8  xl:pr-0 md:pr-14 md:mx-0 mx-20 text-justify md:text-lg font-serif text-gray-800 dark:text-white">
               {" "}
@@ -103,11 +106,8 @@ function AboutSection(props) {
                       rel="noopener noreferrer"
                      >
                      <button
-                        // onClick={() => {
-                        //   dispatch(downloadcv());
-                        // }}
                         className="transition-all delay-175 overflow-hidden  h-14 w-48 items-center sm:h-14 sm:w-56 rounded-3xl font-bold text-xl bg-green-900 text-gray-100  border-green-200 border-solid border-2 hover:bg-green-400 hover:border-1 hover:border-solid hover:border-black  hover:text-slate-950 hover:scale-105 hover:shadow-lg hover:shadow-green-700"
-                      >
+                     >
                         Download CV
                       </button>
                      </a>
