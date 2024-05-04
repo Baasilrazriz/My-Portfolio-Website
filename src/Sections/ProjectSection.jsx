@@ -9,7 +9,38 @@ function ProjectSection(props) {
   const dispatch=useDispatch();
 
   const projects = useSelector((state) => state.projects.projects);
+  
+  const filterProjectsByCategory = category => {
+    return projects.filter(project => project.category === category);
+  };
+  const filterProjectsByTitle = title => {
+    return projects.filter(project => project.title == title);
+  };
+  const [filteredProjects, setFilteredProjects] = useState(projects);
+  
+const handleButtonClick = (selection) => {
 
+  if(selection==="")
+    {
+      setFilteredProjects(projects);
+    }
+    else{
+      const desktopProjects = filterProjectsByCategory(selection);
+  setFilteredProjects(desktopProjects);
+    }
+};
+const [query, setQuery] = useState('');
+
+
+const handleSearch = (event) => {
+  const query = event.target.value;
+  setQuery(query);
+
+  const filteredResults = projects.filter(item =>
+    item.title.toLowerCase().includes(query.toLowerCase())
+  );
+  setFilteredProjects(filteredResults);
+};
   const [toggleProject, setToggleProject] = useState(false);
   const handleMoreProjects = () => {
     setToggleProject(!toggleProject);
@@ -31,16 +62,16 @@ function ProjectSection(props) {
           >
             <div className="hidden md:block">
               <ul className="md:flex md:flex-row md:justify-center  gap-5 font-semibold hidden  ">
-                <li className=" border-gray-600 text-gray-300 hover:bg-slate-500 hover:border-slate-700 hover:text-slate-800 bg-slate-700 hover:scale-95 border-2  rounded-full cursor-pointer text-base p-1  font-bold  active:after:border-2 active:after:border-white active:after:rounded-3xl h-9   w-28 text-center  ">
+                <li onClick={()=>{handleButtonClick("")}} className=" border-gray-600  text-gray-300 hover:bg-slate-500 hover:border-slate-700 hover:text-slate-800 bg-slate-700 hover:scale-110 hover:shadow  border-2  rounded-full cursor-pointer text-base p-1  focus:bg-slate-400   active:after:rounded-3xl h-9   w-28 text-center  ">
                   All projects
                 </li>
-                <li className=" border-gray-600 text-gray-300 hover:bg-slate-500 hover:border-slate-700 hover:text-slate-800 bg-slate-700 hover:scale-95 border-2 rounded-full cursor-pointer text-base p-1  font-bold  active:after:border-2 active:after:border-white active:after:rounded-3xl  h-9   w-28 text-center">
+                <li onClick={()=>{handleButtonClick("Desktop App")}} className=" border-gray-600  text-gray-300 hover:bg-slate-500 hover:border-slate-700 hover:text-slate-800 bg-slate-700  hover:scale-110 hover:shadow  border-2 rounded-full cursor-pointer text-base p-1  focus:bg-slate-400   active:after:rounded-3xl  h-9   w-28 text-center">
                   Desktop App
                 </li>
-                <li className=" border-gray-600 text-gray-300 hover:bg-slate-500 hover:border-slate-700 hover:text-slate-800 bg-slate-700 hover:scale-95 border-2 rounded-full cursor-pointer text-base p-1  font-bold  active:after:border-2 active:after:border-white active:after:rounded-3xl  h-9   w-28 text-center">
+                <li onClick={()=>{handleButtonClick("Web Development")}} className=" border-gray-600  text-gray-300 hover:bg-slate-500 hover:border-slate-700 hover:text-slate-800 bg-slate-700  hover:scale-110 hover:shadow  border-2 rounded-full cursor-pointer text-base p-1  focus:bg-slate-400   active:after:rounded-3xl  h-9   w-28 text-center">
                   Web App
                 </li>
-                <li className=" border-gray-600 text-gray-300 hover:bg-slate-500 hover:border-slate-700 hover:text-slate-800 bg-slate-700 hover:scale-95 border-2 rounded-full cursor-pointer text-base p-1  font-bold  active:after:border-2 active:after:border-white active:after:rounded-3xl  h-9   w-28 text-center">
+                <li onClick={()=>{handleButtonClick("Mobile App")}} className=" border-gray-600  text-gray-300 hover:bg-slate-500 hover:border-slate-700 hover:text-slate-800 bg-slate-700 hover:scale-110 hover:shadow  border-2 rounded-full cursor-pointer text-base p-1   focus:bg-slate-400   active:after:rounded-3xl  h-9   w-28 text-center">
                   Mobile App
                 </li>
               </ul>
@@ -54,6 +85,8 @@ function ProjectSection(props) {
                     id="price"
                     className=" block w-full rounded-tl-xl rounded-bl-xl border-0 h-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     placeholder="  search"
+                    value={query}
+                    onChange={handleSearch}
                   />
                   <button className="bg-white rounded-tr-xl rounded-br-xl border-0 p-2">
                     <svg
@@ -77,24 +110,27 @@ function ProjectSection(props) {
           </div>
 
           <div className="text-gray-600 body-font">
-            <h1 className="w-full text-gray-400 font-serif  pt-5 px-6 text-end text-lg">Total projects: <span className=" text-xl text-red-600 font-bold">{projects.length}</span></h1>
+            <h1 className="w-full text-gray-400 font-serif  pt-5 px-6 text-end text-lg">Total projects: <span className=" text-xl text-red-600 font-bold">{filteredProjects.length}</span></h1>
             <div
               className={`container px-5 pt-10 pb-16 ${
                 toggleProject ? "" : "h-[36rem]"
               }   overflow-hidden mx-auto`}
             >
             
-              <div className="flex flex-wrap gap-y-14 -m-4">
-                {projects.map((project, index) => {
+              <div className="flex flex-wrap gap-y-14 -m-4 ">
+                {filteredProjects.map((project, index) => {
                   return (
                     <ProjectCard
                       key={index}
                       title={project.title}
                       language={project.lang}
-                      image={project.imgUrl[0]}
+                      image={project.imgUrl}
+                      git_link={project.git_link}
+                      live_link={project.live_link}
                       overview={project.overview}
                       skills={project.tech}
                       type={project.category}
+                      
                     />
                   );
                 })}
@@ -105,7 +141,7 @@ function ProjectSection(props) {
           <div className="overflow-hidden h-16 w-full flex flex-col items-center justify-center bg-gray-400   border-2 rounded-bl-2xl rounded-br-2xl">
             <button
               onClick={handleMoreProjects}
-              className=" h-12 w-44 border-4 text-center   text-xl font-bold rounded-full  border-gray-600 text-slate-300 hover:bg-slate-500 hover:border-slate-700 hover:text-slate-800 bg-slate-700 hover:scale-95"
+              className=" h-12 w-44 border-4 text-center   text-lg  rounded-full  border-gray-600 text-slate-300 hover:bg-slate-500 hover:border-slate-700 hover:text-slate-800 bg-slate-700 hover:scale-95"
             >
               {toggleProject ? "see less ..." : "see more ..."}
             </button>
