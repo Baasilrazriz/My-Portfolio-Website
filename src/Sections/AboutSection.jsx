@@ -20,7 +20,7 @@ function AboutSection(props) {
           <div className="md:w-1/3">
             <div className="  md:ml-2 xl:ml-5   lg:mx-20 xl:h-96 xl:w-96 lg:h-72 lg:w-72 xl:mt-[-6rem]  h-64 w-64 rounded-full overflow-hidden  border-2 border-black">
               <img
-                className="h-full  w-full object-cover"
+                className="h-full  w-full object-cover   "
                 src={profilePic}
                 alt=""
               />
