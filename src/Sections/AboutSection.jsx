@@ -31,7 +31,7 @@ function AboutSection(props) {
             <h1 className="font-bold text-gray-800 dark:text-white  font-serif md:mx-0 mx-20 text-3xl">
               Asaalam o Alikum!
             </h1>
-            <p className="mt-2 mb-8  xl:pr-0 md:pr-14 md:mx-0 mx-20 text-justify md:text-lg font-serif text-gray-800 dark:text-white">
+            <p className="mt-2 mb-8   xl:pr-0 md:pr-14 md:mx-0 mx-20 text-justify md:text-lg font-serif text-gray-800 dark:text-white">
               {" "}
               {about}
             </p>
@@ -80,7 +80,7 @@ function AboutSection(props) {
                     <h1 className=" font-medium text-gray-900 dark:text-white  font-serif lg:text-lg  xl:text-2xl sm:text-xl  text-[1.4rem]">
                       Email:
                     </h1>
-                    <p className="pt-1  text-justify xl:text-xl text-[1.4rem] lg:text-lg font-serif sm:text-xl text-gray-700 dark:text-gray-400">
+                    <p className="pt-[0.18rem]  text-justify xl:text-xl text-[1.4rem] lg:text-lg font-serif sm:text-xl text-gray-700 dark:text-gray-400">
                       baasilrazriz@gmail.com
                     </p>
                   </div>
@@ -89,7 +89,7 @@ function AboutSection(props) {
                     <h1 className=" font-medium text-gray-900 dark:text-white  font-serif  lg:text-lg xl:text-2xl text-[1.4rem]">
                       Phone:
                     </h1>
-                    <p className="pt-1  text-justify xl:text-xl text-[1.4rem] lg:text-lg font-serif sm:text-xl text-gray-700 dark:text-gray-400">
+                    <p className="pt-[0.1rem]  text-justify xl:text-xl text-[1.4rem] lg:text-lg font-serif sm:text-xl text-gray-700 dark:text-gray-400">
                       +923237184249
                     </p>
                   </div>

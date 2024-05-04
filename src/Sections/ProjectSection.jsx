@@ -77,11 +77,13 @@ function ProjectSection(props) {
           </div>
 
           <div className="text-gray-600 body-font">
+            <h1 className="w-full text-gray-400 font-serif  pt-5 px-6 text-end text-lg">Total projects: <span className=" text-xl text-red-600 font-bold">{projects.length}</span></h1>
             <div
-              className={`container px-5 py-16 ${
+              className={`container px-5 pt-10 pb-16 ${
                 toggleProject ? "" : "h-[36rem]"
               }   overflow-hidden mx-auto`}
             >
+            
               <div className="flex flex-wrap gap-y-14 -m-4">
                 {projects.map((project, index) => {
                   return (
