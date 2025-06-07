@@ -1,7 +1,7 @@
 import { Suspense, lazy } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import ErrorBoundary from './Components/ErrorBoundary' // Create this component
 
 // Lazy load components for better performance
 const PortfolioPage = lazy(() => import("./Pages/PortfolioPage"))
