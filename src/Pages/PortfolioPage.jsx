@@ -1,54 +1,116 @@
-import React, { Suspense, lazy, useEffect, useState } from 'react';
+/* eslint-disable react/prop-types */
+import { Suspense, lazy, useEffect, useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MainLoader from '../Loaders/MainLoader';
+import { ErrorBoundary } from 'react-error-boundary';
 
-const NavbarSection =lazy(()=>import('../Sections/NavbarSection'))    
-const HomeSection =lazy(()=>import('../Sections/HomeSection'))    
-const SocialAccountSection =lazy(()=>import('../Sections/SocialAccountSection'))    
-const AboutSection =lazy(()=>import('../Sections/AboutSection'))    
-const EducationSection =lazy(()=>import('../Sections/EducationSection'))    
-const SkillsSection =lazy(()=>import('../Sections/SkillsSection'))    
-const CertificateSection =lazy(()=>import('../Sections/CertificateSection'))    
-const ProjectSection =lazy(()=>import('../Sections/ProjectSection'))    
-const ContactSection =lazy(()=>import('../Sections/ContactSection'))    
-const FooterSection =lazy(()=>import('../Sections/FooterSection'))    
+// Lazy load all sections efficiently
+const sections = {
+  NavbarSection: lazy(() => import('../Sections/NavbarSection')),
+  HomeSection: lazy(() => import('../Sections/HomeSection')),
+  AboutSection: lazy(() => import('../Sections/AboutSection')),
+  EducationSection: lazy(() => import('../Sections/EducationSection')),
+  SkillsSection: lazy(() => import('../Sections/SkillsSection')),
+  CertificateSection: lazy(() => import('../Sections/CertificateSection')),
+  ProjectSection: lazy(() => import('../Sections/ProjectSection')),
+  ContactSection: lazy(() => import('../Sections/ContactSection')),
+  FooterSection: lazy(() => import('../Sections/FooterSection')),
+};
 
+function PortfolioPage() {
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 4000);
 
+    return () => clearTimeout(timer);
+  }, []);
 
-function PortfolioPage(props) {
-    const [loading, setLoading] = useState(true);
-
+  // Error fallback component
+  const ErrorFallback = ({ error }) => {
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 2000);
+      // Log error for debugging
+      console.error('Portfolio Page Error:', error);
+      
+      // Redirect to error page after a short delay
+      const redirectTimer = setTimeout(() => {
+        navigate('/error', { 
+          state: { 
+            error: error.message,
+            from: '/' 
+          }
+        });
+      }, 1000);
 
-        return () => clearTimeout(timer);
-    }, []);
+      return () => clearTimeout(redirectTimer);
+    }, [error]);
+
+    // Show a brief loading state before redirect
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-400 text-lg mb-4">Something went wrong...</div>
+          <div className="text-slate-500 text-sm">Redirecting to error page...</div>
+        </div>
+      </div>
+    );
+  };
+
+  // Memoize section components to prevent unnecessary re-renders
+  const SectionComponents = useMemo(() => {
+    const {
+      NavbarSection,
+      HomeSection,
+      AboutSection,
+      EducationSection,
+      SkillsSection,
+      CertificateSection,
+      ProjectSection,
+      ContactSection,
+      FooterSection,
+    } = sections;
 
     return (
-        <>
-        <Suspense  fallback={<MainLoader/>}>
-        {loading ? (
-                <MainLoader />
-            ) : (
-                <div className='w-full'>
-                    <NavbarSection/>
-                    <HomeSection/>
-                    <SocialAccountSection/>
-                    <AboutSection/>
-                    <EducationSection/>
-                    <SkillsSection/>
-                    <CertificateSection/>
-                    <ProjectSection/>
-                    <ContactSection/>
-                    <FooterSection/>
-                </div>
-            )}        </Suspense>
-   
-        
-        </>
+      <div className="w-full min-h-screen dark:bg-slate-950 bg-slate-100 text-slate-900 dark:text-slate-200">
+        <NavbarSection />
+        <HomeSection />
+        <AboutSection />
+        <EducationSection />
+        <SkillsSection />
+        <CertificateSection />
+        <ProjectSection />
+        <ContactSection />
+        <FooterSection />
+      </div>
     );
+  }, []);
+
+  // Show loader during initial loading
+  if (loading) {
+    return <MainLoader />;
+  }
+
+  return (
+    <ErrorBoundary 
+      FallbackComponent={ErrorFallback}
+      onError={(error, errorInfo) => {
+        // Log error details for debugging
+        console.error('ErrorBoundary caught an error:', error, errorInfo);
+      }}
+      onReset={() => {
+        // Reset any state if needed
+        setLoading(true);
+        setTimeout(() => setLoading(false), 2000);
+      }}
+    >
+      <Suspense fallback={<MainLoader />}>
+        {SectionComponents}
+      </Suspense>
+    </ErrorBoundary>
+  );
 }
 
 export default PortfolioPage;

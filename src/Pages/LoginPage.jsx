@@ -1,7 +1,7 @@
-import React from 'react';
+
 import LoginForm from '../Components/Login/LoginForm';
 
-function LoginPage(props) {
+function LoginPage() {
     return (
         <div className=' max-h-screen'>
         <LoginForm/>

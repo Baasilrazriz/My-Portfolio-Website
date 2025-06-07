@@ -12,6 +12,10 @@
 } */
 * {
   scroll-behavior: smooth
+  
+
+
+  
 }
 
 #load {
@@ -64,3 +68,4 @@
     opacity: 1;
   }
 }
+
