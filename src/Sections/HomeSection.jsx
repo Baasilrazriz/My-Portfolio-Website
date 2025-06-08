@@ -1,11 +1,12 @@
 import { memo, useEffect, useState, useMemo } from "react";
 import { useSelector } from "react-redux";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 function HomeSection() {
   const image = useSelector((state) => state.home.image);
   const description = useSelector((state) => state.home.description);
   const socialAccounts = useSelector((state) => state.socialAccount?.socialAccounts || []);
+  const shouldReduceMotion = useReducedMotion();
   
   const roles = useMemo(() => [
     "Full Stack Developer",
@@ -22,6 +23,11 @@ function HomeSection() {
 
   // Enhanced typewriter effect
   useEffect(() => {
+    if (shouldReduceMotion) {
+      setCurrentRole(roles[0]);
+      return;
+    }
+
     const typeSpeed = isDeleting ? 75 : 150;
     const role = roles[roleIndex];
 
@@ -41,51 +47,76 @@ function HomeSection() {
     }, typeSpeed);
 
     return () => clearTimeout(timer);
-  }, [charIndex, isDeleting, roleIndex, roles]);
+  }, [charIndex, isDeleting, roleIndex, roles, shouldReduceMotion]);
 
   // Cursor blinking effect
   useEffect(() => {
+    if (shouldReduceMotion) return;
+    
     const cursorTimer = setInterval(() => {
       setShowCursor(prev => !prev);
     }, 500);
     return () => clearInterval(cursorTimer);
-  }, []);
+  }, [shouldReduceMotion]);
 
-  // Animation variants
-  const containerVariants = {
+  // Optimized Animation variants
+  const containerVariants = useMemo(() => ({
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        duration: 0.6,
-        staggerChildren: 0.15,
+        duration: shouldReduceMotion ? 0.1 : 0.6,
+        staggerChildren: shouldReduceMotion ? 0 : 0.15,
       },
     },
-  };
+  }), [shouldReduceMotion]);
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+  const itemVariants = useMemo(() => ({
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: shouldReduceMotion ? 0.1 : 0.6,
         ease: "easeOut",
       },
     },
-  };
+  }), [shouldReduceMotion]);
 
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
+  const imageVariants = useMemo(() => ({
+    hidden: { opacity: 0, scale: shouldReduceMotion ? 1 : 0.9 },
     visible: {
       opacity: 1,
       scale: 1,
       transition: {
-        duration: 0.8,
+        duration: shouldReduceMotion ? 0.1 : 0.8,
         ease: "easeOut",
       },
     },
-  };
+  }), [shouldReduceMotion]);
+
+  // Your social accounts as fallback
+  const fallbackSocialAccounts = [
+    {
+      name: 'facebook',
+      url: 'https://www.facebook.com/muhammadbaasil.irfan',
+    },
+    {
+      name: 'instagram',
+      url: 'https://www.instagram.com/basilrazriz/',
+    },
+    {
+      name: 'linkedin',
+      url: 'https://www.linkedin.com/in/muhammad-basil-irfan-rizvi-886157215/',
+    },
+    {
+      name: 'github',
+      url: 'https://github.com/Baasilrazriz',
+    },
+  ];
+
+  // Use your social accounts if Redux store is empty
+  const displaySocialAccounts = socialAccounts.length > 0 ? socialAccounts : fallbackSocialAccounts;
 
   // Social icons mapping
   const getSocialIcon = (name) => {
@@ -128,7 +159,7 @@ function HomeSection() {
       </head>
 
       <motion.section
-        className="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black overflow-hidden"
+        className="relative sm:pt-0 pt-24 min-h-screen bg-gradient-to-br from-white via-slate-50 to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-black overflow-hidden"
         id="home"
         initial="hidden"
         animate="visible"
@@ -138,8 +169,8 @@ function HomeSection() {
         <div className="absolute inset-0 pointer-events-none">
           {/* Subtle gradient orbs */}
           <motion.div
-            className="absolute top-20 left-20 w-64 h-64 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"
-            animate={{
+            className="absolute top-10 sm:top-20 left-10 sm:left-20 w-32 h-32 sm:w-48 md:w-64 sm:h-48 md:h-64 bg-gradient-to-r from-blue-500/20 to-purple-500/20 dark:from-blue-500/10 dark:to-purple-500/10 rounded-full blur-2xl sm:blur-3xl"
+            animate={shouldReduceMotion ? {} : {
               scale: [1, 1.2, 1],
               opacity: [0.3, 0.6, 0.3],
             }}
@@ -150,8 +181,8 @@ function HomeSection() {
             }}
           />
           <motion.div
-            className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-r from-red-500/8 to-orange-500/8 rounded-full blur-3xl"
-            animate={{
+            className="absolute bottom-10 sm:bottom-20 right-10 sm:right-20 w-40 h-40 sm:w-60 md:w-80 sm:h-60 md:h-80 bg-gradient-to-r from-red-500/15 to-orange-500/15 dark:from-red-500/8 dark:to-orange-500/8 rounded-full blur-2xl sm:blur-3xl"
+            animate={shouldReduceMotion ? {} : {
               scale: [1.2, 1, 1.2],
               opacity: [0.2, 0.5, 0.2],
             }}
@@ -165,8 +196,8 @@ function HomeSection() {
           
           {/* Floating geometric shapes */}
           <motion.div
-            className="absolute top-1/4 right-1/4 w-4 h-4 bg-yellow-400/40 rounded-full"
-            animate={{
+            className="absolute top-1/4 right-1/4 w-3 h-3 sm:w-4 sm:h-4 bg-yellow-400/60 dark:bg-yellow-400/40 rounded-full"
+            animate={shouldReduceMotion ? {} : {
               y: [0, -30, 0],
               x: [0, 20, 0],
               opacity: [0.4, 1, 0.4],
@@ -178,8 +209,8 @@ function HomeSection() {
             }}
           />
           <motion.div
-            className="absolute bottom-1/3 left-1/4 w-3 h-3 bg-cyan-400/50 rotate-45"
-            animate={{
+            className="absolute bottom-1/3 left-1/4 w-2 h-2 sm:w-3 sm:h-3 bg-cyan-400/70 dark:bg-cyan-400/50 rotate-45"
+            animate={shouldReduceMotion ? {} : {
               rotate: [45, 225, 45],
               scale: [1, 1.5, 1],
             }}
@@ -193,23 +224,23 @@ function HomeSection() {
         </div>
 
         {/* Main Content Container */}
-        <div className="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
           <div className="max-w-7xl mx-auto w-full">
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20 items-center">
+            <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 xl:gap-20 items-center">
               
               {/* Left Content */}
               <motion.div 
-                className="space-y-8 text-center lg:text-left order-2 lg:order-1"
+                className="space-y-6 sm:space-y-8 text-center lg:text-left order-2 lg:order-1"
                 variants={itemVariants}
               >
                 {/* Status Badge */}
                 <motion.div
-                  className="inline-flex items-center px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full backdrop-blur-sm"
+                  className="inline-flex items-center px-3 py-2 sm:px-4 sm:py-2 bg-green-500/20 dark:bg-green-500/10 border border-green-500/40 dark:border-green-500/20 rounded-full backdrop-blur-sm"
                   variants={itemVariants}
                 >
                   <motion.div
-                    className="w-2 h-2 bg-green-400 rounded-full mr-3"
-                    animate={{
+                    className="w-2 h-2 bg-green-500 dark:bg-green-400 rounded-full mr-2 sm:mr-3"
+                    animate={shouldReduceMotion ? {} : {
                       scale: [1, 1.3, 1],
                       opacity: [0.8, 1, 0.8],
                     }}
@@ -218,17 +249,17 @@ function HomeSection() {
                       repeat: Infinity,
                     }}
                   />
-                  <span className="text-sm font-medium text-green-300">
+                  <span className="text-xs sm:text-sm font-medium text-green-700 dark:text-green-300">
                     Available for projects
                   </span>
                 </motion.div>
 
                 {/* Greeting */}
                 <motion.div variants={itemVariants} className="space-y-2">
-                  <h2 className="text-xl sm:text-2xl font-light text-slate-300">
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-light text-slate-600 dark:text-slate-300">
                     {"Hello, I'm"}
                   </h2>
-                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-900 dark:text-white leading-tight">
                     Muhammad Basil Irfan
                   </h1>
                 </motion.div>
@@ -238,11 +269,11 @@ function HomeSection() {
                   variants={itemVariants}
                   className="space-y-4"
                 >
-                  <div className="flex items-center justify-center lg:justify-start space-x-2 text-2xl sm:text-3xl lg:text-4xl font-semibold">
-                    <span className="text-slate-300">{"I'm a"}</span>
-                    <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent min-w-[280px] text-left">
+                  <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-2 sm:space-y-0 sm:space-x-2 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold">
+                    <span className="text-slate-600 dark:text-slate-300">{"I'm a"}</span>
+                    <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 dark:from-blue-400 dark:via-purple-500 dark:to-cyan-400 bg-clip-text text-transparent min-w-[200px] sm:min-w-[250px] md:min-w-[280px] text-center sm:text-left">
                       {currentRole}
-                      <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100 text-blue-400`}>
+                      <span className={`${showCursor && !shouldReduceMotion ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100 text-blue-600 dark:text-blue-400`}>
                         |
                       </span>
                     </span>
@@ -252,7 +283,7 @@ function HomeSection() {
                 {/* Description */}
                 <motion.p
                   variants={itemVariants}
-                  className="text-lg text-slate-400 leading-relaxed max-w-2xl mx-auto lg:mx-0"
+                  className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0"
                 >
                   {description || "Passionate about creating exceptional digital experiences with modern technologies. Specialized in building scalable web applications that deliver real value to users and businesses."}
                 </motion.p>
@@ -260,12 +291,12 @@ function HomeSection() {
                 {/* CTA Buttons */}
                 <motion.div
                   variants={itemVariants}
-                  className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+                  className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start px-4 sm:px-0"
                 >
                   <motion.a
                     href="#proj"
-                    className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg"
-                    whileHover={{ 
+                    className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg shadow-lg text-center"
+                    whileHover={shouldReduceMotion ? {} : { 
                       scale: 1.05,
                       boxShadow: "0 20px 40px rgba(59, 130, 246, 0.3)"
                     }}
@@ -282,8 +313,8 @@ function HomeSection() {
                     href="https://drive.google.com/file/d/11LkjodG_xPY63FGX1_7Hf2eSKhhQzbse/view?usp=drive_link"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-8 py-4 bg-transparent border-2 border-slate-600 text-slate-300 font-semibold rounded-lg hover:border-slate-400 hover:text-white transition-all duration-300"
-                    whileHover={{ scale: 1.05 }}
+                    className="px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-slate-400 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-semibold rounded-lg hover:border-slate-600 dark:hover:border-slate-400 hover:text-slate-900 dark:hover:text-white transition-all duration-300 text-center"
+                    whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     Download CV
@@ -293,80 +324,53 @@ function HomeSection() {
                 {/* Social Links */}
                 <motion.div
                   variants={itemVariants}
-                  className="flex items-center justify-center lg:justify-start space-x-6"
+                  className="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-6 px-4 sm:px-0"
                 >
-                  <span className="text-slate-500 text-sm font-medium">
+                  <span className="text-slate-500 dark:text-slate-500 text-sm font-medium">
                     Connect with me:
                   </span>
-                  <div className="flex space-x-4">
-                    {socialAccounts.length > 0 ? (
-                      socialAccounts.map((social, index) => (
-                        <motion.a
-                          key={social.name || index}
-                          href={social.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-10 h-10 bg-slate-800/50 border border-slate-700 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-all duration-300"
-                          whileHover={{ scale: 1.1, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.8 + index * 0.1 }}
-                          aria-label={`Follow me on ${social.name}`}
-                        >
-                          {social.image ? (
-                            <img 
-                              src={social.image} 
-                              alt={social.name}
-                              className="w-5 h-5 object-contain"
-                            />
-                          ) : (
-                            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                              {getSocialIcon(social.name)}
-                            </svg>
-                          )}
-                        </motion.a>
-                      ))
-                    ) : (
-                      // Fallback social links
-                      [
-                        { name: "github", url: "https://github.com" },
-                        { name: "linkedin", url: "https://linkedin.com" },
-                        { name: "twitter", url: "https://twitter.com" }
-                      ].map((social, index) => (
-                        <motion.a
-                          key={social.name}
-                          href={social.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-10 h-10 bg-slate-800/50 border border-slate-700 rounded-lg flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-all duration-300"
-                          whileHover={{ scale: 1.1, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.8 + index * 0.1 }}
-                          aria-label={`Follow me on ${social.name}`}
-                        >
-                          <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                  <div className="flex space-x-3 sm:space-x-4">
+                    {displaySocialAccounts.map((social, index) => (
+                      <motion.a
+                        key={social.name || index}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-200/80 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg flex items-center justify-center text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-300 dark:hover:bg-slate-700 transition-all duration-300"
+                        whileHover={shouldReduceMotion ? {} : { scale: 1.1, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.8 + index * 0.1 }}
+                        aria-label={`Follow me on ${social.name}`}
+                      >
+                        {social.image ? (
+                          <img 
+                            src={social.image} 
+                            alt={social.name}
+                            className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+                          />
+                        ) : (
+                          <svg className="w-5 h-5 sm:w-6 sm:h-6 fill-current" viewBox="0 0 24 24">
                             {getSocialIcon(social.name)}
                           </svg>
-                        </motion.a>
-                      ))
-                    )}
+                        )}
+                      </motion.a>
+                    ))}
                   </div>
                 </motion.div>
               </motion.div>
 
               {/* Right Content - Profile Image */}
               <motion.div
-                className="relative order-1 lg:order-2 flex justify-center"
+                className="relative order-1 lg:order-2 flex justify-center px-4 sm:px-0"
                 variants={imageVariants}
               >
                 <div className="relative">
                   {/* Glow effect */}
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-2xl"
-                    animate={{
+                    className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-purple-500/30 dark:from-blue-500/20 dark:to-purple-500/20 rounded-full blur-xl sm:blur-2xl"
+                    animate={shouldReduceMotion ? {} : {
                       scale: [1, 1.1, 1],
                       opacity: [0.5, 0.8, 0.5],
                     }}
@@ -379,8 +383,8 @@ function HomeSection() {
                   
                   {/* Profile image container */}
                   <motion.div
-                    className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-slate-700/50 bg-gradient-to-br from-slate-800 to-slate-900 p-2"
-                    whileHover={{ scale: 1.05 }}
+                    className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-slate-300/50 dark:border-slate-700/50 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-800 dark:to-slate-900 p-2"
+                    whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
                     <div className="w-full h-full rounded-full overflow-hidden">
@@ -394,8 +398,8 @@ function HomeSection() {
                     
                     {/* Floating badge */}
                     <motion.div
-                      className="absolute top-4 right-4 w-12 h-12 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center shadow-lg"
-                      animate={{
+                      className="absolute top-2 right-2 sm:top-4 sm:right-4 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center shadow-lg"
+                      animate={shouldReduceMotion ? {} : {
                         rotate: [0, 360],
                       }}
                       transition={{
@@ -404,7 +408,7 @@ function HomeSection() {
                         ease: "linear",
                       }}
                     >
-                      <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                       </svg>
                     </motion.div>
@@ -412,8 +416,8 @@ function HomeSection() {
 
                   {/* Decorative elements */}
                   <motion.div
-                    className="absolute -top-4 -left-4 w-20 h-20 border-4 border-yellow-400/30 rounded-full"
-                    animate={{
+                    className="absolute -top-2 -left-2 sm:-top-4 sm:-left-4 w-16 h-16 sm:w-20 sm:h-20 border-4 border-yellow-400/50 dark:border-yellow-400/30 rounded-full"
+                    animate={shouldReduceMotion ? {} : {
                       rotate: [0, 360],
                       scale: [1, 1.1, 1],
                     }}
@@ -425,8 +429,8 @@ function HomeSection() {
                   />
                   
                   <motion.div
-                    className="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-2xl rotate-45"
-                    animate={{
+                    className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-r from-purple-500/30 to-pink-500/30 dark:from-purple-500/20 dark:to-pink-500/20 rounded-2xl rotate-45"
+                    animate={shouldReduceMotion ? {} : {
                       rotate: [45, 225, 45],
                     }}
                     transition={{
@@ -441,14 +445,14 @@ function HomeSection() {
 
             {/* Scroll Indicator */}
             <motion.div
-              className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+              className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.5 }}
             >
               <motion.div
-                className="flex flex-col items-center space-y-2 text-slate-500"
-                animate={{
+                className="flex flex-col items-center space-y-2 text-slate-500 dark:text-slate-500"
+                animate={shouldReduceMotion ? {} : {
                   y: [0, 8, 0],
                 }}
                 transition={{
@@ -457,12 +461,12 @@ function HomeSection() {
                   ease: "easeInOut",
                 }}
               >
-                <span className="text-xs font-medium tracking-wider uppercase">Scroll to explore</span>
-                <div className="w-6 h-10 border-2 border-slate-600 rounded-full flex justify-center">
+                <span className="text-xs font-medium tracking-wider uppercase hidden sm:block">Scroll to explore</span>
+                <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-slate-400 dark:border-slate-600 rounded-full flex justify-center">
                   <motion.div
-                    className="w-1 h-3 bg-slate-500 rounded-full mt-2"
-                    animate={{
-                      y: [0, 12, 0],
+                    className="w-1 h-2 sm:h-3 bg-slate-500 dark:bg-slate-500 rounded-full mt-2"
+                    animate={shouldReduceMotion ? {} : {
+                      y: [0, 8, 0],
                       opacity: [1, 0, 1],
                     }}
                     transition={{

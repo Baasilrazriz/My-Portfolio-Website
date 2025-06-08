@@ -1,4 +1,4 @@
-import  { memo } from 'react';
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import { FaExternalLinkAlt, FaCalendar, FaBuilding, FaAward } from 'react-icons/fa';

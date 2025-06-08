@@ -34,18 +34,18 @@ const LOAD_MORE_COUNT = 6;
 
 // Skeleton Components
 const CertificateCardSkeleton = React.memo(() => (
-  <div className="bg-slate-800/50 dark:bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50 dark:border-slate-600/50 backdrop-blur-xl animate-pulse">
+  <div className="bg-white/80 dark:bg-slate-800/50 rounded-2xl p-6 border border-slate-200/50 dark:border-slate-700/50 backdrop-blur-xl animate-pulse">
     {/* Image skeleton */}
-    <div className="w-full h-48 bg-slate-700/50 dark:bg-slate-800/50 rounded-xl mb-4"></div>
+    <div className="w-full h-48 bg-slate-200/50 dark:bg-slate-700/50 rounded-xl mb-4"></div>
     
     {/* Content skeleton */}
     <div className="space-y-3">
-      <div className="h-6 bg-slate-700/50 dark:bg-slate-800/50 rounded w-3/4"></div>
-      <div className="h-4 bg-slate-700/30 dark:bg-slate-800/30 rounded w-1/2"></div>
-      <div className="h-4 bg-slate-700/30 dark:bg-slate-800/30 rounded w-2/3"></div>
+      <div className="h-6 bg-slate-200/50 dark:bg-slate-700/50 rounded w-3/4"></div>
+      <div className="h-4 bg-slate-200/30 dark:bg-slate-700/30 rounded w-1/2"></div>
+      <div className="h-4 bg-slate-200/30 dark:bg-slate-700/30 rounded w-2/3"></div>
       <div className="flex justify-between items-center mt-4">
-        <div className="h-6 bg-slate-700/30 dark:bg-slate-800/30 rounded w-20"></div>
-        <div className="h-8 bg-blue-500/20 dark:bg-blue-600/20 rounded-full w-24"></div>
+        <div className="h-6 bg-slate-200/30 dark:bg-slate-700/30 rounded w-20"></div>
+        <div className="h-8 bg-blue-200/20 dark:bg-blue-500/20 rounded-full w-24"></div>
       </div>
     </div>
   </div>
@@ -53,11 +53,11 @@ const CertificateCardSkeleton = React.memo(() => (
 
 const StatCardSkeleton = React.memo(() => (
   <div className="space-y-4 animate-pulse">
-    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-slate-700/50 dark:bg-slate-800/50 rounded-2xl mx-auto"></div>
-    <div className="h-8 sm:h-10 bg-slate-700/50 dark:bg-slate-800/50 rounded w-16 mx-auto"></div>
+    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-slate-200/50 dark:bg-slate-700/50 rounded-2xl mx-auto"></div>
+    <div className="h-8 sm:h-10 bg-slate-200/50 dark:bg-slate-700/50 rounded w-16 mx-auto"></div>
     <div className="space-y-1">
-      <div className="h-4 bg-slate-700/30 dark:bg-slate-800/30 rounded w-20 mx-auto"></div>
-      <div className="h-3 bg-slate-700/20 dark:bg-slate-800/20 rounded w-24 mx-auto"></div>
+      <div className="h-4 bg-slate-200/30 dark:bg-slate-700/30 rounded w-20 mx-auto"></div>
+      <div className="h-3 bg-slate-200/20 dark:bg-slate-700/20 rounded w-24 mx-auto"></div>
     </div>
   </div>
 ));
@@ -268,7 +268,7 @@ const CertificateSection = React.memo(() => {
   return (
     <motion.section
       id="Achievements"
-      className="relative min-h-screen py-16 sm:py-20 lg:py-24 overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-black dark:from-black dark:via-slate-950 dark:to-slate-900 transition-colors duration-500"
+      className="relative min-h-screen py-16 sm:py-20 lg:py-24 overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-black transition-colors duration-500"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.1 }}
@@ -281,7 +281,7 @@ const CertificateSection = React.memo(() => {
           <>
             {/* Primary Blue-Purple Orb */}
             <motion.div
-              className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-r from-blue-500/15 to-purple-500/15 dark:from-blue-400/20 dark:to-purple-400/20 rounded-full blur-3xl"
+              className="absolute top-20 right-20 w-96 h-96 bg-gradient-to-r from-blue-500/12 via-indigo-500/8 to-purple-500/6 dark:from-blue-500/15 dark:via-indigo-500/12 dark:to-purple-500/15 rounded-full blur-3xl"
               animate={{
                 scale: [1, 1.1, 1],
                 opacity: [0.2, 0.4, 0.2],
@@ -297,7 +297,7 @@ const CertificateSection = React.memo(() => {
             
             {/* Secondary Cyan-Teal Orb */}
             <motion.div
-              className="absolute bottom-20 left-20 w-80 h-80 bg-gradient-to-r from-cyan-500/12 to-teal-500/12 dark:from-cyan-400/18 dark:to-teal-400/18 rounded-full blur-3xl"
+              className="absolute bottom-20 left-20 w-80 h-80 bg-gradient-to-r from-cyan-500/10 via-teal-500/8 to-emerald-500/6 dark:from-cyan-500/12 dark:via-teal-500/12 dark:to-emerald-500/18 rounded-full blur-3xl"
               animate={{
                 scale: [1.1, 1, 1.1],
                 opacity: [0.15, 0.35, 0.15],
@@ -314,7 +314,7 @@ const CertificateSection = React.memo(() => {
             
             {/* Accent Orange Orb */}
             <motion.div
-              className="absolute top-1/2 left-1/4 w-60 h-60 bg-gradient-to-r from-orange-500/10 to-amber-500/10 dark:from-orange-400/15 dark:to-amber-400/15 rounded-full blur-3xl"
+              className="absolute top-1/2 left-1/4 w-60 h-60 bg-gradient-to-r from-orange-500/8 to-amber-500/8 dark:from-orange-500/10 dark:via-orange-400/15 dark:to-amber-400/15 rounded-full blur-3xl"
               animate={{
                 scale: [1, 1.15, 1],
                 opacity: [0.1, 0.25, 0.1],
@@ -334,7 +334,7 @@ const CertificateSection = React.memo(() => {
         {particles.map((particle) => (
           <motion.div
             key={particle.id}
-            className="absolute bg-white/20 dark:bg-white/30 rounded-full"
+            className="absolute bg-slate-400/20 dark:bg-white/20 rounded-full"
             style={{
               width: particle.size,
               height: particle.size,
@@ -364,21 +364,21 @@ const CertificateSection = React.memo(() => {
           <>
             {/* Rotating Ring */}
             <motion.div
-              className="absolute top-32 left-32 w-40 h-40 border-2 border-blue-500/10 dark:border-blue-400/15 rounded-full"
+              className="absolute top-32 left-32 w-40 h-40 border-2 border-blue-500/8 dark:border-blue-500/10 rounded-full"
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             />
             
             {/* Counter-rotating Square */}
             <motion.div
-              className="absolute bottom-32 right-32 w-32 h-32 border-2 border-purple-500/10 dark:border-purple-400/15 rounded-lg"
+              className="absolute bottom-32 right-32 w-32 h-32 border-2 border-purple-500/8 dark:border-purple-500/10 rounded-lg"
               animate={{ rotate: -360 }}
               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
             />
             
             {/* Floating Hexagon */}
             <motion.div
-              className="absolute top-2/3 right-1/4 w-24 h-24 border-2 border-cyan-500/15 dark:border-cyan-400/20"
+              className="absolute top-2/3 right-1/4 w-24 h-24 border-2 border-cyan-500/10 dark:border-cyan-500/15"
               style={{
                 clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)"
               }}
@@ -397,7 +397,7 @@ const CertificateSection = React.memo(() => {
 
         {/* Neural Network Lines */}
         {!shouldReduceMotion && (
-          <svg className="absolute inset-0 w-full h-full opacity-5 dark:opacity-10">
+          <svg className="absolute inset-0 w-full h-full opacity-3 dark:opacity-5">
             <defs>
               <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#3b82f6" />
@@ -498,14 +498,14 @@ const CertificateSection = React.memo(() => {
 
           {/* Main Title */}
           <motion.h2
-            className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 bg-gradient-to-r from-white via-blue-100 to-purple-100 dark:from-slate-100 dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent"
+            className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 bg-gradient-to-r from-slate-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-100 dark:to-purple-100 bg-clip-text text-transparent"
             variants={itemVariants}
           >
             My Achievements
           </motion.h2>
 
           <motion.p
-            className="text-lg sm:text-xl text-slate-400 dark:text-slate-300 max-w-4xl mx-auto leading-relaxed mb-8"
+            className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-4xl mx-auto leading-relaxed mb-8"
             variants={itemVariants}
           >
             A curated collection of professional certifications and achievements that showcase 
@@ -519,7 +519,7 @@ const CertificateSection = React.memo(() => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 dark:from-blue-400/15 dark:to-purple-400/15 border border-blue-500/20 dark:border-blue-400/30 rounded-full backdrop-blur-xl">
               <FaEye className="text-blue-400 dark:text-blue-300 text-sm" />
-              <span className="text-sm font-medium text-slate-300 dark:text-slate-200">
+              <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
                 {isInitialLoading ? (
                   <span className="flex items-center gap-2">
                     <FaSpinner className="animate-spin" />
@@ -539,7 +539,7 @@ const CertificateSection = React.memo(() => {
               whileTap={{ scale: 0.95 }}
             >
               <FaSync className={`text-cyan-400 dark:text-cyan-300 text-sm ${(loading || isRefreshing) ? 'animate-spin' : ''}`} />
-              <span className="text-sm font-medium text-slate-300 dark:text-slate-200">
+              <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
                 {isRefreshing ? 'Refreshing...' : 'Refresh'}
               </span>
             </motion.button>
@@ -595,12 +595,12 @@ const CertificateSection = React.memo(() => {
                 placeholder="Search certificates..."
                 value={filters.searchTerm}
                 onChange={handleSearchChange}
-                className="w-full pl-12 pr-12 py-3 bg-slate-800/50 dark:bg-slate-900/50 border border-slate-700/50 dark:border-slate-600/50 rounded-2xl backdrop-blur-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:focus:ring-blue-400/50 focus:border-blue-500/50 dark:focus:border-blue-400/50 transition-all duration-300 text-white placeholder-slate-400 dark:placeholder-slate-300"
+                className="w-full pl-12 pr-12 py-3 bg-white/50 dark:bg-slate-800/50 border border-slate-300/50 dark:border-slate-700/50 rounded-2xl backdrop-blur-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:focus:ring-blue-400/50 focus:border-blue-500/50 dark:focus:border-blue-400/50 transition-all duration-300 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
               />
               {filters.searchTerm && (
                 <motion.button
                   onClick={handleClearSearch}
-                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 dark:text-slate-300 hover:text-slate-300 dark:hover:text-slate-200"
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   whileHover={{ scale: 1.1 }}
@@ -614,13 +614,13 @@ const CertificateSection = React.memo(() => {
 
           {/* Category Filter Header */}
           <div className="flex justify-center mb-6">
-            <div className="inline-flex items-center px-4 py-2 bg-slate-800/50 dark:bg-slate-900/50 border border-slate-700/50 dark:border-slate-600/50 rounded-full backdrop-blur-xl">
+            <div className="inline-flex items-center px-4 py-2 bg-white/50 dark:bg-slate-800/50 border border-slate-300/50 dark:border-slate-700/50 rounded-full backdrop-blur-xl">
               <FaFilter className="mr-2 text-blue-400 dark:text-blue-300" />
-              <span className="text-sm font-medium text-white">Filter by Category</span>
+              <span className="text-sm font-medium text-slate-900 dark:text-white">Filter by Category</span>
               {(filters.category !== 'All' || filters.searchTerm) && (
                 <motion.button
                   onClick={handleClearFilters}
-                  className="ml-3 px-2 py-1 text-xs bg-red-500/20 dark:bg-red-400/20 text-red-300 dark:text-red-200 border border-red-500/30 dark:border-red-400/30 rounded-lg hover:bg-red-500/30 dark:hover:bg-red-400/30 transition-colors"
+                  className="ml-3 px-2 py-1 text-xs bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-300 border border-red-300 dark:border-red-500/30 rounded-lg hover:bg-red-200 dark:hover:bg-red-500/30 transition-colors"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -643,8 +643,8 @@ const CertificateSection = React.memo(() => {
                   onClick={() => handleFilterChange(category)}
                   className={`relative px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-300 backdrop-blur-xl border ${
                     filters.category === category
-                      ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20 dark:from-blue-400/25 dark:to-purple-400/25 text-white border-blue-500/50 dark:border-blue-400/50 shadow-lg shadow-blue-500/25 dark:shadow-blue-400/25"
-                      : "bg-slate-800/30 dark:bg-slate-900/30 text-slate-300 dark:text-slate-200 border-slate-700/30 dark:border-slate-600/30 hover:bg-slate-700/40 dark:hover:bg-slate-800/40 hover:border-slate-600/40 dark:hover:border-slate-500/40"
+                      ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20 dark:from-blue-400/25 dark:to-purple-400/25 text-slate-900 dark:text-white border-blue-500/50 dark:border-blue-400/50 shadow-lg shadow-blue-500/25 dark:shadow-blue-400/25"
+                      : "bg-white/30 dark:bg-slate-800/30 text-slate-700 dark:text-slate-300 border-slate-300/30 dark:border-slate-700/30 hover:bg-slate-100/40 dark:hover:bg-slate-700/40 hover:border-slate-400/40 dark:hover:border-slate-600/40"
                   }`}
                   variants={filterVariants}
                   initial="hidden"
@@ -694,7 +694,7 @@ const CertificateSection = React.memo(() => {
             </div>
 
             {/* Stats Skeleton */}
-            <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 dark:from-slate-900/50 dark:to-black/50 backdrop-blur-xl rounded-3xl p-8 border-2 border-slate-700/50 dark:border-slate-600/50 shadow-2xl">
+            <div className="bg-gradient-to-br from-white/80 to-slate-100/50 dark:from-slate-800/50 dark:to-slate-900/50 backdrop-blur-xl rounded-3xl p-8 border-2 border-slate-200/50 dark:border-slate-700/50 shadow-2xl">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
                 {Array.from({ length: 4 }, (_, i) => (
                   <StatCardSkeleton key={i} />
@@ -717,10 +717,10 @@ const CertificateSection = React.memo(() => {
             >
               <FaSearch className="text-white text-2xl" />
             </motion.div>
-            <h3 className="text-xl font-bold text-white mb-2">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
               No certificates found
             </h3>
-            <p className="text-slate-400 dark:text-slate-300 text-center mb-4">
+            <p className="text-slate-600 dark:text-slate-400 text-center mb-4">
               Try adjusting your search terms or filters
             </p>
             <motion.button
@@ -812,13 +812,13 @@ const CertificateSection = React.memo(() => {
         {/* Enhanced Statistics Dashboard */}
         {!isInitialLoading && certificates.length > 0 && (
           <motion.div
-            className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 dark:from-slate-900/50 dark:to-black/50 backdrop-blur-xl rounded-3xl p-8 border-2 border-slate-700/50 dark:border-slate-600/50 shadow-2xl relative overflow-hidden"
+            className="bg-gradient-to-br from-white/80 to-slate-100/50 dark:from-slate-800/50 dark:to-slate-900/50 backdrop-blur-xl rounded-3xl p-8 border-2 border-slate-200/50 dark:border-slate-700/50 shadow-2xl relative overflow-hidden"
             variants={itemVariants}
             whileHover={shouldReduceMotion ? {} : { scale: 1.02, y: -5 }}
             transition={{ duration: 0.3 }}
           >
             {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-5 dark:opacity-10">
+            <div className="absolute inset-0 opacity-3 dark:opacity-5">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-600 dark:from-blue-300 dark:to-purple-500" />
             </div>
 
@@ -881,10 +881,10 @@ const CertificateSection = React.memo(() => {
                   </motion.div>
                   
                   <div className="space-y-1">
-                    <div className="text-white font-bold text-sm sm:text-base">
+                    <div className="text-slate-900 dark:text-white font-bold text-sm sm:text-base">
                       {stat.label}
                     </div>
-                    <div className="text-slate-400 dark:text-slate-300 text-xs sm:text-sm leading-tight">
+                    <div className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm leading-tight">
                       {stat.description}
                     </div>
                   </div>

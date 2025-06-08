@@ -1,4 +1,4 @@
-import  {  useState, useMemo, useCallback } from "react";
+import  {  useState, useMemo, useCallback, useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -62,9 +62,9 @@ const ProjectSection = () => {
   ], [projects]);
 
   // Fetch projects on component mount
-  // useEffect(() => {
-  //   dispatch(fetchProjects());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchProjects());
+  }, [dispatch]);
 
   // Projects to display (limited or all)
   const displayedProjects = useMemo(() => {

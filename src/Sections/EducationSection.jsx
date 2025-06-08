@@ -132,7 +132,7 @@ function EducationSection() {
     <motion.section
       ref={ref}
       id="education"
-      className="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black overflow-hidden py-12 sm:py-16 md:py-20 lg:py-24"
+      className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-black overflow-hidden py-12 sm:py-16 md:py-20 lg:py-24"
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
@@ -143,7 +143,7 @@ function EducationSection() {
         {!shouldReduceMotion && (
           <>
             <motion.div
-              className="absolute top-10 right-10 sm:top-20 sm:right-20 w-48 h-48 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-r from-blue-500/12 via-indigo-500/8 to-purple-500/6 rounded-full blur-3xl"
+              className="absolute top-10 right-10 sm:top-20 sm:right-20 w-48 h-48 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-gradient-to-r from-blue-500/12 via-indigo-500/8 to-purple-500/6 dark:from-blue-500/12 dark:via-indigo-500/8 dark:to-purple-500/6 rounded-full blur-3xl"
               animate={{
                 scale: [1, 1.15, 1],
                 opacity: [0.4, 0.7, 0.4],
@@ -156,7 +156,7 @@ function EducationSection() {
               }}
             />
             <motion.div
-              className="absolute bottom-10 left-10 sm:bottom-20 sm:left-20 w-40 h-40 sm:w-64 sm:h-64 lg:w-80 lg:h-80 bg-gradient-to-r from-cyan-500/10 via-teal-500/8 to-emerald-500/6 rounded-full blur-3xl"
+              className="absolute bottom-10 left-10 sm:bottom-20 sm:left-20 w-40 h-40 sm:w-64 sm:h-64 lg:w-80 lg:h-80 bg-gradient-to-r from-cyan-500/10 via-teal-500/8 to-emerald-500/6 dark:from-cyan-500/10 dark:via-teal-500/8 dark:to-emerald-500/6 rounded-full blur-3xl"
               animate={{
                 scale: [1.1, 1, 1.1],
                 opacity: [0.3, 0.6, 0.3],
@@ -170,7 +170,7 @@ function EducationSection() {
               }}
             />
             <motion.div
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-gradient-to-r from-purple-500/8 via-pink-500/6 to-rose-500/4 rounded-full blur-3xl"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-gradient-to-r from-purple-500/8 via-pink-500/6 to-rose-500/4 dark:from-purple-500/8 dark:via-pink-500/6 dark:to-rose-500/4 rounded-full blur-3xl"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.2, 0.5, 0.2],
@@ -189,7 +189,7 @@ function EducationSection() {
         {particles.map((particle) => (
           <motion.div
             key={particle.id}
-            className="absolute rounded-full bg-gradient-to-r from-white/20 to-blue-200/10"
+            className="absolute rounded-full bg-gradient-to-r from-slate-400/20 to-blue-400/10 dark:from-white/20 dark:to-blue-200/10"
             style={{
               left: `${particle.left}%`,
               top: `${particle.top}%`,
@@ -223,7 +223,7 @@ function EducationSection() {
         {/* Enhanced Section Header */}
         <motion.div variants={itemVariants} className="text-center mb-12 sm:mb-16 lg:mb-20">
           <motion.div
-            className="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-4 bg-gradient-to-r from-slate-800/40 via-slate-700/30 to-slate-800/40 border border-slate-600/30 rounded-xl lg:rounded-2xl backdrop-blur-xl mb-6 sm:mb-8 shadow-2xl"
+            className="inline-flex items-center px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-4 bg-gradient-to-r from-white/40 via-slate-100/30 to-white/40 dark:from-slate-800/40 dark:via-slate-700/30 dark:to-slate-800/40 border border-slate-300/30 dark:border-slate-600/30 rounded-xl lg:rounded-2xl backdrop-blur-xl mb-6 sm:mb-8 shadow-2xl"
             whileHover={shouldReduceMotion ? {} : { scale: 1.02, y: -2 }}
             transition={{ duration: 0.3 }}
           >
@@ -240,13 +240,13 @@ function EducationSection() {
           </motion.div>
 
           <motion.h2
-            className="text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-6"
+            className="text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-slate-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-100 dark:to-purple-100 bg-clip-text text-transparent mb-6"
             variants={itemVariants}
           >
             Education
           </motion.h2>
           <motion.p
-            className="text-sm sm:text-base lg:text-xl text-slate-400 max-w-xs sm:max-w-2xl lg:max-w-3xl mx-auto leading-relaxed font-medium px-4 sm:px-0"
+            className="text-sm sm:text-base lg:text-xl text-slate-600 dark:text-slate-400 max-w-xs sm:max-w-2xl lg:max-w-3xl mx-auto leading-relaxed font-medium px-4 sm:px-0"
             variants={itemVariants}
           >
             A chronicle of academic achievements and knowledge milestones that
@@ -328,7 +328,7 @@ function EducationSection() {
                               ease: "easeInOut",
                             }}
                           />
-                          <div className="relative w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 rounded-full border-4 border-blue-400/40 flex items-center justify-center shadow-2xl backdrop-blur-sm">
+                          <div className="relative w-16 h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-white via-slate-100 to-slate-200 dark:from-slate-800 dark:via-slate-700 dark:to-slate-900 rounded-full border-4 border-blue-400/40 flex items-center justify-center shadow-2xl backdrop-blur-sm">
                             <div className="w-10 h-10 lg:w-14 lg:h-14 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 rounded-full flex items-center justify-center shadow-inner">
                               <IconComponent className="text-white text-lg lg:text-2xl" />
                             </div>
@@ -356,7 +356,7 @@ function EducationSection() {
                         <div className="relative group">
                           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl lg:rounded-3xl blur-xl group-hover:from-blue-500/20 group-hover:to-purple-500/20 transition-all duration-500" />
                           
-                          <div className="relative bg-gradient-to-br from-slate-800/60 via-slate-700/40 to-slate-900/60 backdrop-blur-2xl rounded-2xl lg:rounded-3xl p-4 sm:p-6 lg:p-8 border border-slate-600/30 hover:border-slate-500/50 transition-all duration-500 shadow-2xl">
+                          <div className="relative bg-gradient-to-br from-white/80 via-slate-100/60 to-slate-200/40 dark:from-slate-800/60 dark:via-slate-700/40 dark:to-slate-900/60 backdrop-blur-2xl rounded-2xl lg:rounded-3xl p-4 sm:p-6 lg:p-8 border border-slate-300/30 dark:border-slate-600/30 hover:border-slate-400/50 dark:hover:border-slate-500/50 transition-all duration-500 shadow-2xl">
                             {/* Education Level Badge */}
                             <motion.div
                               className="absolute -top-3 right-4 lg:-top-4 lg:right-6 px-3 py-1 lg:px-4 lg:py-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full shadow-lg"
@@ -370,7 +370,7 @@ function EducationSection() {
                             {/* Institution Header */}
                             <div className="flex items-start gap-3 sm:gap-4 lg:gap-6 mb-4 sm:mb-5 lg:mb-6">
                               <motion.div
-                                className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 rounded-xl lg:rounded-2xl overflow-hidden bg-gradient-to-br from-slate-600 to-slate-800 p-1 lg:p-1.5 shadow-xl flex-shrink-0"
+                                className="w-16 h-16 sm:w-18 sm:h-18 lg:w-20 lg:h-20 rounded-xl lg:rounded-2xl overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-600 dark:to-slate-800 p-1 lg:p-1.5 shadow-xl flex-shrink-0"
                                 whileHover={
                                   shouldReduceMotion ? {} : { scale: 1.08 }
                                 }
@@ -387,10 +387,10 @@ function EducationSection() {
                               </motion.div>
 
                               <div className="flex-1 min-w-0">
-                                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent mb-1 sm:mb-2 leading-tight">
+                                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent mb-1 sm:mb-2 leading-tight">
                                   {edu.title}
                                 </h3>
-                                <div className="flex items-center gap-2 text-slate-400 mb-1 sm:mb-2">
+                                <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400 mb-1 sm:mb-2">
                                   <div className="w-4 h-4 lg:w-5 lg:h-5 bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg flex items-center justify-center">
                                     <FaCalendarAlt className="text-white text-xs" />
                                   </div>
@@ -409,7 +409,7 @@ function EducationSection() {
 
                             {/* Description */}
                             <div className="mb-4 sm:mb-5 lg:mb-6">
-                              <p className="text-slate-300 leading-relaxed text-xs sm:text-sm font-medium">
+                              <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-xs sm:text-sm font-medium">
                                 {edu.description}
                               </p>
                             </div>
@@ -440,10 +440,10 @@ function EducationSection() {
                                   <FaTrophy className="text-white text-sm sm:text-base lg:text-lg relative z-10" />
                                 </motion.div>
                                 <div>
-                                  <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-1">
+                                  <p className="text-xs text-slate-500 dark:text-slate-500 font-semibold uppercase tracking-wider mb-1">
                                     {edu.resultType}
                                   </p>
-                                  <p className="text-base sm:text-lg lg:text-xl font-black bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
+                                  <p className="text-base sm:text-lg lg:text-xl font-black bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
                                     {edu.result}
                                   </p>
                                 </div>
@@ -524,7 +524,7 @@ function EducationSection() {
                               ease: "easeInOut",
                             }}
                           />
-                          <div className="relative w-12 h-12 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 rounded-full border-3 border-blue-400/40 flex items-center justify-center shadow-xl backdrop-blur-sm">
+                          <div className="relative w-12 h-12 bg-gradient-to-br from-white via-slate-100 to-slate-200 dark:from-slate-800 dark:via-slate-700 dark:to-slate-900 rounded-full border-3 border-blue-400/40 flex items-center justify-center shadow-xl backdrop-blur-sm">
                             <div className="w-8 h-8 bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 rounded-full flex items-center justify-center shadow-inner">
                               <IconComponent className="text-white text-sm" />
                             </div>
@@ -548,7 +548,7 @@ function EducationSection() {
                         <div className="relative group">
                           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/8 to-purple-500/8 rounded-2xl blur-lg group-hover:from-blue-500/15 group-hover:to-purple-500/15 transition-all duration-500" />
                           
-                          <div className="relative bg-gradient-to-br from-slate-800/70 via-slate-700/50 to-slate-900/70 backdrop-blur-2xl rounded-2xl p-5 border border-slate-600/30 hover:border-slate-500/50 transition-all duration-500 shadow-xl">
+                          <div className="relative bg-gradient-to-br from-white/80 via-slate-100/70 to-slate-200/50 dark:from-slate-800/70 dark:via-slate-700/50 dark:to-slate-900/70 backdrop-blur-2xl rounded-2xl p-5 border border-slate-300/30 dark:border-slate-600/30 hover:border-slate-400/50 dark:hover:border-slate-500/50 transition-all duration-500 shadow-xl">
                             {/* Mobile Badge */}
                             <motion.div
                               className="absolute -top-3 right-4 px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full shadow-lg"
@@ -562,7 +562,7 @@ function EducationSection() {
                             {/* Mobile Header */}
                             <div className="flex items-start gap-4 mb-4">
                               <motion.div
-                                className="w-14 h-14 rounded-xl overflow-hidden bg-gradient-to-br from-slate-600 to-slate-800 p-1 shadow-lg flex-shrink-0"
+                                className="w-14 h-14 rounded-xl overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-600 dark:to-slate-800 p-1 shadow-lg flex-shrink-0"
                                 whileHover={
                                   shouldReduceMotion ? {} : { scale: 1.05 }
                                 }
@@ -579,10 +579,10 @@ function EducationSection() {
                               </motion.div>
 
                               <div className="flex-1 min-w-0">
-                                <h3 className="text-lg font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent mb-1 leading-tight">
+                                <h3 className="text-lg font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent mb-1 leading-tight">
                                   {edu.title}
                                 </h3>
-                                <div className="flex items-center gap-2 text-slate-400 mb-1">
+                                <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400 mb-1">
                                   <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-500 rounded-md flex items-center justify-center">
                                     <FaCalendarAlt className="text-white text-xs" />
                                   </div>
@@ -601,7 +601,7 @@ function EducationSection() {
 
                             {/* Mobile Description */}
                             <div className="mb-4">
-                              <p className="text-slate-300 leading-relaxed text-sm">
+                              <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-sm">
                                 {edu.description}
                               </p>
                             </div>
@@ -619,10 +619,10 @@ function EducationSection() {
                                   <FaTrophy className="text-white text-sm relative z-10" />
                                 </motion.div>
                                 <div>
-                                  <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider">
+                                  <p className="text-xs text-slate-500 dark:text-slate-500 font-semibold uppercase tracking-wider">
                                     {edu.resultType}
                                   </p>
-                                  <p className="text-lg font-black bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
+                                  <p className="text-lg font-black bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
                                     {edu.result}
                                   </p>
                                 </div>
@@ -718,7 +718,7 @@ function EducationSection() {
               transition={{ duration: 0.4 }}
               >
               <motion.div
-                className={`inline-flex items-center justify-center w-18 h-18 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br ${stat.bgGradient} border border-slate-600/40 rounded-3xl mb-5 sm:mb-6 lg:mb-8 transition-all duration-500 backdrop-blur-xl shadow-2xl relative overflow-hidden group-hover:border-slate-500/60`}
+                className={`inline-flex items-center justify-center w-18 h-18 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br ${stat.bgGradient} border border-slate-300/40 dark:border-slate-600/40 rounded-3xl mb-5 sm:mb-6 lg:mb-8 transition-all duration-500 backdrop-blur-xl shadow-2xl relative overflow-hidden group-hover:border-slate-400/60 dark:group-hover:border-slate-500/60`}
                 whileHover={shouldReduceMotion ? {} : { scale: 1.1, rotate: 3 }}
                 transition={{ duration: 0.4 }}
               >
@@ -758,7 +758,7 @@ function EducationSection() {
               >
                 {stat.number}
               </motion.div>
-              <div className="text-slate-400 font-semibold text-base sm:text-lg lg:text-xl tracking-wide">
+              <div className="text-slate-600 dark:text-slate-400 font-semibold text-base sm:text-lg lg:text-xl tracking-wide">
                 {stat.label}
               </div>
             </motion.div>

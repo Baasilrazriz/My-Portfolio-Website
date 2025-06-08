@@ -2,13 +2,13 @@ import { useDispatch } from "react-redux";
 import { toggleNavbarDropdown } from "../../Store/Features/navbarSlice";
 import Switcher from "../Theme/Switcher";
 import { useState, useEffect, useCallback } from "react";
-import { 
-  HiOutlineHome, 
-  HiOutlineUser, 
-  HiOutlineAcademicCap, 
-  HiOutlineLightningBolt, 
-  HiOutlineBriefcase, 
-  HiOutlineMail 
+import {
+  HiOutlineHome,
+  HiOutlineUser,
+  HiOutlineAcademicCap,
+  HiOutlineLightningBolt,
+  HiOutlineBriefcase,
+  HiOutlineMail,
 } from "react-icons/hi";
 
 function Navbar() {
@@ -21,10 +21,19 @@ function Navbar() {
   const handleScroll = useCallback(() => {
     const scrollY = window.scrollY;
     setIsScrolled(scrollY > 20);
-    
+
     // Active section detection
-    const sections = ["home", "about", "education", "skills", "proj", "con"];
-    const current = sections.find(section => {
+    const sections = [
+      "home",
+      "about",
+      "services",
+      "achievements",
+      "education",
+      "skills",
+      "proj",
+      "con",
+    ];
+    const current = sections.find((section) => {
       const element = document.getElementById(section);
       if (element) {
         const rect = element.getBoundingClientRect();
@@ -60,58 +69,66 @@ function Navbar() {
   const navItems = [
     { id: "home", label: "Home", icon: HiOutlineHome },
     { id: "about", label: "About", icon: HiOutlineUser },
+    { id: "services", label: "Services", icon: HiOutlineLightningBolt },
     { id: "education", label: "Education", icon: HiOutlineAcademicCap },
     { id: "skills", label: "Skills", icon: HiOutlineLightningBolt },
     { id: "proj", label: "Projects", icon: HiOutlineBriefcase },
-    { id: "con", label: "Contact", icon: HiOutlineMail }
+    { id: "con", label: "Contact", icon: HiOutlineMail },
   ];
 
   return (
     <>
       {/* Main Navbar - Enhanced Dynamic Island */}
-      <nav className={`
+      <nav
+        className={`
         fixed top-4 left-1/2 transform -translate-x-1/2 z-50 
         transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]
-        ${isScrolled 
-          ? 'w-[95%] md:w-[85%] lg:w-[70%] max-w-4xl' 
-          : 'w-[98%] md:w-[90%] lg:w-[75%] max-w-5xl'
+        ${
+          isScrolled
+            ? "w-[95%] md:w-[90%] lg:w-[80%] max-w-5xl"
+            : "w-[98%] md:w-[95%] lg:w-[85%] max-w-6xl"
         }
-      `}>
+      `}
+      >
         {/* Exotic Dynamic Island Container */}
-        <div className={`
+        <div
+          className={`
           relative overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]
-          ${isScrolled 
-            ? 'rounded-[32px] bg-white/90 dark:bg-gray-900/90 backdrop-blur-3xl shadow-2xl border border-white/50 dark:border-gray-700/60' 
-            : 'rounded-[40px] bg-white/80 dark:bg-gray-900/80 backdrop-blur-2xl shadow-xl border border-white/40 dark:border-gray-700/50'
+          ${
+            isScrolled
+              ? "rounded-[32px] bg-white/90 dark:bg-gray-900/90 backdrop-blur-3xl shadow-2xl border border-white/50 dark:border-gray-700/60"
+              : "rounded-[40px] bg-white/80 dark:bg-gray-900/80 backdrop-blur-2xl shadow-xl border border-white/40 dark:border-gray-700/50"
           }
-          ${isMenuOpen 
-            ? 'rounded-[28px] bg-white/95 dark:bg-gray-900/95 backdrop-blur-3xl shadow-3xl border border-white/60 dark:border-gray-700/70' 
-            : ''
+          ${
+            isMenuOpen
+              ? "rounded-[28px] bg-white/95 dark:bg-gray-900/95 backdrop-blur-3xl shadow-3xl border border-white/60 dark:border-gray-700/70"
+              : ""
           }
-        `}>
-          
+        `}
+        >
           {/* Multi-Layer Animated Background */}
           <div className="absolute inset-0">
             {/* Primary Flowing Gradient */}
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 via-pink-500/10 to-orange-500/10 dark:from-blue-400/10 dark:via-purple-400/10 dark:via-pink-400/10 dark:to-orange-400/10 animate-gradient-flow"></div>
-            
+
             {/* Secondary Diagonal Shimmer */}
             <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/15 dark:via-gray-100/8 to-transparent animate-shimmer opacity-60"></div>
-            
+
             {/* Tertiary Pulse Layer */}
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 via-transparent to-violet-500/5 animate-pulse-slow"></div>
           </div>
-          
+
           {/* Main Content Container */}
-          <div className={`
+          <div
+            className={`
             relative flex items-center justify-between px-6 transition-all duration-500
-            ${isMenuOpen ? 'py-5' : 'py-4'}
-          `}>
-            
+            ${isMenuOpen ? "py-5" : "py-4"}
+          `}
+          >
             {/* Enhanced Logo Section */}
             <div className="flex-shrink-0 z-20">
-              <a 
-                href="#home" 
+              <a
+                href="#home"
                 className="group relative block transition-all duration-500 hover:scale-110"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -119,19 +136,19 @@ function Navbar() {
                   {/* Multi-layer Glow System */}
                   <div className="absolute inset-0 bg-gradient-to-br from-red-500/40 via-orange-500/30 to-red-600/40 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700 animate-pulse"></div>
                   <div className="absolute inset-0 bg-gradient-to-br from-red-400/20 via-orange-400/15 to-red-500/20 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                  
+
                   {/* Logo with Enhanced Effects */}
                   <img
                     src="/bas.png"
                     alt="Basil Razriz - Transforming Visions into Code"
                     className={`
                       relative transition-all duration-500 ease-out object-contain
-                      ${isScrolled ? 'h-9 w-auto' : 'h-11 w-auto'}
+                      ${isScrolled ? "h-9 w-auto" : "h-11 w-auto"}
                       filter drop-shadow-lg group-hover:drop-shadow-2xl
                       group-hover:brightness-110 group-hover:contrast-125 group-hover:saturate-110
                     `}
                   />
-                  
+
                   {/* Animated Ring Effects */}
                   <div className="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-red-500/30 transition-all duration-500"></div>
                   <div className="absolute inset-0 rounded-2xl border border-transparent group-hover:border-orange-400/20 transition-all duration-700 delay-100"></div>
@@ -141,13 +158,16 @@ function Navbar() {
 
             {/* Enhanced Center Navigation - Desktop */}
             <div className="hidden lg:flex items-center">
-              <div className={`
+              <div
+                className={`
                 flex items-center space-x-1 rounded-full p-1.5 backdrop-blur-sm transition-all duration-500
-                ${isScrolled 
-                  ? 'bg-white/30 dark:bg-gray-800/40 border border-white/50 dark:border-gray-700/60 shadow-lg' 
-                  : 'bg-white/25 dark:bg-gray-800/35 border border-white/40 dark:border-gray-700/50 shadow-md'
+                ${
+                  isScrolled
+                    ? "bg-white/30 dark:bg-gray-800/40 border border-white/50 dark:border-gray-700/60 shadow-lg"
+                    : "bg-white/25 dark:bg-gray-800/35 border border-white/40 dark:border-gray-700/50 shadow-md"
                 }
-              `}>
+              `}
+              >
                 {navItems.map((item) => {
                   const IconComponent = item.icon;
                   return (
@@ -157,9 +177,10 @@ function Navbar() {
                       className={`
                         relative px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-400
                         group flex items-center space-x-2 overflow-hidden backdrop-blur-sm
-                        ${activeSection === item.id 
-                          ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-lg scale-110 border border-white/60 dark:border-gray-700/60' 
-                          : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-white/40 dark:hover:bg-gray-800/40 hover:scale-105'
+                        ${
+                          activeSection === item.id
+                            ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-lg scale-110 border border-white/60 dark:border-gray-700/60"
+                            : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-white/40 dark:hover:bg-gray-800/40 hover:scale-105"
                         }
                       `}
                     >
@@ -171,10 +192,12 @@ function Navbar() {
                           <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-500/10 to-violet-500/10 animate-gradient-flow" />
                         </>
                       )}
-                      
+
                       <IconComponent className="w-4 h-4 opacity-80 group-hover:opacity-100 transition-all duration-300 relative z-10" />
-                      <span className="relative z-10 font-medium tracking-wide">{item.label}</span>
-                      
+                      <span className="relative z-10 font-medium tracking-wide">
+                        {item.label}
+                      </span>
+
                       {/* Enhanced Hover Effects */}
                       <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/15 via-purple-500/15 to-pink-500/15 opacity-0 group-hover:opacity-100 transition-all duration-400 scale-0 group-hover:scale-100" />
                     </a>
@@ -187,13 +210,16 @@ function Navbar() {
             <div className="flex items-center space-x-3 z-20">
               {/* Advanced Theme Switcher */}
               <div className="relative group">
-                <div className={`
+                <div
+                  className={`
                   p-2.5 rounded-full backdrop-blur-sm transition-all duration-400 group-hover:scale-110
-                  ${isScrolled 
-                    ? 'bg-white/30 dark:bg-gray-800/40 border border-white/50 dark:border-gray-700/60 shadow-lg' 
-                    : 'bg-white/25 dark:bg-gray-800/35 border border-white/40 dark:border-gray-700/50 shadow-md'
+                  ${
+                    isScrolled
+                      ? "bg-white/30 dark:bg-gray-800/40 border border-white/50 dark:border-gray-700/60 shadow-lg"
+                      : "bg-white/25 dark:bg-gray-800/35 border border-white/40 dark:border-gray-700/50 shadow-md"
                   }
-                `}>
+                `}
+                >
                   <Switcher />
                 </div>
                 {/* Multi-layer Glow */}
@@ -206,27 +232,50 @@ function Navbar() {
                 onClick={handleToggle}
                 className={`
                   lg:hidden p-2.5 rounded-full backdrop-blur-sm transition-all duration-400 hover:scale-110
-                  ${isScrolled 
-                    ? 'bg-white/30 dark:bg-gray-800/40 border border-white/50 dark:border-gray-700/60 shadow-lg' 
-                    : 'bg-white/25 dark:bg-gray-800/35 border border-white/40 dark:border-gray-700/50 shadow-md'
+                  ${
+                    isScrolled
+                      ? "bg-white/30 dark:bg-gray-800/40 border border-white/50 dark:border-gray-700/60 shadow-lg"
+                      : "bg-white/25 dark:bg-gray-800/35 border border-white/40 dark:border-gray-700/50 shadow-md"
                   }
-                  ${isMenuOpen ? 'bg-white/40 dark:bg-gray-800/50 scale-105' : ''}
+                  ${
+                    isMenuOpen
+                      ? "bg-white/40 dark:bg-gray-800/50 scale-105"
+                      : ""
+                  }
                 `}
               >
                 <div className="w-6 h-6 flex flex-col justify-center items-center">
-                  <span className={`block w-5 h-0.5 bg-gray-700 dark:bg-gray-300 transform transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${isMenuOpen ? 'rotate-45 translate-y-1 bg-blue-600 dark:bg-blue-400' : '-translate-y-1'}`} />
-                  <span className={`block w-5 h-0.5 bg-gray-700 dark:bg-gray-300 transition-all duration-400 ${isMenuOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`} />
-                  <span className={`block w-5 h-0.5 bg-gray-700 dark:bg-gray-300 transform transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${isMenuOpen ? '-rotate-45 -translate-y-1 bg-blue-600 dark:bg-blue-400' : 'translate-y-1'}`} />
+                  <span
+                    className={`block w-5 h-0.5 bg-gray-700 dark:bg-gray-300 transform transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                      isMenuOpen
+                        ? "rotate-45 translate-y-1 bg-blue-600 dark:bg-blue-400"
+                        : "-translate-y-1"
+                    }`}
+                  />
+                  <span
+                    className={`block w-5 h-0.5 bg-gray-700 dark:bg-gray-300 transition-all duration-400 ${
+                      isMenuOpen ? "opacity-0 scale-0" : "opacity-100 scale-100"
+                    }`}
+                  />
+                  <span
+                    className={`block w-5 h-0.5 bg-gray-700 dark:bg-gray-300 transform transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                      isMenuOpen
+                        ? "-rotate-45 -translate-y-1 bg-blue-600 dark:bg-blue-400"
+                        : "translate-y-1"
+                    }`}
+                  />
                 </div>
               </button>
             </div>
           </div>
-          
+
           {/* Exotic Expandable Mobile Menu */}
-          <div className={`
+          <div
+            className={`
             lg:hidden overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]
-            ${isMenuOpen ? 'max-h-full opacity-100' : 'max-h-0 opacity-0'}
-          `}>
+            ${isMenuOpen ? "max-h-full opacity-100" : "max-h-0 opacity-0"}
+          `}
+          >
             <div className="px-6 pb-6">
               {/* Elegant Divider */}
               <div className="relative mb-6">
@@ -237,7 +286,7 @@ function Navbar() {
                   <div className="w-8 h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full"></div>
                 </div>
               </div>
-              
+
               {/* Streamlined Mobile Navigation */}
               <div className="space-y-3">
                 {navItems.map((item, index) => {
@@ -250,31 +299,45 @@ function Navbar() {
                       className={`
                         group relative flex items-center p-4 rounded-2xl transition-all duration-400
                         transform hover:scale-[1.02] overflow-hidden backdrop-blur-sm
-                        ${activeSection === item.id 
-                          ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white shadow-lg border border-white/30' 
-                          : 'bg-white/70 dark:bg-gray-800/70 text-gray-700 dark:text-gray-300 hover:bg-white/90 dark:hover:bg-gray-800/90 border border-white/40 dark:border-gray-700/40'
+                        ${
+                          activeSection === item.id
+                            ? "bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white shadow-lg border border-white/30"
+                            : "bg-white/70 dark:bg-gray-800/70 text-gray-700 dark:text-gray-300 hover:bg-white/90 dark:hover:bg-gray-800/90 border border-white/40 dark:border-gray-700/40"
                         }
                       `}
                       style={{
                         animationDelay: `${index * 0.08}s`,
-                        animation: isMenuOpen ? 'slideInScale 0.6s ease-out both' : 'none'
+                        animation: isMenuOpen
+                          ? "slideInScale 0.6s ease-out both"
+                          : "none",
                       }}
                     >
                       {/* Enhanced Background Effects */}
                       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-all duration-400"></div>
-                      
+
                       <div className="relative z-10 flex items-center space-x-4 w-full">
-                        <div className={`
+                        <div
+                          className={`
                           p-2 rounded-xl transition-all duration-300
-                          ${activeSection === item.id 
-                            ? 'bg-white/20' 
-                            : 'bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600'
+                          ${
+                            activeSection === item.id
+                              ? "bg-white/20"
+                              : "bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600"
                           }
-                        `}>
-                          <IconComponent className={`w-5 h-5 transition-all duration-300 ${activeSection === item.id ? 'text-white' : 'text-gray-600 dark:text-gray-400'}`} />
+                        `}
+                        >
+                          <IconComponent
+                            className={`w-5 h-5 transition-all duration-300 ${
+                              activeSection === item.id
+                                ? "text-white"
+                                : "text-gray-600 dark:text-gray-400"
+                            }`}
+                          />
                         </div>
-                        <span className="font-medium text-base tracking-wide">{item.label}</span>
-                        
+                        <span className="font-medium text-base tracking-wide">
+                          {item.label}
+                        </span>
+
                         {/* Active Pulse Indicator */}
                         {activeSection === item.id && (
                           <div className="ml-auto">
@@ -292,7 +355,7 @@ function Navbar() {
       </nav>
 
       {/* Advanced Animation Styles */}
-      <style >{`
+      <style>{`
         @keyframes slideInScale {
           from {
             opacity: 0;

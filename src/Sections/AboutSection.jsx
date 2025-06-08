@@ -512,10 +512,10 @@ function AboutSection() {
   // Show loading state while fetching initial data
   if (loading && !name && !editData.name) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-black flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <FaSpinner className="text-4xl text-blue-400 animate-spin" />
-          <p className="text-white text-lg">Loading about information...</p>
+          <p className="text-slate-900 dark:text-white text-lg">Loading about information...</p>
         </div>
       </div>
     );
@@ -555,7 +555,7 @@ function AboutSection() {
 
       <motion.section
         ref={ref}
-        className="relative min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-black overflow-hidden"
+        className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-black overflow-hidden"
         id="about"
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
@@ -566,7 +566,7 @@ function AboutSection() {
           {!shouldReduceMotion && (
             <>
               <motion.div
-                className="absolute top-20 right-20 w-80 h-80 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"
+                className="absolute top-20 right-20 w-80 h-80 bg-gradient-to-r from-blue-500/10 to-purple-500/10 dark:from-blue-500/10 dark:to-purple-500/10 rounded-full blur-3xl"
                 animate={{
                   scale: [1, 1.1, 1],
                   opacity: [0.2, 0.4, 0.2],
@@ -578,7 +578,7 @@ function AboutSection() {
                 }}
               />
               <motion.div
-                className="absolute bottom-20 left-20 w-60 h-60 bg-gradient-to-r from-cyan-500/8 to-teal-500/8 rounded-full blur-3xl"
+                className="absolute bottom-20 left-20 w-60 h-60 bg-gradient-to-r from-cyan-500/8 to-teal-500/8 dark:from-cyan-500/8 dark:to-teal-500/8 rounded-full blur-3xl"
                 animate={{
                   scale: [1.1, 1, 1.1],
                   opacity: [0.15, 0.3, 0.15],
@@ -596,7 +596,7 @@ function AboutSection() {
           {particles.map((particle) => (
             <motion.div
               key={particle.id}
-              className="absolute w-1 h-1 bg-white/20 rounded-full"
+              className="absolute w-1 h-1 bg-slate-400/30 dark:bg-white/20 rounded-full"
               style={{
                 left: `${particle.left}%`,
                 top: `${particle.top}%`,
@@ -623,7 +623,7 @@ function AboutSection() {
           {/* Section Header */}
           <motion.div variants={itemVariants} className="text-center mb-20">
             <motion.div
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-full backdrop-blur-sm mb-6"
+              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 dark:border-blue-500/20 rounded-full backdrop-blur-sm mb-6"
               variants={itemVariants}
               whileHover={shouldReduceMotion ? {} : { scale: 1.01 }}
               transition={{ duration: 0.15 }}
@@ -635,13 +635,13 @@ function AboutSection() {
             </motion.div>
 
             <motion.h2
-              className="text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-blue-100 to-purple-100 bg-clip-text text-transparent mb-6"
+              className="text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-slate-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-100 dark:to-purple-100 bg-clip-text text-transparent mb-6"
               variants={itemVariants}
             >
               About Me
             </motion.h2>
             <motion.p
-              className="text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed"
+              className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed"
               variants={itemVariants}
             >
               Crafting digital experiences with passion, precision, and
@@ -696,8 +696,8 @@ function AboutSection() {
                   whileHover={shouldReduceMotion ? {} : { scale: 1.01 }}
                   transition={{ duration: 0.15 }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-1">
-                    <div className="w-full h-full rounded-3xl overflow-hidden bg-gradient-to-br from-slate-700 to-slate-800">
+                  <div className="absolute inset-0 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-800 dark:to-slate-900 rounded-3xl p-1">
+                    <div className="w-full h-full rounded-3xl overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800">
                       <img
                         src={editData.profilePic || "/api/placeholder/400/400"}
                         alt={`${editData.name} - ${editData.title}`}
@@ -771,7 +771,7 @@ function AboutSection() {
             >
               <motion.div variants={cardVariants}>
                 <motion.h3
-                  className="text-3xl md:text-4xl font-bold text-white mb-4 flex items-center gap-3"
+                  className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-3"
                   whileHover={shouldReduceMotion ? {} : { x: 3 }}
                   transition={{ duration: 0.15 }}
                 >
@@ -783,13 +783,13 @@ function AboutSection() {
                     👋
                   </motion.span>
                 </motion.h3>
-                <p className="text-lg text-slate-300 leading-relaxed">
+                <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
                   {editData.about}
                 </p>
               </motion.div>
 
               <motion.div variants={cardVariants} className="space-y-4">
-                <h4 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+                <h4 className="text-xl font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
                   <FaStar className="text-yellow-400" />
                   My Background
                 </h4>
@@ -797,7 +797,7 @@ function AboutSection() {
                   {aboutDetails.map((detail, index) => (
                     <motion.div
                       key={detail.title}
-                      className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-lg rounded-xl p-4 border border-slate-700/50 hover:border-slate-600/50 transition-all duration-150"
+                      className="bg-gradient-to-br from-white/80 to-slate-100/80 dark:from-slate-800/50 dark:to-slate-900/50 backdrop-blur-lg rounded-xl p-4 border border-slate-200/50 dark:border-slate-700/50 hover:border-slate-300/50 dark:hover:border-slate-600/50 transition-all duration-150"
                       initial={{ opacity: 0, y: 5 }}
                       animate={isInView ? { opacity: 1, y: 0 } : {}}
                       transition={{ delay: 0.1 + index * 0.02, duration: 0.2 }}
@@ -818,10 +818,10 @@ function AboutSection() {
                           <detail.icon className="text-white text-sm" />
                         </motion.div>
                         <div className="flex-1">
-                          <h5 className="text-white font-semibold mb-1">
+                          <h5 className="text-slate-900 dark:text-white font-semibold mb-1">
                             {detail.title}
                           </h5>
-                          <p className="text-slate-300 text-sm leading-relaxed">
+                          <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
                             {detail.value}
                           </p>
                         </div>
@@ -858,7 +858,7 @@ function AboutSection() {
 
                 <motion.button
                   onClick={() => {
-                    const contactSection = document.getElementById("contact");
+                    const contactSection = document.getElementById("con");
                     if (contactSection) {
                       contactSection.scrollIntoView({ behavior: "smooth" });
                     }
@@ -868,7 +868,7 @@ function AboutSection() {
                   whileTap={{ scale: 0.995 }}
                   transition={{ duration: 0.15 }}
                 >
-                  <div className="w-full px-8 py-4 bg-transparent border-2 border-slate-600 text-white font-semibold rounded-xl hover:bg-slate-800 hover:border-slate-500 transition-all duration-150 text-center group">
+                  <div className="w-full px-8 py-4 bg-transparent border-2 border-slate-400 dark:border-slate-600 text-slate-900 dark:text-white font-semibold rounded-xl hover:bg-slate-200 dark:hover:bg-slate-800 hover:border-slate-500 dark:hover:border-slate-500 transition-all duration-150 text-center group">
                     <span className="flex items-center justify-center gap-3">
                       <FaCommentDots
                         className={
@@ -891,7 +891,7 @@ function AboutSection() {
             {personalInfo.map((info, index) => (
               <motion.div
                 key={info.label}
-                className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-lg rounded-2xl p-6 border border-slate-700/50 hover:border-slate-600/50 transition-all duration-150"
+                className="bg-gradient-to-br from-white/80 to-slate-100/80 dark:from-slate-800/50 dark:to-slate-900/50 backdrop-blur-lg rounded-2xl p-6 border border-slate-200/50 dark:border-slate-700/50 hover:border-slate-300/50 dark:hover:border-slate-600/50 transition-all duration-150"
                 variants={cardVariants}
                 whileHover={
                   shouldReduceMotion
@@ -916,10 +916,10 @@ function AboutSection() {
                     <info.icon className="text-white text-lg" />
                   </motion.div>
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-slate-400 mb-1">
+                    <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">
                       {info.label}
                     </p>
-                    <p className="text-white font-semibold leading-relaxed">
+                    <p className="text-slate-900 dark:text-white font-semibold leading-relaxed">
                       {info.value}
                     </p>
                   </div>
@@ -962,7 +962,7 @@ function AboutSection() {
                 >
                   {achievement.number}
                 </motion.div>
-                <div className="text-sm text-slate-400 font-medium">
+                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                   {achievement.label}
                 </div>
               </motion.div>
@@ -983,7 +983,7 @@ function AboutSection() {
             onClick={closeModal}
           >
             <motion.div
-              className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto border border-slate-700 shadow-xl"
+              className="bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto border border-slate-300 dark:border-slate-700 shadow-xl"
               variants={modalVariants}
               initial="hidden"
               animate="visible"
@@ -991,24 +991,24 @@ function AboutSection() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-bold text-white flex items-center gap-3">
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
                   <FaEdit className="text-blue-400" />
                   Edit Information
                 </h3>
                 <motion.button
                   onClick={closeModal}
-                  className="p-2 hover:bg-slate-700 rounded-lg transition-colors duration-100"
+                  className="p-2 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition-colors duration-100"
                   whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <FaTimes className="text-lg text-slate-400" />
+                  <FaTimes className="text-lg text-slate-600 dark:text-slate-400" />
                 </motion.button>
               </div>
 
               <div className="space-y-6">
                 {/* Profile Picture Upload */}
                 <div className="text-center">
-                  <label className="block text-lg font-medium text-white mb-3">
+                  <label className="block text-lg font-medium text-slate-900 dark:text-white mb-3">
                     Profile Picture
                   </label>
                   <div className="flex flex-col items-center space-y-4">
@@ -1019,7 +1019,7 @@ function AboutSection() {
                       <img
                         src={editData.profilePic || "/api/placeholder/128/128"}
                         alt="Profile"
-                        className="w-24 h-24 rounded-xl object-cover border-3 border-slate-600"
+                        className="w-24 h-24 rounded-xl object-cover border-3 border-slate-400 dark:border-slate-600"
                         onError={(e) => {
                           e.target.src = "/api/placeholder/128/128";
                         }}
@@ -1083,7 +1083,7 @@ function AboutSection() {
                           : ""
                       }
                     >
-                      <label className="block text-sm font-medium text-slate-300 mb-1 flex items-center gap-2">
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-2">
                         <field.icon className="text-blue-400" />
                         {field.label}
                         {field.required && (
@@ -1096,7 +1096,7 @@ function AboutSection() {
                         onChange={(e) =>
                           handleInputChange(field.key, e.target.value)
                         }
-                        className="w-full p-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-slate-400 transition-all duration-100"
+                        className="w-full p-3 bg-slate-100/50 dark:bg-slate-700/50 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all duration-100"
                         placeholder={`Enter your ${field.label.toLowerCase()}`}
                         required={field.required}
                       />
@@ -1109,14 +1109,14 @@ function AboutSection() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.15 }}
                 >
-                  <label className="block text-sm font-medium text-slate-300 mb-1">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                     About Description
                   </label>
                   <textarea
                     value={editData.about || ""}
                     onChange={(e) => handleInputChange("about", e.target.value)}
                     rows={4}
-                    className="w-full p-3 bg-slate-700/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-slate-400 resize-none transition-all duration-100"
+                    className="w-full p-3 bg-slate-100/50 dark:bg-slate-700/50 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 resize-none transition-all duration-100"
                     placeholder="Tell us about yourself..."
                   />
                 </motion.div>
@@ -1153,7 +1153,7 @@ function AboutSection() {
                   <motion.button
                     onClick={closeModal}
                     disabled={loading || isUploading}
-                    className="px-6 py-3 bg-slate-600 hover:bg-slate-500 text-white rounded-lg transition-colors duration-100 font-medium flex items-center gap-2"
+                    className="px-6 py-3 bg-slate-400 dark:bg-slate-600 hover:bg-slate-500 dark:hover:bg-slate-500 text-white rounded-lg transition-colors duration-100 font-medium flex items-center gap-2"
                     whileHover={!shouldReduceMotion ? { scale: 1.005 } : {}}
                     whileTap={{ scale: 0.995 }}
                   >

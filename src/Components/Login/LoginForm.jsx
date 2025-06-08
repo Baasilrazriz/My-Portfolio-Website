@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
+  const navigate = useNavigate();
+  
   // State for managing form inputs
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -46,6 +49,19 @@ function LoginForm() {
     }
   };
 
+  // Function to handle successful authentication
+  const handleSuccessfulAuth = (authMethod = 'password') => {
+    // Store admin session
+    sessionStorage.setItem('isAdminAuthenticated', 'true');
+    sessionStorage.setItem('adminEmail', authMethod === 'biometric' ? 'biometric-auth' : email);
+    sessionStorage.setItem('authMethod', authMethod);
+    
+    console.log('✅ Authentication successful');
+    
+    // Navigate to home page with admin privileges
+    navigate('/', { replace: true });
+  };
+
   // Function to handle biometric authentication
   const handleBiometricAuth = async () => {
     if (!biometricSupported) {
@@ -81,16 +97,8 @@ function LoginForm() {
       });
 
       if (credential) {
-        // Store biometric session
-        sessionStorage.setItem('isAdminAuthenticated', 'true');
-        sessionStorage.setItem('adminEmail', 'biometric-auth');
-        sessionStorage.setItem('authMethod', 'biometric');
-        
-        console.log('✅ Biometric authentication successful');
-        alert('Biometric login successful! (Redirect to admin panel would happen here)');
-        
-        // Uncomment this when you have an admin route:
-        // window.location.href = '/admin';
+        // Handle successful biometric authentication
+        handleSuccessfulAuth('biometric');
       }
     } catch (err) {
       console.log('❌ Biometric authentication failed:', err);
@@ -137,28 +145,16 @@ function LoginForm() {
 
       // Validate credentials
       if (email === adminEmail && password === adminPassword) {
-        // Store admin session
-        sessionStorage.setItem('isAdminAuthenticated', 'true');
-        sessionStorage.setItem('adminEmail', email);
-        sessionStorage.setItem('authMethod', 'password');
-        
-        // Success - redirect to admin dashboard or home
-        console.log('✅ Admin authenticated successfully');
-        
-        // For now, just show success message instead of redirect
-        alert('Login successful! (Redirect to admin panel would happen here)');
-        
-        // Uncomment this when you have an admin route:
-        // window.location.href = '/admin';
+        // Handle successful password authentication
+        handleSuccessfulAuth('password');
       } else {
         console.log('❌ Authentication failed');
         console.log('Email match:', email === adminEmail);
         console.log('Password match:', password === adminPassword);
         setError('Invalid admin credentials. Access denied.');
+        setIsLoading(false);
       }
-      
-      setIsLoading(false);
-    }, 1500); // Increased timeout for debugging
+    }, 1500);
   };
 
   return (

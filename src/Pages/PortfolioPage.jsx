@@ -10,6 +10,7 @@ const sections = {
   HomeSection: lazy(() => import('../Sections/HomeSection')),
   AboutSection: lazy(() => import('../Sections/AboutSection')),
   EducationSection: lazy(() => import('../Sections/EducationSection')),
+  ServicesSection: lazy(() => import('../Sections/ServicesSection')),
   SkillsSection: lazy(() => import('../Sections/SkillsSection')),
   CertificateSection: lazy(() => import('../Sections/CertificateSection')),
   ProjectSection: lazy(() => import('../Sections/ProjectSection')),
@@ -67,6 +68,7 @@ function PortfolioPage() {
       AboutSection,
       EducationSection,
       SkillsSection,
+      ServicesSection,
       CertificateSection,
       ProjectSection,
       ContactSection,
@@ -78,9 +80,10 @@ function PortfolioPage() {
         <NavbarSection />
         <HomeSection />
         <AboutSection />
+        <ServicesSection />
         <EducationSection />
-        <SkillsSection />
         <CertificateSection />
+        <SkillsSection />
         <ProjectSection />
         <ContactSection />
         <FooterSection />
