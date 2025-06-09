@@ -35,6 +35,10 @@ import {
   FaExclamationTriangle,
   FaCertificate,
   FaLanguage,
+  FaFilePdf,
+  FaTrash,
+  FaEye,
+  FaCloudUploadAlt,
 } from "react-icons/fa";
 import { fetchAboutInfo, updateAboutInfo } from "../Store/Features/aboutSlice";
 
@@ -58,6 +62,8 @@ function AboutSection() {
     languages,
     interests,
     certifications,
+    cvUrl,
+    cvFileName,
     loading,
     error,
   } = useSelector((state) => state.about || {});
@@ -70,6 +76,7 @@ function AboutSection() {
   // Modal and form state
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [isCvUploading, setIsCvUploading] = useState(false);
   const [notification, setNotification] = useState({
     show: false,
     type: "",
@@ -90,6 +97,8 @@ function AboutSection() {
     interests: "Web Development, UI/UX Design, Open Source",
     certifications: "AWS Certified, React Developer Certified",
     profilePic: "",
+    cvUrl: "",
+    cvFileName: "",
   }), []);
 
   // Create editData state that syncs with Redux store
@@ -115,8 +124,10 @@ function AboutSection() {
       interests: interests || defaultData.interests,
       certifications: certifications || defaultData.certifications,
       profilePic: profilePic || defaultData.profilePic,
+      cvUrl: cvUrl || defaultData.cvUrl,
+      cvFileName: cvFileName || defaultData.cvFileName,
     });
-  }, [name, title, dob, location, email, phone, about, education, languages, interests, certifications, profilePic, defaultData]);
+  }, [name, title, dob, location, email, phone, about, education, languages, interests, certifications, profilePic, cvUrl, cvFileName, defaultData]);
 
   // Show error notification if Redux error occurs
   useEffect(() => {
@@ -308,6 +319,108 @@ function AboutSection() {
     [showNotification]
   );
 
+  // CV Upload Handler
+  const handleCvUpload = useCallback(
+    async (file) => {
+      if (!file) return;
+
+      // Validate file type
+      if (file.type !== "application/pdf") {
+        showNotification("error", "Please select a PDF file");
+        return;
+      }
+
+      // Validate file size (10MB max for PDF)
+      if (file.size > 10 * 1024 * 1024) {
+        showNotification("error", "PDF size should be less than 10MB");
+        return;
+      }
+
+      setIsCvUploading(true);
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append(
+          "upload_preset",
+          import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "your_upload_preset"
+        );
+        // Set resource type to raw for PDF files
+        formData.append("resource_type", "raw");
+
+        const response = await fetch(
+          `https://api.cloudinary.com/v1_1/${
+            import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "your_cloud_name"
+          }/raw/upload`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("CV upload failed");
+        }
+
+        const data = await response.json();
+        if (data.secure_url) {
+          setEditData((prev) => ({ 
+            ...prev, 
+            cvUrl: data.secure_url,
+            cvFileName: file.name
+          }));
+          showNotification("success", "CV uploaded successfully!");
+        }
+      } catch (error) {
+        showNotification("error", "CV upload failed. Please try again.");
+        console.error("CV upload error:", error);
+      } finally {
+        setIsCvUploading(false);
+      }
+    },
+    [showNotification]
+  );
+
+  // CV Download Handler
+  const handleCvDownload = useCallback(async () => {
+    if (!editData.cvUrl) {
+      showNotification("error", "No CV available for download");
+      return;
+    }
+
+    try {
+      // Create a temporary anchor element to trigger download
+      const link = document.createElement('a');
+      link.href = editData.cvUrl;
+      link.download = editData.cvFileName || 'CV.pdf';
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      showNotification("success", "CV download started!");
+    } catch (error) {
+      showNotification("error", "Failed to download CV. Please try again.");
+      console.error("Download error:", error);
+    }
+  }, [editData.cvUrl, editData.cvFileName, showNotification]);
+
+  // CV Delete Handler
+  const handleCvDelete = useCallback(() => {
+    setEditData((prev) => ({ 
+      ...prev, 
+      cvUrl: "",
+      cvFileName: ""
+    }));
+    showNotification("success", "CV removed successfully!");
+  }, [showNotification]);
+
+  // CV Preview Handler
+  const handleCvPreview = useCallback(() => {
+    if (editData.cvUrl) {
+      window.open(editData.cvUrl, '_blank');
+    }
+  }, [editData.cvUrl]);
+
   // Optimized form submission handler
   const handleSaveChanges = useCallback(async () => {
     try {
@@ -338,6 +451,8 @@ function AboutSection() {
         interests: editData.interests,
         certifications: editData.certifications,
         Profilepic: editData.profilePic, // Note: Using 'Profilepic' to match Redux state
+        cvUrl: editData.cvUrl,
+        cvFileName: editData.cvFileName,
       };
 
       // Dispatch Redux action
@@ -835,26 +950,33 @@ function AboutSection() {
                 variants={cardVariants}
                 className="flex flex-col sm:flex-row gap-4"
               >
-                <motion.a
-                  href="https://drive.google.com/file/d/11LkjodG_xPY63FGX1_7Hf2eSKhhQzbse/view?usp=drive_link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1"
-                  whileHover={shouldReduceMotion ? {} : { scale: 1.005, y: -1 }}
-                  whileTap={{ scale: 0.995 }}
+                <motion.button
+                  onClick={handleCvDownload}
+                  disabled={!editData.cvUrl}
+                  className={`flex-1 ${
+                    editData.cvUrl 
+                      ? 'cursor-pointer' 
+                      : 'cursor-not-allowed opacity-50'
+                  }`}
+                  whileHover={shouldReduceMotion || !editData.cvUrl ? {} : { scale: 1.005, y: -1 }}
+                  whileTap={editData.cvUrl ? { scale: 0.995 } : {}}
                   transition={{ duration: 0.15 }}
                 >
-                  <div className="w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-150 text-center group">
+                  <div className={`w-full px-8 py-4 bg-gradient-to-r ${
+                    editData.cvUrl 
+                      ? 'from-blue-600 to-purple-600 hover:shadow-xl' 
+                      : 'from-gray-400 to-gray-500'
+                  } text-white font-semibold rounded-xl shadow-lg transition-all duration-150 text-center group`}>
                     <span className="flex items-center justify-center gap-3">
                       <FaDownload
                         className={
-                          shouldReduceMotion ? "" : "group-hover:animate-bounce"
+                          shouldReduceMotion || !editData.cvUrl ? "" : "group-hover:animate-bounce"
                         }
                       />
-                      Download CV
+                      {editData.cvUrl ? "Download CV" : "No CV Available"}
                     </span>
                   </div>
-                </motion.a>
+                </motion.button>
 
                 <motion.button
                   onClick={() => {
@@ -1068,6 +1190,90 @@ function AboutSection() {
                   </div>
                 </div>
 
+                {/* CV Upload Section */}
+                <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800/50 dark:to-slate-900/50 rounded-xl p-6 border border-slate-200/50 dark:border-slate-700/50">
+                  <div className="text-center mb-4">
+                    <label className="block text-lg font-medium text-slate-900 dark:text-white mb-3 flex items-center justify-center gap-2">
+                      <FaFilePdf className="text-red-500" />
+                      CV Document
+                    </label>
+                    
+                    {editData.cvUrl ? (
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-center gap-2 p-3 bg-green-100 dark:bg-green-900/30 border border-green-300 dark:border-green-600/30 rounded-lg">
+                          <FaFilePdf className="text-red-500" />
+                          <span className="text-slate-900 dark:text-white font-medium">
+                            {editData.cvFileName || 'CV.pdf'}
+                          </span>
+                        </div>
+                        
+                        <div className="flex gap-2 justify-center">
+                          <motion.button
+                            onClick={handleCvPreview}
+                            className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-150 flex items-center gap-2"
+                            whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            <FaEye />
+                            Preview
+                          </motion.button>
+                          
+                          <motion.button
+                            onClick={handleCvDelete}
+                            className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-150 flex items-center gap-2"
+                            whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            <FaTrash />
+                            Remove
+                          </motion.button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        <input
+                          type="file"
+                          accept=".pdf"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) handleCvUpload(file);
+                          }}
+                          className="hidden"
+                          id="cv-upload"
+                          disabled={isCvUploading}
+                        />
+                        <motion.label
+                          htmlFor="cv-upload"
+                          className={`px-6 py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg hover:from-green-600 hover:to-emerald-700 cursor-pointer inline-flex items-center gap-3 font-medium transition-all duration-100 ${
+                            isCvUploading ? "opacity-50 cursor-not-allowed" : ""
+                          }`}
+                          whileHover={
+                            !isCvUploading && !shouldReduceMotion
+                              ? { scale: 1.02 }
+                              : {}
+                          }
+                          whileTap={!isCvUploading ? { scale: 0.98 } : {}}
+                        >
+                          {isCvUploading ? (
+                            <>
+                              <FaSpinner className="animate-spin" />
+                              Uploading CV...
+                            </>
+                          ) : (
+                            <>
+                              <FaCloudUploadAlt className="text-xl" />
+                              Upload CV (PDF)
+                            </>
+                          )}
+                        </motion.label>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                          Upload your CV in PDF format (Max: 10MB)
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
                 {/* Form Fields */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   {formFields.map((field, index) => (
@@ -1125,18 +1331,18 @@ function AboutSection() {
                 <div className="flex gap-3 pt-4">
                   <motion.button
                     onClick={handleSaveChanges}
-                    disabled={loading || isUploading}
+                    disabled={loading || isUploading || isCvUploading}
                     className={`flex-1 px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-100 font-medium flex items-center justify-center gap-2 ${
-                      loading || isUploading
+                      loading || isUploading || isCvUploading
                         ? "opacity-50 cursor-not-allowed"
                         : ""
                     }`}
                     whileHover={
-                      !(loading || isUploading) && !shouldReduceMotion
+                      !(loading || isUploading || isCvUploading) && !shouldReduceMotion
                         ? { scale: 1.005 }
                         : {}
                     }
-                    whileTap={!(loading || isUploading) ? { scale: 0.995 } : {}}
+                    whileTap={!(loading || isUploading || isCvUploading) ? { scale: 0.995 } : {}}
                   >
                     {loading ? (
                       <>
@@ -1152,7 +1358,7 @@ function AboutSection() {
                   </motion.button>
                   <motion.button
                     onClick={closeModal}
-                    disabled={loading || isUploading}
+                    disabled={loading || isUploading || isCvUploading}
                     className="px-6 py-3 bg-slate-400 dark:bg-slate-600 hover:bg-slate-500 dark:hover:bg-slate-500 text-white rounded-lg transition-colors duration-100 font-medium flex items-center gap-2"
                     whileHover={!shouldReduceMotion ? { scale: 1.005 } : {}}
                     whileTap={{ scale: 0.995 }}
