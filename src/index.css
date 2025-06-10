@@ -2,22 +2,141 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .spinner {
-  width: 300px;
-  height: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: transparent;
-} */
+/* Custom Animated Cursor Styles */
 * {
-  scroll-behavior: smooth
-  
-
-
-  
+  scroll-behavior: smooth;
+  cursor: none; /* Hide default cursor */
 }
 
+/* Main cursor dot */
+.cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(45deg, #8b5cf6, #3b82f6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+  animation: pulse-cursor 2s infinite;
+}
+
+/* Cursor trail/ring */
+.cursor-ring {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.25s ease-out, border-color 0.2s ease-out;
+}
+
+/* Light mode cursor adjustments */
+@media (prefers-color-scheme: light) {
+  .cursor {
+    background: linear-gradient(45deg, #7c3aed, #2563eb);
+    mix-blend-mode: multiply;
+  }
+  
+  .cursor-ring {
+    border-color: rgba(124, 58, 237, 0.4);
+  }
+}
+
+/* Dark mode cursor adjustments */
+@media (prefers-color-scheme: dark) {
+  .cursor {
+    background: linear-gradient(45deg, #a855f7, #60a5fa);
+    mix-blend-mode: screen;
+  }
+  
+  .cursor-ring {
+    border-color: rgba(168, 85, 247, 0.5);
+  }
+}
+
+/* Cursor hover states */
+.cursor-hover {
+  transform: scale(1.5);
+  background: linear-gradient(45deg, #ec4899, #f59e0b) !important;
+}
+
+.cursor-ring-hover {
+  transform: scale(1.2);
+  border-color: rgba(236, 72, 153, 0.6) !important;
+  border-width: 3px;
+}
+
+/* Cursor click state */
+.cursor-click {
+  transform: scale(0.8);
+  opacity: 0.8;
+}
+
+/* Cursor text state */
+.cursor-text {
+  transform: scale(0.5);
+  background: linear-gradient(45deg, #10b981, #06b6d4) !important;
+}
+
+.cursor-ring-text {
+  transform: scale(0.8);
+  border-color: rgba(16, 185, 129, 0.5) !important;
+}
+
+/* Cursor hide state */
+.cursor-hidden {
+  opacity: 0;
+  transform: scale(0);
+}
+
+/* Pulse animation for cursor */
+@keyframes pulse-cursor {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);
+  }
+}
+
+/* Sparkle trail effect */
+.cursor-sparkle {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: linear-gradient(45deg, #fbbf24, #f59e0b);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9997;
+  animation: sparkle-fade 0.6s ease-out forwards;
+}
+
+@keyframes sparkle-fade {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(180deg);
+  }
+}
+
+/* Restore default cursor for form elements and buttons when needed */
+input, textarea, button, select, a {
+  cursor: none !important;
+}
+
+/* Special cursor for loading states */
+.cursor-loading {
+  animation: spin 1s linear infinite, pulse-cursor 2s infinite;
+}
+
+/* Original styles preserved */
 #load {
   font-size: 4rem;
   font-weight: 700;
@@ -37,8 +156,6 @@
 
 .completed {
   font-size: 4rem;
-  
-
   animation: bigger 1s linear;
 }
 
@@ -68,4 +185,3 @@
     opacity: 1;
   }
 }
-
