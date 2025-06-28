@@ -250,15 +250,40 @@ const certificateSlice = createSlice({
       const now = new Date();
       const sixMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 6, now.getDate());
       
+      // Get unique categories, excluding empty/null values
+      const uniqueCategories = [...new Set(
+        state.items
+          .map(cert => cert.category)
+          .filter(category => category && category.trim() !== '')
+      )];
+      
+      // Count recent certificates (within last 6 months)
+      const recentCount = state.items.filter(cert => {
+        const certDate = cert.issueDate || cert.createdAt;
+        if (!certDate) return false;
+        
+        try {
+          const parsedDate = new Date(certDate);
+          return parsedDate > sixMonthsAgo && parsedDate <= now;
+        } catch {
+          return false;
+        }
+      }).length;
+      
+      // Count verified certificates (those that are not explicitly false)
+      const verifiedCount = state.items.filter(cert => 
+        cert.verified !== false && cert.verified !== 'false'
+      ).length;
+      
       state.stats = {
         total: state.items.length,
-        categories: [...new Set(state.items.map(cert => cert.category))].length,
-        recent: state.items.filter(cert => {
-          const certDate = new Date(cert.issueDate || cert.createdAt);
-          return certDate > sixMonthsAgo;
-        }).length,
-        verified: state.items.filter(cert => cert.verified !== false).length
+        categories: uniqueCategories.length,
+        recent: recentCount,
+        verified: verifiedCount
       };
+      
+      // Update pagination total as well
+      state.pagination.totalItems = state.filteredCertificates.length;
     },
     applyFilters: (state) => {
       let filtered = [...state.items];
@@ -310,6 +335,9 @@ const certificateSlice = createSlice({
         state.items.unshift(action.payload);
         state.totalCount += 1;
         state.success = 'Certificate added successfully!';
+        // Update stats and apply filters after adding
+        certificateSlice.caseReducers.updateStats(state);
+        certificateSlice.caseReducers.applyFilters(state);
       })
       .addCase(addCertificate.rejected, (state, action) => {
         state.loading = false;
@@ -327,6 +355,9 @@ const certificateSlice = createSlice({
         state.filteredCertificates = action.payload;
         state.totalCount = action.payload.length;
         state.initialized = true;
+        // Update stats after fetching
+        certificateSlice.caseReducers.updateStats(state);
+        certificateSlice.caseReducers.applyFilters(state);
       })
       .addCase(fetchCertificates.rejected, (state, action) => {
         state.loading = false;
@@ -345,6 +376,9 @@ const certificateSlice = createSlice({
           state.items[index] = action.payload;
         }
         state.success = 'Certificate updated successfully!';
+        // Update stats and apply filters after updating
+        certificateSlice.caseReducers.updateStats(state);
+        certificateSlice.caseReducers.applyFilters(state);
       })
       .addCase(updateCertificate.rejected, (state, action) => {
         state.loading = false;
@@ -362,6 +396,9 @@ const certificateSlice = createSlice({
         state.filteredCertificates = state.filteredCertificates.filter(cert => cert.id !== action.payload);
         state.totalCount = Math.max(0, state.totalCount - 1);
         state.success = 'Certificate deleted successfully!';
+        // Update stats after deleting
+        certificateSlice.caseReducers.updateStats(state);
+        certificateSlice.caseReducers.applyFilters(state);
       })
       .addCase(deleteCertificate.rejected, (state, action) => {
         state.loading = false;

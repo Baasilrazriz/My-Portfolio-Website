@@ -1,7 +1,6 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 
-function MainLoader(props) {
+function MainLoader() {
   return (
     <motion.div 
       className="flex justify-center items-center bg-gradient-to-br from-slate-950 via-slate-900 to-black h-screen relative overflow-hidden"

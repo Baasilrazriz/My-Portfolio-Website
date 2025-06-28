@@ -9,6 +9,7 @@ import {
   HiOutlineLightningBolt,
   HiOutlineBriefcase,
   HiOutlineMail,
+  HiOutlineOfficeBuilding,
 } from "react-icons/hi";
 
 function Navbar() {
@@ -29,6 +30,7 @@ function Navbar() {
       "services",
       "achievements",
       "education",
+      "experience",
       "skills",
       "proj",
       "con",
@@ -71,6 +73,7 @@ function Navbar() {
     { id: "about", label: "About", icon: HiOutlineUser },
     { id: "services", label: "Services", icon: HiOutlineLightningBolt },
     { id: "education", label: "Education", icon: HiOutlineAcademicCap },
+    { id: "experience", label: "Experience", icon: HiOutlineOfficeBuilding },
     { id: "skills", label: "Skills", icon: HiOutlineLightningBolt },
     { id: "proj", label: "Projects", icon: HiOutlineBriefcase },
     { id: "con", label: "Contact", icon: HiOutlineMail },
@@ -81,12 +84,12 @@ function Navbar() {
       {/* Main Navbar - Enhanced Dynamic Island */}
       <nav
         className={`
-        fixed top-4 left-1/2 transform -translate-x-1/2 z-50 
+        fixed top-2 sm:top-4 left-1/2 transform -translate-x-1/2 z-50 
         transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]
         ${
           isScrolled
-            ? "w-[95%] md:w-[90%] lg:w-[80%] max-w-5xl"
-            : "w-[98%] md:w-[95%] lg:w-[85%] max-w-6xl"
+            ? "w-[96%] sm:w-[95%] md:w-[90%] lg:w-[85%] xl:w-[80%] max-w-6xl"
+            : "w-[98%] sm:w-[97%] md:w-[95%] lg:w-[90%] xl:w-[85%] max-w-7xl"
         }
       `}
       >
@@ -121,8 +124,8 @@ function Navbar() {
           {/* Main Content Container */}
           <div
             className={`
-            relative flex items-center justify-between px-6 transition-all duration-500
-            ${isMenuOpen ? "py-5" : "py-4"}
+            relative flex items-center justify-between px-3 sm:px-4 md:px-6 transition-all duration-500
+            ${isMenuOpen ? "py-4 sm:py-5" : "py-3 sm:py-4"}
           `}
           >
             {/* Enhanced Logo Section */}
@@ -143,7 +146,7 @@ function Navbar() {
                     alt="Basil Razriz - Transforming Visions into Code"
                     className={`
                       relative transition-all duration-500 ease-out object-contain
-                      ${isScrolled ? "h-9 w-auto" : "h-11 w-auto"}
+                      ${isScrolled ? "h-7 sm:h-8 md:h-9 w-auto" : "h-8 sm:h-9 md:h-10 lg:h-11 w-auto"}
                       filter drop-shadow-lg group-hover:drop-shadow-2xl
                       group-hover:brightness-110 group-hover:contrast-125 group-hover:saturate-110
                     `}
@@ -157,10 +160,10 @@ function Navbar() {
             </div>
 
             {/* Enhanced Center Navigation - Desktop */}
-            <div className="hidden lg:flex items-center">
+            <div className="hidden md:flex items-center">
               <div
                 className={`
-                flex items-center space-x-1 rounded-full p-1.5 backdrop-blur-sm transition-all duration-500
+                flex items-center space-x-0.5 lg:space-x-1 rounded-full p-1 lg:p-1.5 backdrop-blur-sm transition-all duration-500
                 ${
                   isScrolled
                     ? "bg-white/30 dark:bg-gray-800/40 border border-white/50 dark:border-gray-700/60 shadow-lg"
@@ -175,11 +178,11 @@ function Navbar() {
                       key={item.id}
                       href={`#${item.id}`}
                       className={`
-                        relative px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-400
-                        group flex items-center space-x-2 overflow-hidden backdrop-blur-sm
+                        relative px-2 md:px-3 lg:px-4 py-2 lg:py-2.5 rounded-full text-xs md:text-sm font-medium transition-all duration-400
+                        group flex items-center space-x-1 lg:space-x-2 overflow-hidden backdrop-blur-sm
                         ${
                           activeSection === item.id
-                            ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-lg scale-110 border border-white/60 dark:border-gray-700/60"
+                            ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-lg scale-105 lg:scale-110 border border-white/60 dark:border-gray-700/60"
                             : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-white/40 dark:hover:bg-gray-800/40 hover:scale-105"
                         }
                       `}
@@ -193,9 +196,12 @@ function Navbar() {
                         </>
                       )}
 
-                      <IconComponent className="w-4 h-4 opacity-80 group-hover:opacity-100 transition-all duration-300 relative z-10" />
-                      <span className="relative z-10 font-medium tracking-wide">
+                      <IconComponent className="w-3 md:w-4 h-3 md:h-4 opacity-80 group-hover:opacity-100 transition-all duration-300 relative z-10" />
+                      <span className="relative z-10 font-medium tracking-wide hidden lg:inline">
                         {item.label}
+                      </span>
+                      <span className="relative z-10 font-medium tracking-wide lg:hidden text-xs">
+                        {item.label.slice(0, 3)}
                       </span>
 
                       {/* Enhanced Hover Effects */}
@@ -207,12 +213,12 @@ function Navbar() {
             </div>
 
             {/* Enhanced Right Controls */}
-            <div className="flex items-center space-x-3 z-20">
+            <div className="flex items-center space-x-2 sm:space-x-3 z-20">
               {/* Advanced Theme Switcher */}
               <div className="relative group">
                 <div
                   className={`
-                  p-2.5 rounded-full backdrop-blur-sm transition-all duration-400 group-hover:scale-110
+                  p-2 sm:p-2.5 rounded-full backdrop-blur-sm transition-all duration-400 group-hover:scale-110
                   ${
                     isScrolled
                       ? "bg-white/30 dark:bg-gray-800/40 border border-white/50 dark:border-gray-700/60 shadow-lg"
@@ -231,7 +237,7 @@ function Navbar() {
               <button
                 onClick={handleToggle}
                 className={`
-                  lg:hidden p-2.5 rounded-full backdrop-blur-sm transition-all duration-400 hover:scale-110
+                  md:hidden p-2 sm:p-2.5 rounded-full backdrop-blur-sm transition-all duration-400 hover:scale-110
                   ${
                     isScrolled
                       ? "bg-white/30 dark:bg-gray-800/40 border border-white/50 dark:border-gray-700/60 shadow-lg"
@@ -244,24 +250,24 @@ function Navbar() {
                   }
                 `}
               >
-                <div className="w-6 h-6 flex flex-col justify-center items-center">
+                <div className="w-5 h-5 sm:w-6 sm:h-6 flex flex-col justify-center items-center">
                   <span
-                    className={`block w-5 h-0.5 bg-gray-700 dark:bg-gray-300 transform transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                    className={`block w-4 sm:w-5 h-0.5 bg-gray-700 dark:bg-gray-300 transform transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
                       isMenuOpen
-                        ? "rotate-45 translate-y-1 bg-blue-600 dark:bg-blue-400"
-                        : "-translate-y-1"
+                        ? "rotate-45 translate-y-0.5 sm:translate-y-1 bg-blue-600 dark:bg-blue-400"
+                        : "-translate-y-0.5 sm:-translate-y-1"
                     }`}
                   />
                   <span
-                    className={`block w-5 h-0.5 bg-gray-700 dark:bg-gray-300 transition-all duration-400 ${
+                    className={`block w-4 sm:w-5 h-0.5 bg-gray-700 dark:bg-gray-300 transition-all duration-400 ${
                       isMenuOpen ? "opacity-0 scale-0" : "opacity-100 scale-100"
                     }`}
                   />
                   <span
-                    className={`block w-5 h-0.5 bg-gray-700 dark:bg-gray-300 transform transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                    className={`block w-4 sm:w-5 h-0.5 bg-gray-700 dark:bg-gray-300 transform transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
                       isMenuOpen
-                        ? "-rotate-45 -translate-y-1 bg-blue-600 dark:bg-blue-400"
-                        : "translate-y-1"
+                        ? "-rotate-45 -translate-y-0.5 sm:-translate-y-1 bg-blue-600 dark:bg-blue-400"
+                        : "translate-y-0.5 sm:translate-y-1"
                     }`}
                   />
                 </div>
@@ -272,13 +278,13 @@ function Navbar() {
           {/* Exotic Expandable Mobile Menu */}
           <div
             className={`
-            lg:hidden overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]
+            md:hidden overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]
             ${isMenuOpen ? "max-h-full opacity-100" : "max-h-0 opacity-0"}
           `}
           >
-            <div className="px-6 pb-6">
+            <div className="px-3 sm:px-4 md:px-6 pb-4 sm:pb-6">
               {/* Elegant Divider */}
-              <div className="relative mb-6">
+              <div className="relative mb-4 sm:mb-6">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent opacity-50"></div>
                 </div>
@@ -288,7 +294,7 @@ function Navbar() {
               </div>
 
               {/* Streamlined Mobile Navigation */}
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {navItems.map((item, index) => {
                   const IconComponent = item.icon;
                   return (
@@ -297,7 +303,7 @@ function Navbar() {
                       href={`#${item.id}`}
                       onClick={() => setIsMenuOpen(false)}
                       className={`
-                        group relative flex items-center p-4 rounded-2xl transition-all duration-400
+                        group relative flex items-center p-3 sm:p-4 rounded-xl sm:rounded-2xl transition-all duration-400
                         transform hover:scale-[1.02] overflow-hidden backdrop-blur-sm
                         ${
                           activeSection === item.id
@@ -315,10 +321,10 @@ function Navbar() {
                       {/* Enhanced Background Effects */}
                       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-all duration-400"></div>
 
-                      <div className="relative z-10 flex items-center space-x-4 w-full">
+                      <div className="relative z-10 flex items-center space-x-3 sm:space-x-4 w-full">
                         <div
                           className={`
-                          p-2 rounded-xl transition-all duration-300
+                          p-1.5 sm:p-2 rounded-lg sm:rounded-xl transition-all duration-300
                           ${
                             activeSection === item.id
                               ? "bg-white/20"
@@ -327,14 +333,14 @@ function Navbar() {
                         `}
                         >
                           <IconComponent
-                            className={`w-5 h-5 transition-all duration-300 ${
+                            className={`w-4 sm:w-5 h-4 sm:h-5 transition-all duration-300 ${
                               activeSection === item.id
                                 ? "text-white"
                                 : "text-gray-600 dark:text-gray-400"
                             }`}
                           />
                         </div>
-                        <span className="font-medium text-base tracking-wide">
+                        <span className="font-medium text-sm sm:text-base tracking-wide">
                           {item.label}
                         </span>
 

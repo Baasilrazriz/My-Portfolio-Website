@@ -10,6 +10,7 @@ const sections = {
   HomeSection: lazy(() => import('../Sections/HomeSection')),
   AboutSection: lazy(() => import('../Sections/AboutSection')),
   EducationSection: lazy(() => import('../Sections/EducationSection')),
+  ExperienceSection: lazy(() => import('../Sections/ExperienceSection')),
   ServicesSection: lazy(() => import('../Sections/ServicesSection')),
   SkillsSection: lazy(() => import('../Sections/SkillsSection')),
   CertificateSection: lazy(() => import('../Sections/CertificateSection')),
@@ -23,11 +24,25 @@ function PortfolioPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 4000);
+    // Check if this is the first visit
+    const hasVisited = localStorage.getItem('portfolioVisited');
+    const isFirstTime = !hasVisited;
 
-    return () => clearTimeout(timer);
+    if (isFirstTime) {
+      // First visit: show loader for 4 seconds
+      localStorage.setItem('portfolioVisited', 'true');
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 4000);
+      return () => clearTimeout(timer);
+    } else {
+      // Subsequent visits: show loader only for actual loading time
+      // Simulate realistic loading time (you can adjust this or remove if not needed)
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, Math.random() * 1000 + 300); // 300ms to 1.3s random loading time
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   // Error fallback component
@@ -67,6 +82,7 @@ function PortfolioPage() {
       HomeSection,
       AboutSection,
       EducationSection,
+      ExperienceSection,
       SkillsSection,
       ServicesSection,
       CertificateSection,
@@ -82,6 +98,7 @@ function PortfolioPage() {
         <AboutSection />
         <ServicesSection />
         <EducationSection />
+        <ExperienceSection />
         <CertificateSection />
         <SkillsSection />
         <ProjectSection />

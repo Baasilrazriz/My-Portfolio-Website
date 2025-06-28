@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Upload Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header p {
+            color: #666;
+            margin: 10px 0 0 0;
+            font-size: 1.1em;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: bold;
+            display: none;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .status.info {
+            background: #cce7ff;
+            color: #004085;
+            border: 1px solid #b3d7ff;
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn.primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+        .btn.secondary {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            color: white;
+        }
+        .btn.success {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+        }
+        .btn.warning {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            color: white;
+        }
+        .btn:disabled {
+            background: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+        .progress-container {
+            margin: 20px 0;
+            display: none;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #333;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .log-container {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            max-height: 500px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            margin-top: 20px;
+        }
+        .log-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .log-container::-webkit-scrollbar-track {
+            background: #2a2a2a;
+            border-radius: 4px;
+        }
+        .log-container::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 4px;
+        }
+        .log-container::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+        .log-entry {
+            margin-bottom: 5px;
+        }
+        .log-entry.success {
+            color: #00ff00;
+        }
+        .log-entry.error {
+            color: #ff6b6b;
+        }
+        .log-entry.warning {
+            color: #ffd93d;
+        }
+        .log-entry.info {
+            color: #74c0fc;
+        }
+        .config-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        .config-info h3 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        .config-item {
+            margin: 5px 0;
+            font-family: monospace;
+            background: white;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        .test-form {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .form-group textarea {
+            height: 80px;
+            resize: vertical;
+        }
+        .tech-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .tech-input input {
+            flex: 1;
+        }
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .tech-tag {
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .tech-tag .remove {
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            width: 100%;
+        }
+        .file-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .file-input-display {
+            border: 2px dashed #ddd;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .file-input-display:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        .file-input-display.has-file {
+            border-color: #28a745;
+            background: #f8fff8;
+        }
+        .preview-image {
+            max-width: 200px;
+            max-height: 150px;
+            margin-top: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Project Upload Test</h1>
+            <p>Test project upload functionality with Cloudinary and Firebase integration</p>
+        </div>
+
+        <div class="config-info">
+            <h3>📋 Configuration Status</h3>
+            <div class="config-item">
+                <strong>Cloudinary Cloud Name:</strong> <span id="cloudName">Loading...</span>
+            </div>
+            <div class="config-item">
+                <strong>Upload Preset:</strong> <span id="uploadPreset">Loading...</span>
+            </div>
+            <div class="config-item">
+                <strong>Firebase Project:</strong> <span id="firebaseProject">portfolio-razriz</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn primary" onclick="testConnection()">🔍 Test Connection</button>
+            <button class="btn secondary" onclick="uploadAllProjects()">📤 Upload All Projects</button>
+            <button class="btn success" onclick="showSingleUploadForm()">➕ Upload Single Project</button>
+            <button class="btn warning" onclick="clearLogs()">🧹 Clear Logs</button>
+        </div>
+
+        <div class="status" id="status"></div>
+
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+                <div class="progress-text" id="progressText">0%</div>
+            </div>
+        </div>
+
+        <!-- Single Project Upload Form -->
+        <div class="test-form" id="singleUploadForm" style="display: none;">
+            <h3>📝 Upload Single Project</h3>
+            <form id="projectForm">
+                <div class="form-group">
+                    <label for="projectTitle">Project Title *</label>
+                    <input type="text" id="projectTitle" required placeholder="e.g., Ecommerce Web App">
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectLang">Technologies Used *</label>
+                    <input type="text" id="projectLang" required placeholder="e.g., React + ASP.net + SQL">
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectOverview">Project Overview *</label>
+                    <textarea id="projectOverview" required placeholder="Brief description of your project..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectCategory">Category *</label>
+                    <select id="projectCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Mobile Development">Mobile Development</option>
+                        <option value="Machine Learning">Machine Learning</option>
+                        <option value="Data Science">Data Science</option>
+                        <option value="Desktop Application">Desktop Application</option>
+                        <option value="Game Development">Game Development</option>
+                        <option value="DevOps">DevOps</option>
+                        <option value="API Development">API Development</option>
+                        <option value="Blockchain">Blockchain</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectImage">Project Image *</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="projectImage" class="file-input" accept="image/*" required>
+                        <div class="file-input-display" id="fileInputDisplay">
+                            <p>📸 Click to select project image</p>
+                            <p style="font-size: 12px; color: #666;">Supports: JPG, PNG, GIF (Max: 10MB)</p>
+                        </div>
+                    </div>
+                    <img id="previewImage" class="preview-image" style="display: none;">
+                </div>
+                
+                <div class="form-group">
+                    <label>Tech Stack *</label>
+                    <div class="tech-input">
+                        <input type="text" id="techInput" placeholder="Enter technology name">
+                        <button type="button" class="btn primary" onclick="addTech()" style="padding: 8px 16px;">Add</button>
+                    </div>
+                    <div class="tech-list" id="techList"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectLive">Live Link (Optional)</label>
+                    <input type="url" id="projectLive" placeholder="https://your-project.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectGit">GitHub Link (Optional)</label>
+                    <input type="url" id="projectGit" placeholder="https://github.com/username/repository">
+                </div>
+                
+                <div class="controls">
+                    <button type="submit" class="btn success">🚀 Upload Project</button>
+                    <button type="button" class="btn secondary" onclick="hideSingleUploadForm()">❌ Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="log-container" id="logContainer">
+            <div class="log-entry info">🔄 Initializing project upload test interface...</div>
+            <div class="log-entry success">✅ Interface ready. Click 'Test Connection' to begin.</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { 
+            uploadAllProjects, 
+            uploadSingleProject, 
+            testCloudinaryConnection 
+        } from './src/scripts/uploadProjects.js';
+
+        // Global variables
+        let techArray = [];
+
+        // Configuration
+        const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+        const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+
+        // Update configuration display
+        document.getElementById('cloudName').textContent = CLOUDINARY_CLOUD_NAME || 'Not configured';
+        document.getElementById('uploadPreset').textContent = CLOUDINARY_UPLOAD_PRESET || 'Not configured';
+
+        // Custom logging function
+        window.log = function(message, type = 'info') {
+            const logContainer = document.getElementById('logContainer');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${type}`;
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        };
+
+        // Status display function
+        function showStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+            statusEl.style.display = 'block';
+            
+            if (type !== 'error') {
+                setTimeout(() => {
+                    statusEl.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Progress bar functions
+        function showProgress(percentage, text) {
+            const container = document.getElementById('progressContainer');
+            const fill = document.getElementById('progressFill');
+            const textEl = document.getElementById('progressText');
+            
+            container.style.display = 'block';
+            fill.style.width = `${percentage}%`;
+            textEl.textContent = text || `${percentage}%`;
+        }
+
+        function hideProgress() {
+            document.getElementById('progressContainer').style.display = 'none';
+        }
+
+        // Test connection function
+        window.testConnection = async function() {
+            try {
+                showStatus('Testing Cloudinary connection...', 'info');
+                showProgress(0, 'Starting test...');
+                
+                const isConnected = await testCloudinaryConnection();
+                
+                if (isConnected) {
+                    showStatus('✅ Connection test successful!', 'success');
+                    showProgress(100, 'Test completed');
+                } else {
+                    showStatus('❌ Connection test failed!', 'error');
+                    showProgress(100, 'Test failed');
+                }
+                
+                setTimeout(hideProgress, 2000);
+            } catch (error) {
+                showStatus(`❌ Connection test error: ${error.message}`, 'error');
+                hideProgress();
+                window.log(`Connection test error: ${error.message}`, 'error');
+            }
+        };
+
+        // Upload all projects function
+        window.uploadAllProjects = async function() {
+            try {
+                showStatus('Starting bulk project upload...', 'info');
+                showProgress(0, 'Initializing...');
+                
+                const summary = await uploadAllProjects();
+                
+                if (summary.successful > 0) {
+                    showStatus(`✅ Upload completed! ${summary.successful}/${summary.totalProjects} projects uploaded successfully.`, 'success');
+                    showProgress(100, `${summary.successful}/${summary.totalProjects} completed`);
+                } else {
+                    showStatus('❌ Upload failed! No projects were uploaded successfully.', 'error');
+                    showProgress(100, 'Upload failed');
+                }
+                
+                setTimeout(hideProgress, 3000);
+            } catch (error) {
+                showStatus(`❌ Upload error: ${error.message}`, 'error');
+                hideProgress();
+                window.log(`Upload error: ${error.message}`, 'error');
+            }
+        };
+
+        // Single upload form functions
+        window.showSingleUploadForm = function() {
+            document.getElementById('singleUploadForm').style.display = 'block';
+            document.getElementById('singleUploadForm').scrollIntoView({ behavior: 'smooth' });
+        };
+
+        window.hideSingleUploadForm = function() {
+            document.getElementById('singleUploadForm').style.display = 'none';
+            document.getElementById('projectForm').reset();
+            techArray = [];
+            updateTechList();
+            resetFileInput();
+        };
+
+        // Tech stack management
+        window.addTech = function() {
+            const input = document.getElementById('techInput');
+            const tech = input.value.trim();
+            
+            if (tech && !techArray.includes(tech)) {
+                techArray.push(tech);
+                input.value = '';
+                updateTechList();
+            }
+        };
+
+        function updateTechList() {
+            const techList = document.getElementById('techList');
+            techList.innerHTML = techArray.map((tech, index) => 
+                `<div class="tech-tag">
+                    ${tech}
+                    <span class="remove" onclick="removeTech(${index})">×</span>
+                </div>`
+            ).join('');
+        }
+
+        window.removeTech = function(index) {
+            techArray.splice(index, 1);
+            updateTechList();
+        };
+
+        // File input handling
+        document.getElementById('projectImage').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const display = document.getElementById('fileInputDisplay');
+            const preview = document.getElementById('previewImage');
+            
+            if (file) {
+                display.classList.add('has-file');
+                display.innerHTML = `<p>📸 Selected: ${file.name}</p><p style="font-size: 12px; color: #666;">Size: ${(file.size / 1024 / 1024).toFixed(2)} MB</p>`;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                resetFileInput();
+            }
+        });
+
+        function resetFileInput() {
+            const display = document.getElementById('fileInputDisplay');
+            const preview = document.getElementById('previewImage');
+            
+            display.classList.remove('has-file');
+            display.innerHTML = '<p>📸 Click to select project image</p><p style="font-size: 12px; color: #666;">Supports: JPG, PNG, GIF (Max: 10MB)</p>';
+            preview.style.display = 'none';
+        }
+
+        // Tech input enter key support
+        document.getElementById('techInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addTech();
+            }
+        });
+
+        // Form submission
+        document.getElementById('projectForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            try {
+                if (techArray.length === 0) {
+                    showStatus('❌ Please add at least one technology to the tech stack', 'error');
+                    return;
+                }
+                
+                const fileInput = document.getElementById('projectImage');
+                const file = fileInput.files[0];
+                
+                if (!file) {
+                    showStatus('❌ Please select a project image', 'error');
+                    return;
+                }
+
+                // Convert file to base64
+                const reader = new FileReader();
+                reader.onload = async function(e) {
+                    const base64Image = e.target.result;
+                    
+                    const projectData = {
+                        id: Date.now(),
+                        title: document.getElementById('projectTitle').value.trim(),
+                        lang: document.getElementById('projectLang').value.trim(),
+                        overview: document.getElementById('projectOverview').value.trim(),
+                        imgUrl: base64Image,
+                        tech: [...techArray],
+                        category: document.getElementById('projectCategory').value,
+                        live_link: document.getElementById('projectLive').value.trim(),
+                        git_link: document.getElementById('projectGit').value.trim()
+                    };
+                    
+                    showStatus('Uploading project...', 'info');
+                    showProgress(0, 'Starting upload...');
+                    
+                    try {
+                        const result = await uploadSingleProject(projectData);
+                        
+                        if (result.success) {
+                            showStatus('✅ Project uploaded successfully!', 'success');
+                            showProgress(100, 'Upload completed');
+                            hideSingleUploadForm();
+                        } else {
+                            showStatus(`❌ Upload failed: ${result.error}`, 'error');
+                            showProgress(100, 'Upload failed');
+                        }
+                        
+                        setTimeout(hideProgress, 3000);
+                    } catch (error) {
+                        showStatus(`❌ Upload error: ${error.message}`, 'error');
+                        hideProgress();
+                    }
+                };
+                
+                reader.readAsDataURL(file);
+                
+            } catch (error) {
+                showStatus(`❌ Form error: ${error.message}`, 'error');
+                window.log(`Form error: ${error.message}`, 'error');
+            }
+        });
+
+        // Clear logs function
+        window.clearLogs = function() {
+            document.getElementById('logContainer').innerHTML = '<div class="log-entry info">🧹 Logs cleared</div>';
+        };
+
+        // Initialize
+        window.log('🚀 Project upload test interface loaded', 'success');
+        window.log('💡 Ready to test project upload functionality', 'info');
+    </script>
+</body>
+</html>

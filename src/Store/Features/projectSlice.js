@@ -17,8 +17,10 @@ export const fetchProjects = createAsyncThunk(
   'projects/fetchProjects',
   async (_, { rejectWithValue }) => {
     try {
+      const projectsRef = collection(db, 'portfolio', 'projects', 'items');
+
       const q = query(
-        collection(db, 'projects'),
+        projectsRef,
         orderBy('createdAt', 'desc')
       );
       const querySnapshot = await getDocs(q);

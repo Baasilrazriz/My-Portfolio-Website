@@ -4,11 +4,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import PropTypes from 'prop-types'
 import { useCursor } from './Hooks/useCursor'
+import AIBot from './Components/AIBot/AIBot'
 
 // Lazy load components for better performance
 const PortfolioPage = lazy(() => import("./Pages/PortfolioPage"))
 const LoginPage = lazy(() => import("./Pages/LoginPage"))
 const ErrorPage = lazy(() => import("./Pages/ErrorPage"))
+const ProjectDetailPage = lazy(() => import("./Pages/ProjectDetailPage"))
 const ProtectedRoutes = lazy(() => import("./ProtectedRoutes/ProtectedRoutes"))
 // Enhanced Loading component with cursor loading state
 const Loading = ({ setCursorLoading }) => {
@@ -122,6 +124,9 @@ function App() {
         toastClassName="backdrop-blur-sm"
       />
       
+      {/* AI Bot Component */}
+      <AIBot />
+      
       <BrowserRouter>
         <Suspense fallback={<Loading setCursorLoading={setCursorLoading} />}>
           <Routes>
@@ -132,7 +137,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             
             {/* Project Detail Route */}
-            <Route path="/project/:id" element={<PortfolioPage />} />
+            <Route path="/project/:id" element={<ProjectDetailPage />} />
             
             {/* Error Page Route */}
             <Route path="/error" element={<ErrorPage />} />

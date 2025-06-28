@@ -1,12 +1,17 @@
-import { memo, useEffect, useState, useMemo } from "react";
+import { memo, useEffect, useState, useMemo, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { motion, useReducedMotion } from "framer-motion";
+import { downloadFile } from "../utils/cvUtils";
 
 function HomeSection() {
   const image = useSelector((state) => state.home.image);
   const description = useSelector((state) => state.home.description);
   const socialAccounts = useSelector((state) => state.socialAccount?.socialAccounts || []);
   const shouldReduceMotion = useReducedMotion();
+  
+  // Force local CV URL for reliability
+  const cvUrl = "/cv.pdf";
+  const cvFileName = "Muhammad_Basil_Irfan_CV.pdf";
   
   const roles = useMemo(() => [
     "Full Stack Developer",
@@ -117,6 +122,38 @@ function HomeSection() {
 
   // Use your social accounts if Redux store is empty
   const displaySocialAccounts = socialAccounts.length > 0 ? socialAccounts : fallbackSocialAccounts;
+
+  // CV Download Handler
+  const handleCvDownload = useCallback(async (e) => {
+    e.preventDefault();
+    
+    if (!cvUrl) {
+      console.warn("No CV available for download");
+      return;
+    }
+
+    try {
+      // Always use local URL for reliability
+      const localUrl = "/cv.pdf";
+      const downloadUrl = cvUrl.includes('cloudinary') ? localUrl : cvUrl;
+      
+      console.log('Downloading CV from:', downloadUrl);
+      const result = await downloadFile(downloadUrl, cvFileName || 'Muhammad_Basil_Irfan_CV.pdf');
+      
+      // Silent success for home section (no notifications)
+      if (result.success) {
+        console.log('CV download successful via method:', result.method);
+      }
+    } catch (error) {
+      console.error("Download error:", error);
+      // Silent fallback for home section
+      try {
+        window.open("/cv.pdf", '_blank');
+      } catch (fallbackError) {
+        console.error("Failed to open CV:", fallbackError);
+      }
+    }
+  }, [cvUrl, cvFileName]);
 
   // Social icons mapping
   const getSocialIcon = (name) => {
@@ -309,16 +346,19 @@ function HomeSection() {
                     View My Work
                   </motion.a>
                   
-                  <motion.a
-                    href="https://drive.google.com/file/d/11LkjodG_xPY63FGX1_7Hf2eSKhhQzbse/view?usp=drive_link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-slate-400 dark:border-slate-600 text-slate-700 dark:text-slate-300 font-semibold rounded-lg hover:border-slate-600 dark:hover:border-slate-400 hover:text-slate-900 dark:hover:text-white transition-all duration-300 text-center"
-                    whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                  <motion.button
+                    onClick={handleCvDownload}
+                    disabled={!cvUrl}
+                    className={`px-6 sm:px-8 py-3 sm:py-4 border-2 font-semibold rounded-lg transition-all duration-300 text-center ${
+                      cvUrl 
+                        ? 'bg-transparent border-slate-400 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:border-slate-600 dark:hover:border-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer'
+                        : 'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-500 cursor-not-allowed'
+                    }`}
+                    whileHover={shouldReduceMotion || !cvUrl ? {} : { scale: 1.05 }}
+                    whileTap={cvUrl ? { scale: 0.95 } : {}}
                   >
-                    Download CV
-                  </motion.a>
+                    {cvUrl ? "Download CV" : "CV Not Available"}
+                  </motion.button>
                 </motion.div>
 
                 {/* Social Links */}
@@ -485,4 +525,6 @@ function HomeSection() {
   );
 }
 
-export default memo(HomeSection);
+const MemoizedHomeSection = memo(HomeSection);
+MemoizedHomeSection.displayName = "HomeSection";
+export default MemoizedHomeSection;

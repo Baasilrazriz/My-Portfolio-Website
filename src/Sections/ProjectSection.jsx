@@ -58,7 +58,7 @@ const ProjectSection = () => {
     { value: "All", label: "All Projects", icon: FaCode, count: projects.length },
     { value: "Web Development", label: "Web Apps", icon: FaLaptopCode, count: projects.filter(p => p.category === "Web Development").length },
     { value: "Mobile App", label: "Mobile Apps", icon: FaMobile, count: projects.filter(p => p.category === "Mobile App").length },
-    { value: "Desktop App", label: "Desktop Apps", icon: FaDesktop, count: projects.filter(p => p.category === "Desktop App").length }
+    { value: "Desktop Application", label: "Desktop Apps", icon: FaDesktop, count: projects.filter(p => p.category === "Desktop Application").length }
   ], [projects]);
 
   // Fetch projects on component mount
@@ -76,7 +76,7 @@ const ProjectSection = () => {
     total: projects.length,
     web: projects.filter(p => p.category === "Web Development").length,
     mobile: projects.filter(p => p.category === "Mobile App").length,
-    desktop: projects.filter(p => p.category === "Desktop App").length,
+    desktop: projects.filter(p => p.category === "Desktop Application").length,
     featured: projects.filter(p => p.featured).length
   }), [projects]);
 

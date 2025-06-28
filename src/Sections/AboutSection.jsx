@@ -40,7 +40,17 @@ import {
   FaEye,
   FaCloudUploadAlt,
 } from "react-icons/fa";
+
+// Import Redux actions
 import { fetchAboutInfo, updateAboutInfo } from "../Store/Features/aboutSlice";
+
+// Import CV utilities
+import { 
+  uploadToCloudinary, 
+  downloadFile, 
+  validatePdfFile, 
+  validateImageFile
+} from "../utils/cvUtils";
 
 function AboutSection() {
   const dispatch = useDispatch();
@@ -97,8 +107,8 @@ function AboutSection() {
     interests: "Web Development, UI/UX Design, Open Source",
     certifications: "AWS Certified, React Developer Certified",
     profilePic: "",
-    cvUrl: "",
-    cvFileName: "",
+    cvUrl: "/cv.pdf", // Local fallback URL that's always accessible
+    cvFileName: "Muhammad_Basil_Irfan_CV.pdf",
   }), []);
 
   // Create editData state that syncs with Redux store
@@ -124,17 +134,26 @@ function AboutSection() {
       interests: interests || defaultData.interests,
       certifications: certifications || defaultData.certifications,
       profilePic: profilePic || defaultData.profilePic,
-      cvUrl: cvUrl || defaultData.cvUrl,
-      cvFileName: cvFileName || defaultData.cvFileName,
+      // Force local CV URL for reliability
+      cvUrl: "/cv.pdf",
+      cvFileName: "Muhammad_Basil_Irfan_CV.pdf",
     });
   }, [name, title, dob, location, email, phone, about, education, languages, interests, certifications, profilePic, cvUrl, cvFileName, defaultData]);
+
+ // Optimized notification handler
+  const showNotification = useCallback((type, message) => {
+    setNotification({ show: true, type, message });
+    setTimeout(() => {
+      setNotification({ show: false, type: "", message: "" });
+    }, 3000);
+  }, []);
 
   // Show error notification if Redux error occurs
   useEffect(() => {
     if (error) {
       showNotification("error", `Error: ${error}`);
     }
-  }, [error]);
+  }, [error, showNotification]);
 
   // Ultra-fast modal animation variants
   const modalVariants = useMemo(
@@ -257,61 +276,30 @@ function AboutSection() {
     [shouldReduceMotion]
   );
 
-  // Optimized notification handler
-  const showNotification = useCallback((type, message) => {
-    setNotification({ show: true, type, message });
-    setTimeout(() => {
-      setNotification({ show: false, type: "", message: "" });
-    }, 3000);
-  }, []);
+ 
 
   // Optimized image upload handler
   const handleImageUpload = useCallback(
     async (file) => {
       if (!file) return;
 
-      // Validate file type
-      if (!file.type.startsWith("image/")) {
-        showNotification("error", "Please select a valid image file");
-        return;
-      }
-
-      // Validate file size (5MB max)
-      if (file.size > 5 * 1024 * 1024) {
-        showNotification("error", "Image size should be less than 5MB");
+      // Validate file using utility
+      const validation = validateImageFile(file);
+      if (!validation.isValid) {
+        showNotification("error", validation.errors[0]);
         return;
       }
 
       setIsUploading(true);
       try {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append(
-          "upload_preset",
-          import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "your_upload_preset"
-        );
-
-        const response = await fetch(
-          `https://api.cloudinary.com/v1_1/${
-            import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "your_cloud_name"
-          }/image/upload`,
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Upload failed");
-        }
-
-        const data = await response.json();
+        const data = await uploadToCloudinary(file, 'image');
         if (data.secure_url) {
           setEditData((prev) => ({ ...prev, profilePic: data.secure_url }));
           showNotification("success", "Image uploaded successfully!");
         }
       } catch (error) {
         showNotification("error", "Image upload failed. Please try again.");
+        console.error("Image upload error:", error);
       } finally {
         setIsUploading(false);
       }
@@ -324,44 +312,16 @@ function AboutSection() {
     async (file) => {
       if (!file) return;
 
-      // Validate file type
-      if (file.type !== "application/pdf") {
-        showNotification("error", "Please select a PDF file");
-        return;
-      }
-
-      // Validate file size (10MB max for PDF)
-      if (file.size > 10 * 1024 * 1024) {
-        showNotification("error", "PDF size should be less than 10MB");
+      // Validate file using utility
+      const validation = validatePdfFile(file);
+      if (!validation.isValid) {
+        showNotification("error", validation.errors[0]);
         return;
       }
 
       setIsCvUploading(true);
       try {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append(
-          "upload_preset",
-          import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "your_upload_preset"
-        );
-        // Set resource type to raw for PDF files
-        formData.append("resource_type", "raw");
-
-        const response = await fetch(
-          `https://api.cloudinary.com/v1_1/${
-            import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "your_cloud_name"
-          }/raw/upload`,
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("CV upload failed");
-        }
-
-        const data = await response.json();
+        const data = await uploadToCloudinary(file, 'raw');
         if (data.secure_url) {
           setEditData((prev) => ({ 
             ...prev, 
@@ -382,25 +342,20 @@ function AboutSection() {
 
   // CV Download Handler
   const handleCvDownload = useCallback(async () => {
-    if (!editData.cvUrl) {
-      showNotification("error", "No CV available for download");
-      return;
-    }
-
     try {
-      // Create a temporary anchor element to trigger download
-      const link = document.createElement('a');
-      link.href = editData.cvUrl;
-      link.download = editData.cvFileName || 'CV.pdf';
-      link.target = '_blank';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      console.log('Downloading CV from:', editData.cvUrl);
+      const result = await downloadFile(editData.cvUrl, editData.cvFileName);
       
-      showNotification("success", "CV download started!");
+      if (result.success) {
+        if (result.method === 'popup') {
+          showNotification("success", "CV opened in new tab");
+        } else {
+          showNotification("success", "CV download started!");
+        }
+      }
     } catch (error) {
-      showNotification("error", "Failed to download CV. Please try again.");
       console.error("Download error:", error);
+      showNotification("error", "Failed to download CV. Please try again.");
     }
   }, [editData.cvUrl, editData.cvFileName, showNotification]);
 
@@ -975,6 +930,11 @@ function AboutSection() {
                       />
                       {editData.cvUrl ? "Download CV" : "No CV Available"}
                     </span>
+                    {editData.cvUrl && (
+                      <span className="text-xs text-blue-100 block mt-1">
+                        {editData.cvFileName || 'CV.pdf'}
+                      </span>
+                    )}
                   </div>
                 </motion.button>
 
@@ -1193,7 +1153,7 @@ function AboutSection() {
                 {/* CV Upload Section */}
                 <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800/50 dark:to-slate-900/50 rounded-xl p-6 border border-slate-200/50 dark:border-slate-700/50">
                   <div className="text-center mb-4">
-                    <label className="block text-lg font-medium text-slate-900 dark:text-white mb-3 flex items-center justify-center gap-2">
+                    <label className="text-lg font-medium text-slate-900 dark:text-white mb-3 flex items-center justify-center gap-2">
                       <FaFilePdf className="text-red-500" />
                       CV Document
                     </label>
@@ -1289,7 +1249,7 @@ function AboutSection() {
                           : ""
                       }
                     >
-                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-2">
+                      <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1 flex items-center gap-2">
                         <field.icon className="text-blue-400" />
                         {field.label}
                         {field.required && (

@@ -22,6 +22,7 @@ import {
   setFilter, 
   setSearchTerm, 
   applyFilters,
+  updateStats,
   clearError,
   clearSuccess
 } from "../Store/Features/certificateSlice";
@@ -68,7 +69,7 @@ StatCardSkeleton.displayName = 'StatCardSkeleton';
 const CertificateSection = React.memo(() => {
   const dispatch = useDispatch();
   const { 
-    certificates = [],
+    items = [],
     filteredCertificates = [],
     loading = false, 
     error = null, 
@@ -92,7 +93,7 @@ const CertificateSection = React.memo(() => {
   
   const shouldReduceMotion = useReducedMotion();
 
-  // Fetch certificates on mount - Fixed to prevent infinite loading
+  // Fetch items on mount - Fixed to prevent infinite loading
   useEffect(() => {
     if (!hasInitiallyLoaded && !loading) {
       setHasInitiallyLoaded(true);
@@ -100,12 +101,13 @@ const CertificateSection = React.memo(() => {
     }
   }, [dispatch, hasInitiallyLoaded, loading]);
 
-  // Apply filters when filter or search term changes
+  // Apply filters and update stats when items change
   useEffect(() => {
-    if (certificates.length > 0) {
+    if (items.length > 0) {
       dispatch(applyFilters());
+      dispatch(updateStats());
     }
-  }, [dispatch, filters.category, filters.searchTerm, certificates.length]);
+  }, [dispatch, filters.category, filters.searchTerm, items.length]);
 
   // Auto-clear success messages
   useEffect(() => {
@@ -129,18 +131,18 @@ const CertificateSection = React.memo(() => {
 
   // Extract unique categories with memoization
   const categories = useMemo(() => {
-    if (!certificates.length) return ["All"];
-    const cats = certificates.map(cert => cert.category || "General");
+    if (!items.length) return ["All"];
+    const cats = items.map(cert => cert.category || "General");
     return ["All", ...new Set(cats)];
-  }, [certificates]);
+  }, [items]);
 
-  // Display certificates with pagination
+  // Display items with pagination
   const displayedCertificates = useMemo(() => 
     filteredCertificates.slice(0, displayCount),
     [filteredCertificates, displayCount]
   );
 
-  // Check if more certificates available
+  // Check if more items available
   const hasMoreCertificates = useMemo(() => 
     displayCount < filteredCertificates.length,
     [displayCount, filteredCertificates.length]
@@ -148,8 +150,8 @@ const CertificateSection = React.memo(() => {
 
   // Check if we're in initial loading state
   const isInitialLoading = useMemo(() => 
-    loading && certificates.length === 0,
-    [loading, certificates.length]
+    loading && items.length === 0,
+    [loading, items.length]
   );
 
   // Animation variants
@@ -235,7 +237,7 @@ const CertificateSection = React.memo(() => {
     try {
       await dispatch(fetchCertificates()).unwrap();
     } catch (error) {
-      console.error('Failed to refresh certificates:', error);
+      console.error('Failed to refresh items:', error);
     } finally {
       setIsRefreshing(false);
     }
@@ -526,7 +528,7 @@ const CertificateSection = React.memo(() => {
                     Loading...
                   </span>
                 ) : (
-                  `Showing ${displayedCertificates.length} of ${filteredCertificates.length} certificates`
+                  `Showing ${displayedCertificates.length} of ${filteredCertificates.length} items`
                 )}
               </span>
             </div>
@@ -592,7 +594,7 @@ const CertificateSection = React.memo(() => {
               </motion.div>
               <input
                 type="text"
-                placeholder="Search certificates..."
+                placeholder="Search items..."
                 value={filters.searchTerm}
                 onChange={handleSearchChange}
                 className="w-full pl-12 pr-12 py-3 bg-white/50 dark:bg-slate-800/50 border border-slate-300/50 dark:border-slate-700/50 rounded-2xl backdrop-blur-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:focus:ring-blue-400/50 focus:border-blue-500/50 dark:focus:border-blue-400/50 transition-all duration-300 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
@@ -634,8 +636,8 @@ const CertificateSection = React.memo(() => {
           <div className="flex flex-wrap justify-center gap-3">
             {categories.map((category, index) => {
               const count = category === "All" 
-                ? certificates.length 
-                : certificates.filter(cert => (cert.category || "General") === category).length;
+                ? displayedCertificates.length 
+                : items.filter(cert => (cert.category || "General") === category).length;
               
               return (
                 <motion.button
@@ -705,7 +707,7 @@ const CertificateSection = React.memo(() => {
         )}
 
         {/* No Results State */}
-        {!isInitialLoading && !loading && filteredCertificates.length === 0 && certificates.length > 0 && (
+        {!isInitialLoading && !loading && filteredCertificates.length === 0 && items.length > 0 && (
           <motion.div
             className="flex flex-col items-center justify-center py-16"
             initial={{ opacity: 0, y: 20 }}
@@ -718,7 +720,7 @@ const CertificateSection = React.memo(() => {
               <FaSearch className="text-white text-2xl" />
             </motion.div>
             <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
-              No certificates found
+              No items found
             </h3>
             <p className="text-slate-600 dark:text-slate-400 text-center mb-4">
               Try adjusting your search terms or filters
@@ -810,7 +812,7 @@ const CertificateSection = React.memo(() => {
         )}
 
         {/* Enhanced Statistics Dashboard */}
-        {!isInitialLoading && certificates.length > 0 && (
+        {!isInitialLoading && items.length > 0 && (
           <motion.div
             className="bg-gradient-to-br from-white/80 to-slate-100/50 dark:from-slate-800/50 dark:to-slate-900/50 backdrop-blur-xl rounded-3xl p-8 border-2 border-slate-200/50 dark:border-slate-700/50 shadow-2xl relative overflow-hidden"
             variants={itemVariants}

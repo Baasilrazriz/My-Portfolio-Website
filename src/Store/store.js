@@ -8,6 +8,7 @@ import skillsReducer from "./Features/skillsSlice";
 import projectReducer from "./Features/projectSlice";
 import certificateReducer from "./Features/certificateSlice";
 import loginReducer from "./Features/loginSlice";
+import experienceReducer from "./Features/experienceSlice";
 export const store = configureStore({
   reducer: {
     navbar:navbarReducer,
@@ -19,5 +20,6 @@ export const store = configureStore({
     projects:projectReducer,
     certificate:certificateReducer,
     login:loginReducer,
+    experience:experienceReducer
   },
 });
