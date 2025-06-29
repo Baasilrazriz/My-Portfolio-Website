@@ -192,7 +192,7 @@ function HomeSection() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Muhammad Basil Irfan - Full Stack Developer" />
         <meta name="twitter:description" content="Professional Full Stack Developer specializing in MERN Stack development" />
-        <link rel="canonical" href="https://yourwebsite.com" />
+        <link rel="canonical" href="https://baasilrazriz.tech/" />
       </head>
 
       <motion.section
@@ -202,6 +202,18 @@ function HomeSection() {
         animate="visible"
         variants={containerVariants}
       >
+        {/* SEO-Optimized Heading for Home Section */}
+        <h1 className="hidden sr-only">Muhammad Basil Irfan | Software Engineer | Web Developer | Full Stack Developer | MERN Stack | Portfolio</h1>
+        {/* Visible Main Heading for Users and SEO */}
+        <div className="hidden text-center mt-8 mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white leading-tight">
+            Hi, I&apos;m <span className="text-blue-600 dark:text-blue-400">Muhammad Basil Irfan</span>
+          </h2>
+          <h3 className="mt-2 text-xl sm:text-2xl md:text-3xl font-semibold text-gray-700 dark:text-gray-300">
+            Software Engineer | Web Developer | Full Stack Developer
+          </h3>
+        </div>
+
         {/* Background Effects */}
         <div className="absolute inset-0 pointer-events-none">
           {/* Subtle gradient orbs */}

@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useCursor } from './Hooks/useCursor'
 import AIBot from './Components/AIBot/AIBot'
@@ -62,9 +63,42 @@ ErrorFallback.propTypes = {
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
+  const { isOpen: isAIBotOpen } = useSelector((state) => state.aiBot)
+  const [isMobile, setIsMobile] = useState(false)
   
   // Initialize custom cursor with optimized settings
   const { setCursorLoading, hideCursor, showCursor } = useCursor()
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Prevent scrolling when AIBot is open on mobile
+  useEffect(() => {
+    if (isMobile && isAIBotOpen) {
+      document.body.style.overflow = 'hidden'
+      document.body.style.position = 'fixed'
+      document.body.style.width = '100%'
+    } else {
+      document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
+    }
+
+    // Cleanup function to restore scrolling
+    return () => {
+      document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.width = ''
+    }
+  }, [isMobile, isAIBotOpen])
 
   // Handle initial app loading
   useEffect(() => {

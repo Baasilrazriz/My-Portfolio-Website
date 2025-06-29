@@ -17,6 +17,7 @@ import SingleProjectDisplay from './SingleProjectDisplay';
 
 const AIBot = () => {
   const [inputMessage, setInputMessage] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -34,6 +35,17 @@ const AIBot = () => {
     clearError,
     updateProjectContext
   } = useAIBot();
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Auto scroll to bottom
   const scrollToBottom = useCallback(() => {
@@ -120,7 +132,7 @@ const AIBot = () => {
         {!isOpen && (
           <motion.button
             onClick={toggleChat}
-            className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-full shadow-2xl flex items-center justify-center cursor-pointer group relative overflow-hidden touch-manipulation"
+            className=" w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-full shadow-2xl flex items-center justify-center cursor-pointer group relative overflow-hidden touch-manipulation"
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"
@@ -156,11 +168,17 @@ const AIBot = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className={`bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 ${
+            className={` bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 ${
               isMinimized 
                 ? 'w-72 sm:w-80 h-16' 
-                : 'w-[95vw] max-w-2xl sm:w-[480px] h-[90vh] max-h-[700px] sm:h-[700px]'
-            } flex flex-col overflow-hidden fixed bottom-16 sm:bottom-20 right-4 sm:right-6`}
+                : isMobile
+                  ? 'm-4 max-w-none max-h-none rounded-xl' 
+                  : 'w-[95vw] max-w-2xl sm:w-[480px] h-[90vh] max-h-[700px] sm:h-[700px]'
+            } flex flex-col overflow-hidden fixed ${
+              isMobile && !isMinimized 
+                ? 'top-0 left-0 right-0 bottom-0' 
+                : 'bottom-16 sm:bottom-20 right-4 sm:right-6'
+            }`}
             variants={chatVariants}
             initial="hidden"
             animate="visible"

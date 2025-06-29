@@ -1,14 +1,17 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { AI_CONFIG, validateUserInput, trackQuestion } from './aiUtils';
 import { getEnhancedAIContext } from './firebaseDataFetcher';
+import { toggleAIBot as toggleAiBotAction, closeAIBot, toggleMinimize as toggleMinimizeAction } from '../../Store/Features/aiBotSlice';
 
 // Initialize Gemini AI
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
 export const useAIBot = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
+  const dispatch = useDispatch();
+  const { isOpen, isMinimized } = useSelector((state) => state.aiBot);
+  
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -424,29 +427,27 @@ Remember: You're not just answering - you're building a connection with real, up
   }, [personalContext, messages, conversationContext]);
 
   // Toggle chat window
-  const toggleChat = useCallback(() => {
-    setIsOpen(prev => !prev);
+  const toggleChatWindow = useCallback(() => {
+    dispatch(toggleAiBotAction());
     if (!isOpen) {
-      setIsMinimized(false);
       setError(null);
     }
-  }, [isOpen]);
+  }, [dispatch, isOpen]);
 
   // Toggle minimize/maximize
-  const toggleMinimize = useCallback(() => {
-    setIsMinimized(prev => !prev);
-  }, []);
+  const toggleMinimizeWindow = useCallback(() => {
+    dispatch(toggleMinimizeAction());
+  }, [dispatch]);
 
   // Close chat
-  const closeChat = useCallback(() => {
-    setIsOpen(false);
-    setIsMinimized(false);
+  const closeChatWindow = useCallback(() => {
+    dispatch(closeAIBot());
     setError(null);
     // Cancel any ongoing request
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
-  }, []);
+  }, [dispatch]);
 
   // Clear chat
   const clearChat = useCallback(() => {
@@ -485,9 +486,9 @@ Remember: You're not just answering - you're building a connection with real, up
     
     // Actions
     sendMessage,
-    toggleChat,
-    toggleMinimize,
-    closeChat,
+    toggleChat: toggleChatWindow,
+    toggleMinimize: toggleMinimizeWindow,
+    closeChat: closeChatWindow,
     clearChat,
     clearError,
     updateProjectContext

@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleNavbarDropdown } from "../../Store/Features/navbarSlice";
 import Switcher from "../Theme/Switcher";
 import { useState, useEffect, useCallback } from "react";
@@ -14,9 +14,22 @@ import {
 
 function Navbar() {
   const dispatch = useDispatch();
+  const { isOpen: isAIBotOpen } = useSelector((state) => state.aiBot);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Optimized scroll handler with throttling
   const handleScroll = useCallback(() => {
@@ -79,6 +92,24 @@ function Navbar() {
     { id: "con", label: "Contact", icon: HiOutlineMail },
   ];
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobile && isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [isMobile, isMenuOpen]);
+
   return (
     <>
       {/* Main Navbar - Enhanced Dynamic Island */}
@@ -90,6 +121,11 @@ function Navbar() {
           isScrolled
             ? "w-[96%] sm:w-[95%] md:w-[90%] lg:w-[85%] xl:w-[80%] max-w-6xl"
             : "w-[98%] sm:w-[97%] md:w-[95%] lg:w-[90%] xl:w-[85%] max-w-7xl"
+        }
+        ${
+          isMobile && isAIBotOpen 
+            ? "opacity-0 pointer-events-none transform -translate-y-4 scale-95" 
+            : "opacity-100 pointer-events-auto transform translate-y-0 scale-100"
         }
       `}
       >
