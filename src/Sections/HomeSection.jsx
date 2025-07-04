@@ -2,6 +2,7 @@ import { memo, useEffect, useState, useMemo, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { motion, useReducedMotion } from "framer-motion";
 import { downloadFile } from "../utils/cvUtils";
+import SEOManager from "../Components/SEO/SEOManager";
 
 function HomeSection() {
   const image = useSelector((state) => state.home.image);
@@ -14,10 +15,12 @@ function HomeSection() {
   const cvFileName = "Muhammad_Basil_Irfan_CV.pdf";
   
   const roles = useMemo(() => [
-    "Full Stack Developer",
-    "MERN Stack Expert", 
+    "Software Engineer",
+    "Expert Freelancer", 
+    "MERN Stack Developer",
     "React.js Specialist",
-    "Node.js Developer"
+    "Node.js Expert",
+    "Full Stack Developer"
   ], []);
 
   const [currentRole, setCurrentRole] = useState("");
@@ -179,21 +182,13 @@ function HomeSection() {
 
   return (
     <>
-      {/* SEO Meta Tags */}
-      <head>
-        <title>Muhammad Basil Irfan - Full Stack Developer | MERN Stack Expert</title>
-        <meta name="description" content="Muhammad Basil Irfan - Professional Full Stack Developer specializing in MERN Stack, React.js, Node.js, and modern web development. Available for freelance projects." />
-        <meta name="keywords" content="Full Stack Developer, MERN Stack, React.js, Node.js, JavaScript, Web Developer, Frontend Developer, Backend Developer, Muhammad Basil Irfan" />
-        <meta name="author" content="Muhammad Basil Irfan" />
-        <meta property="og:title" content="Muhammad Basil Irfan - Full Stack Developer" />
-        <meta property="og:description" content="Professional Full Stack Developer specializing in MERN Stack development" />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content={image} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Muhammad Basil Irfan - Full Stack Developer" />
-        <meta name="twitter:description" content="Professional Full Stack Developer specializing in MERN Stack development" />
-        <link rel="canonical" href="https://baasilrazriz.tech/" />
-      </head>
+      {/* Enhanced SEO Meta Tags */}
+      <SEOManager 
+        title="Basil Razriz | Top Karachi Software Engineer | Expert Freelancer"
+        description="Basil Razriz (Muhammad Basil Irfan) - Leading software engineer and freelancer in Karachi, Pakistan. Expert in MERN stack, React.js, Node.js. Hire the best developer for your projects."
+        keywords="Basil, Razriz, Basil Razriz, Muhammad Basil Irfan, Karachi software engineer, expert freelancer, MERN stack developer, React.js developer Karachi, Node.js expert Pakistan, freelance developer Karachi, hire software engineer Pakistan, top developer Karachi, best freelancer Pakistan"
+        section="home"
+      />
 
       <motion.section
         className="relative sm:pt-0 pt-24 min-h-screen bg-gradient-to-br from-white via-slate-50 to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-black overflow-hidden"
@@ -309,8 +304,11 @@ function HomeSection() {
                     {"Hello, I'm"}
                   </h2>
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-slate-900 dark:text-white leading-tight">
-                    Muhammad Basil Irfan
+                    Basil Razriz
                   </h1>
+                  <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 font-medium">
+                    Muhammad Basil Irfan
+                  </p>
                 </motion.div>
 
                 {/* Dynamic Role with Typewriter */}
@@ -334,7 +332,7 @@ function HomeSection() {
                   variants={itemVariants}
                   className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0"
                 >
-                  {description || "Passionate about creating exceptional digital experiences with modern technologies. Specialized in building scalable web applications that deliver real value to users and businesses."}
+                  {description || "Top-rated software engineer and freelancer based in Karachi, Pakistan. Specializing in MERN stack development, React.js, and Node.js. Expert in building scalable web applications that deliver exceptional digital experiences for clients worldwide."}
                 </motion.p>
 
                 {/* CTA Buttons */}

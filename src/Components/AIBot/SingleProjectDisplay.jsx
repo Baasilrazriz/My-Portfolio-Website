@@ -11,6 +11,7 @@ import {
   FaArrowRight,
 } from 'react-icons/fa';
 import { fetchProjectsData } from './firebaseDataFetcher';
+import MainLoader from '../../Loaders/MainLoader';
 
 const SingleProjectDisplay = ({ currentProjectIndex = 0, onProjectChange }) => {
   const [projects, setProjects] = useState([]);
@@ -94,22 +95,7 @@ const SingleProjectDisplay = ({ currentProjectIndex = 0, onProjectChange }) => {
     return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
   };
 
-  if (loading) {
-    return (
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-2xl border border-gray-200/50 dark:border-gray-700/50 p-6 mb-4 shadow-lg"
-      >
-        <div className="flex items-center justify-center h-48 md:h-56">
-          <div className="flex flex-col items-center gap-3">
-            <div className="w-10 h-10 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            <span className="text-sm font-medium text-gray-600 dark:text-gray-300">Loading project...</span>
-          </div>
-        </div>
-      </motion.div>
-    );
-  }
+  if (loading) return <MainLoader/>
 
   if (error || projects.length === 0) {
     return (

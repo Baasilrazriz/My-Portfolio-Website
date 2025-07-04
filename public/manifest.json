@@ -1,0 +1,51 @@
+{
+  "name": "Basil Razriz Portfolio",
+  "short_name": "Basil Razriz",
+  "description": "Professional portfolio of Basil Razriz, software engineer and freelancer from Karachi, Pakistan",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3B82F6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/bas.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/bas.png", 
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "business",
+    "productivity",
+    "developer",
+    "portfolio"
+  ],
+  "keywords": [
+    "Basil Razriz",
+    "software engineer",
+    "freelancer", 
+    "Karachi",
+    "MERN stack",
+    "React.js",
+    "Node.js"
+  ],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "screenshots": [
+    {
+      "src": "/bas.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Basil Razriz Portfolio Homepage"
+    }
+  ]
+}

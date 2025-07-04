@@ -3,9 +3,11 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { useSelector } from 'react-redux'
+import { HelmetProvider } from 'react-helmet-async'
 import PropTypes from 'prop-types'
 import { useCursor } from './Hooks/useCursor'
 import AIBot from './Components/AIBot/AIBot'
+import MainLoader from './Loaders/MainLoader'
 
 // Lazy load components for better performance
 const PortfolioPage = lazy(() => import("./Pages/PortfolioPage"))
@@ -20,14 +22,7 @@ const Loading = ({ setCursorLoading }) => {
     return () => setCursorLoading?.(false)
   }, [setCursorLoading])
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
-      <div className="text-center">
-        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-        <p className="text-slate-600 dark:text-slate-400 animate-pulse">Loading...</p>
-      </div>
-    </div>
-  )
+  return <MainLoader/>
 }
 
 Loading.propTypes = {
@@ -138,55 +133,57 @@ function App() {
   }
 
   return (
-    <ErrorBoundary 
-      FallbackComponent={ErrorFallback}
-      onReset={() => window.location.reload()}
-    >
-      {/* Toast Container with optimized z-index */}
-      <ToastContainer 
-        style={{ zIndex: 10000 }}
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-        toastClassName="backdrop-blur-sm"
-      />
-      
-      {/* AI Bot Component */}
-      <AIBot />
-      
-      <BrowserRouter>
-        <Suspense fallback={<Loading setCursorLoading={setCursorLoading} />}>
-          <Routes>
-            {/* Main Portfolio Route */}
-            <Route path="/" element={<PortfolioPage />} />
-            
-            {/* Login Route */}
-            <Route path="/login" element={<LoginPage />} />
-            
-            {/* Project Detail Route */}
-            <Route path="/project/:id" element={<ProjectDetailPage />} />
-            
-            {/* Error Page Route */}
-            <Route path="/error" element={<ErrorPage />} />
-            
-            {/* Protected Routes */}
-            <Route element={<ProtectedRoutes />}>
-              <Route path="/admin" element={<PortfolioPage />} />
-            </Route>
-            
-            {/* Catch-all route for 404 errors - this must be last */}
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </ErrorBoundary>
+    <HelmetProvider>
+      <ErrorBoundary 
+        FallbackComponent={ErrorFallback}
+        onReset={() => window.location.reload()}
+      >
+        {/* Toast Container with optimized z-index */}
+        <ToastContainer 
+          style={{ zIndex: 10000 }}
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          toastClassName="backdrop-blur-sm"
+        />
+        
+        {/* AI Bot Component */}
+        <AIBot />
+        
+        <BrowserRouter>
+          <Suspense fallback={<Loading setCursorLoading={setCursorLoading} />}>
+            <Routes>
+              {/* Main Portfolio Route */}
+              <Route path="/" element={<PortfolioPage />} />
+              
+              {/* Login Route */}
+              <Route path="/login" element={<LoginPage />} />
+              
+              {/* Project Detail Route */}
+              <Route path="/project/:id" element={<ProjectDetailPage />} />
+              
+              {/* Error Page Route */}
+              <Route path="/error" element={<ErrorPage />} />
+              
+              {/* Protected Routes */}
+              <Route element={<ProtectedRoutes />}>
+                <Route path="/admin" element={<PortfolioPage />} />
+              </Route>
+              
+              {/* Catch-all route for 404 errors - this must be last */}
+              <Route path="*" element={<ErrorPage />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </ErrorBoundary>
+    </HelmetProvider>
   )
 }
 

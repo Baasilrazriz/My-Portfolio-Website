@@ -1,0 +1,34 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://baasilrazriz.tech/sitemap.xml
+
+# Specific crawl directives for major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# Block unnecessary crawling of development files
+Disallow: /src/
+Disallow: /.git/
+Disallow: /node_modules/
+Disallow: *.json
+Disallow: *.config.js
+Disallow: *.md
+
+# Allow important files
+Allow: /cv.pdf
+Allow: /bas.png
+Allow: /public/
+
+# Host information
+Host: https://baasilrazriz.tech
