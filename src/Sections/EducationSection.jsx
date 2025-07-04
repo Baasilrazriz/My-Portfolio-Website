@@ -123,8 +123,8 @@ function EducationSection() {
 
   // Calculate timeline height based on screen size and education count
   const getTimelineHeight = () => {
-    if (screenSize.isMobile) return education.length * 350 + 100;
-    return education.length * 400 + 180;
+    if (screenSize.isMobile) return education.length * 365 + 100;
+    return education.length * 398 + 180;
     
   };
 
@@ -653,7 +653,7 @@ function EducationSection() {
 
             {/* Enhanced Timeline End */}
             <motion.div
-            className={`flex ${screenSize.isMobile ? 'justify-start pl-6' : 'justify-center'} mt-12 sm:mt-16 lg:mt-20 `}
+            className={`flex ${screenSize.isMobile ? 'justify-start pl-1' : 'justify-center pl-2'} mt-12 sm:mt-16 lg:mt-20 `}
             variants={itemVariants}
             >
             <motion.div

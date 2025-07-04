@@ -121,8 +121,8 @@ function ExperienceSection() {
 
   // Calculate timeline height based on screen size and experience count
   const getTimelineHeight = () => {
-    if (screenSize.isMobile) return workExperience.length * 455 + 100;
-    return workExperience.length * 491 + 180;
+    if (screenSize.isMobile) return workExperience.length * 493 + 100;
+    return workExperience.length * 525 + 180;
   };
 
   return (
@@ -713,7 +713,7 @@ function ExperienceSection() {
 
           {/* End Timeline Icon */}
           <motion.div
-            className={`flex ${screenSize.isMobile ? 'justify-start pl-1' : 'justify-center'} mt-12 sm:mt-16 lg:mt-20`}
+            className={`flex ${screenSize.isMobile ? 'justify-start pl-1' : 'justify-center pl-2'} mt-12 sm:mt-16 lg:mt-20`}
             variants={itemVariants}
           >
             <motion.div
